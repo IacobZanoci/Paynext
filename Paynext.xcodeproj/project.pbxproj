@@ -6,8 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		42A0D43D2DD6596200566812 /* NetworkClient in Frameworks */ = {isa = PBXBuildFile; productRef = 42A0D43C2DD6596200566812 /* NetworkClient */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		4239625E2DCFD85800F32002 /* Paynext.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Paynext.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		42A0D43A2DD6581C00566812 /* NetworkClient */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = NetworkClient; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -23,6 +28,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42A0D43D2DD6596200566812 /* NetworkClient in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -32,7 +38,9 @@
 		423962552DCFD85800F32002 = {
 			isa = PBXGroup;
 			children = (
+				42A0D4382DD657D300566812 /* Packages */,
 				423962602DCFD85800F32002 /* Paynext */,
+				42A0D43B2DD6596200566812 /* Frameworks */,
 				4239625F2DCFD85800F32002 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -43,6 +51,29 @@
 				4239625E2DCFD85800F32002 /* Paynext.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		42A0D4382DD657D300566812 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				42A0D4392DD657DD00566812 /* Core */,
+			);
+			path = Packages;
+			sourceTree = "<group>";
+		};
+		42A0D4392DD657DD00566812 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				42A0D43A2DD6581C00566812 /* NetworkClient */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		42A0D43B2DD6596200566812 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -65,6 +96,7 @@
 			);
 			name = Paynext;
 			packageProductDependencies = (
+				42A0D43C2DD6596200566812 /* NetworkClient */,
 			);
 			productName = Paynext;
 			productReference = 4239625E2DCFD85800F32002 /* Paynext.app */;
@@ -334,6 +366,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		42A0D43C2DD6596200566812 /* NetworkClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NetworkClient;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 423962562DCFD85800F32002 /* Project object */;
 }
