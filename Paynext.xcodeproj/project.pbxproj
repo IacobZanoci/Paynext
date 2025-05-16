@@ -8,11 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		42A0D43D2DD6596200566812 /* NetworkClient in Frameworks */ = {isa = PBXBuildFile; productRef = 42A0D43C2DD6596200566812 /* NetworkClient */; };
+		42A0D45B2DD7AA7100566812 /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 42A0D45A2DD7AA7100566812 /* DesignSystem */; };
+		42A0D45D2DD7B66E00566812 /* UIComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 42A0D45C2DD7B66E00566812 /* UIComponents */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		4239625E2DCFD85800F32002 /* Paynext.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Paynext.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42A0D43A2DD6581C00566812 /* NetworkClient */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = NetworkClient; sourceTree = "<group>"; };
+		42A0D4592DD7AA4700566812 /* DesignSystem */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DesignSystem; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -28,7 +31,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42A0D45D2DD7B66E00566812 /* UIComponents in Frameworks */,
 				42A0D43D2DD6596200566812 /* NetworkClient in Frameworks */,
+				42A0D45B2DD7AA7100566812 /* DesignSystem in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -64,6 +69,7 @@
 		42A0D4392DD657DD00566812 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				42A0D4592DD7AA4700566812 /* DesignSystem */,
 				42A0D43A2DD6581C00566812 /* NetworkClient */,
 			);
 			path = Core;
@@ -97,6 +103,8 @@
 			name = Paynext;
 			packageProductDependencies = (
 				42A0D43C2DD6596200566812 /* NetworkClient */,
+				42A0D45A2DD7AA7100566812 /* DesignSystem */,
+				42A0D45C2DD7B66E00566812 /* UIComponents */,
 			);
 			productName = Paynext;
 			productReference = 4239625E2DCFD85800F32002 /* Paynext.app */;
@@ -371,6 +379,14 @@
 		42A0D43C2DD6596200566812 /* NetworkClient */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = NetworkClient;
+		};
+		42A0D45A2DD7AA7100566812 /* DesignSystem */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DesignSystem;
+		};
+		42A0D45C2DD7B66E00566812 /* UIComponents */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = UIComponents;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
