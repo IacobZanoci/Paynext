@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4243BB632DE1D4B500CA1504 /* Persistance in Frameworks */ = {isa = PBXBuildFile; productRef = 4243BB622DE1D4B500CA1504 /* Persistance */; };
 		42A0D43D2DD6596200566812 /* NetworkClient in Frameworks */ = {isa = PBXBuildFile; productRef = 42A0D43C2DD6596200566812 /* NetworkClient */; };
 		42A0D45B2DD7AA7100566812 /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 42A0D45A2DD7AA7100566812 /* DesignSystem */; };
 		42A0D45D2DD7B66E00566812 /* UIComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 42A0D45C2DD7B66E00566812 /* UIComponents */; };
@@ -32,6 +33,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4243BB632DE1D4B500CA1504 /* Persistance in Frameworks */,
 				42A0D45D2DD7B66E00566812 /* UIComponents in Frameworks */,
 				42A0D43D2DD6596200566812 /* NetworkClient in Frameworks */,
 				42A0D45B2DD7AA7100566812 /* DesignSystem in Frameworks */,
@@ -107,6 +109,7 @@
 				42A0D43C2DD6596200566812 /* NetworkClient */,
 				42A0D45A2DD7AA7100566812 /* DesignSystem */,
 				42A0D45C2DD7B66E00566812 /* UIComponents */,
+				4243BB622DE1D4B500CA1504 /* Persistance */,
 			);
 			productName = Paynext;
 			productReference = 4239625E2DCFD85800F32002 /* Paynext.app */;
@@ -378,6 +381,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		4243BB622DE1D4B500CA1504 /* Persistance */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Persistance;
+		};
 		42A0D43C2DD6596200566812 /* NetworkClient */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = NetworkClient;
