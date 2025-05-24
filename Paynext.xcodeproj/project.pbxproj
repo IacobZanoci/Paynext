@@ -14,6 +14,7 @@
 
 /* Begin PBXFileReference section */
 		4239625E2DCFD85800F32002 /* Paynext.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Paynext.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4243BB582DE1CED900CA1504 /* Persistance */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Persistance; sourceTree = "<group>"; };
 		42A0D43A2DD6581C00566812 /* NetworkClient */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = NetworkClient; sourceTree = "<group>"; };
 		42A0D4592DD7AA4700566812 /* DesignSystem */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DesignSystem; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -69,6 +70,7 @@
 		42A0D4392DD657DD00566812 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				4243BB582DE1CED900CA1504 /* Persistance */,
 				42A0D4592DD7AA4700566812 /* DesignSystem */,
 				42A0D43A2DD6581C00566812 /* NetworkClient */,
 			);
