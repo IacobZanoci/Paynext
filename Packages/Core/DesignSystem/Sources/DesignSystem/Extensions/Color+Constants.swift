@@ -20,19 +20,19 @@ public extension Color {
         /// The secondary background color of the application. Success or Failure Transaction Views.
         public static let secondaryBackground = Color("secondaryBackgroundColor", bundle: .module)
         
-        /// The color used to contrast the background color.
-        public static let contrast = Color("contrastColor", bundle: .module)
+        /// The stroke background color of the application. // contrastColor
+        public static let strokeBackground = Color("strokeBackgroundColor", bundle: .module)
         
         // MARK: - Button
         
         /// The primary button background color.
         public static let primaryButton = Color("primaryButtonColor", bundle: .module)
         
-        /// The destructive button background color.
-        public static let destructiveButton = Color("destructiveButtonColor", bundle: .module)
+        /// The secondary button background color.
+        public static let secondaryButton = Color("secondaryButtonColor", bundle: .module)
         
-        /// The plain button foreground color.
-        public static let plainButton = Color("plainButtonColor", bundle: .module)
+        /// The tertiary button background color.
+        public static let tertiaryButton = Color("tertiaryButtonColor", bundle: .module)
         
         // MARK: - Text
         
