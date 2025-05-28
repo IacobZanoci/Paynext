@@ -1,5 +1,5 @@
 //
-//  UnderlinedTextFieldView.swift
+//  RoundedTextFieldView.swift
 //  DesignSystem
 //
 //  Created by Iacob Zanoci on 16.05.2025.
@@ -8,14 +8,20 @@
 import DesignSystem
 import SwiftUI
 
-public struct UnderlinedTextFieldView: View {
+public struct RoundedTextFieldView: View {
     
     @Binding public var text: String
     public var placeholder: String
+    public var isValid: Bool
     
-    public init(text: Binding<String>, placeholder: String) {
+    public init(
+        text: Binding<String>,
+        placeholder: String,
+        isValid: Bool = true
+    ) {
         self._text = text
         self.placeholder = placeholder
+        self.isValid = isValid
     }
     
     public var body: some View {
@@ -23,7 +29,7 @@ public struct UnderlinedTextFieldView: View {
             TextField(placeholder, text: $text)
                 .font(.Paynext.body)
                 .foregroundStyle(Color.Paynext.primaryText)
-                .padding(.vertical, CGFloat.medium)
+                .padding(.medium)
             
             if !text.isEmpty {
                 Button(action: {
@@ -31,23 +37,31 @@ public struct UnderlinedTextFieldView: View {
                 }) {
                     Image(systemName: "xmark.circle.fill")
                         .foregroundStyle(Color.Paynext.secondaryText.opacity(0.6))
+                        .padding(.trailing, 16)
                 }
                 .buttonStyle(.plain)
             }
         }
         .background(
-            VStack {
-                Spacer()
-                Color(Color.Paynext.secondaryText.opacity(0.3))
-                    .frame(height: 0.33)
-            }
+            RoundedRectangle(cornerRadius: 16)
+                .fill(Color.Paynext.background)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(
+                    isValid
+                    ? Color.Paynext.strokeBackground
+                    : Color.Paynext.errorStrokeBackground,
+                    lineWidth: 1.5
+                )
         )
     }
 }
 
 #Preview {
-    UnderlinedTextFieldView(
+    RoundedTextFieldView(
         text: .constant(""),
         placeholder: "Name and Surname"
     )
+    .padding()
 }

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4243BB632DE1D4B500CA1504 /* Persistance in Frameworks */ = {isa = PBXBuildFile; productRef = 4243BB622DE1D4B500CA1504 /* Persistance */; };
+		4243BB922DE7707900CA1504 /* LoginPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = 4243BB912DE7707900CA1504 /* LoginPresentation */; };
 		42A0D43D2DD6596200566812 /* NetworkClient in Frameworks */ = {isa = PBXBuildFile; productRef = 42A0D43C2DD6596200566812 /* NetworkClient */; };
 		42A0D45B2DD7AA7100566812 /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 42A0D45A2DD7AA7100566812 /* DesignSystem */; };
 		42A0D45D2DD7B66E00566812 /* UIComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 42A0D45C2DD7B66E00566812 /* UIComponents */; };
@@ -16,6 +17,7 @@
 /* Begin PBXFileReference section */
 		4239625E2DCFD85800F32002 /* Paynext.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Paynext.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4243BB582DE1CED900CA1504 /* Persistance */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Persistance; sourceTree = "<group>"; };
+		4243BB902DE7692000CA1504 /* LoginPresentation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LoginPresentation; sourceTree = "<group>"; };
 		42A0D43A2DD6581C00566812 /* NetworkClient */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = NetworkClient; sourceTree = "<group>"; };
 		42A0D4592DD7AA4700566812 /* DesignSystem */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DesignSystem; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -34,6 +36,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4243BB632DE1D4B500CA1504 /* Persistance in Frameworks */,
+				4243BB922DE7707900CA1504 /* LoginPresentation in Frameworks */,
 				42A0D45D2DD7B66E00566812 /* UIComponents in Frameworks */,
 				42A0D43D2DD6596200566812 /* NetworkClient in Frameworks */,
 				42A0D45B2DD7AA7100566812 /* DesignSystem in Frameworks */,
@@ -61,9 +64,26 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		4243BB8E2DE768DB00CA1504 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				4243BB8F2DE768E800CA1504 /* Login */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		4243BB8F2DE768E800CA1504 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				4243BB902DE7692000CA1504 /* LoginPresentation */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
 		42A0D4382DD657D300566812 /* Packages */ = {
 			isa = PBXGroup;
 			children = (
+				4243BB8E2DE768DB00CA1504 /* Features */,
 				42A0D4392DD657DD00566812 /* Core */,
 			);
 			path = Packages;
@@ -110,6 +130,7 @@
 				42A0D45A2DD7AA7100566812 /* DesignSystem */,
 				42A0D45C2DD7B66E00566812 /* UIComponents */,
 				4243BB622DE1D4B500CA1504 /* Persistance */,
+				4243BB912DE7707900CA1504 /* LoginPresentation */,
 			);
 			productName = Paynext;
 			productReference = 4239625E2DCFD85800F32002 /* Paynext.app */;
@@ -384,6 +405,10 @@
 		4243BB622DE1D4B500CA1504 /* Persistance */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Persistance;
+		};
+		4243BB912DE7707900CA1504 /* LoginPresentation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LoginPresentation;
 		};
 		42A0D43C2DD6596200566812 /* NetworkClient */ = {
 			isa = XCSwiftPackageProductDependency;
