@@ -22,9 +22,22 @@
 		42A0D4592DD7AA4700566812 /* DesignSystem */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DesignSystem; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		4278BE0F2DE791FC001811CF /* Exceptions for "Paynext" folder in "Paynext" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 4239625D2DCFD85800F32002 /* Paynext */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		423962602DCFD85800F32002 /* Paynext */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				4278BE0F2DE791FC001811CF /* Exceptions for "Paynext" folder in "Paynext" target */,
+			);
 			path = Paynext;
 			sourceTree = "<group>";
 		};
@@ -321,6 +334,7 @@
 				DEVELOPMENT_TEAM = GV4VF4D45P;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Paynext/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -355,6 +369,7 @@
 				DEVELOPMENT_TEAM = GV4VF4D45P;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Paynext/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
