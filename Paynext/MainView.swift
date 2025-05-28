@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import DesignSystem
 
 struct MainView: View {
     
@@ -22,9 +23,25 @@ struct MainView: View {
     
     init() {
         let appearance = UITabBarAppearance()
+        let itemAppearance = UITabBarItemAppearance()
+        
         appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = .white
-        appearance.shadowColor = UIColor.lightGray
+        appearance.backgroundColor = UIColor.Paynext.tabBarBackground
+        appearance.shadowColor = UIColor.systemGray5
+        
+        itemAppearance.normal.iconColor = UIColor.Paynext.normalTabBar
+        itemAppearance.normal.titleTextAttributes = [
+            .foregroundColor: UIColor.Paynext.normalTabBar,
+            .font: UIFont.systemFont(ofSize: 10, weight: .regular)
+        ]
+        
+        itemAppearance.selected.iconColor = UIColor.Paynext.selectedTabBar
+        itemAppearance.selected.titleTextAttributes = [
+            .foregroundColor: UIColor.Paynext.selectedTabBar,
+            .font: UIFont.systemFont(ofSize: 10, weight: .bold)
+        ]
+        
+        appearance.stackedLayoutAppearance = itemAppearance
         UITabBar.appearance().standardAppearance = appearance
         UITabBar.appearance().scrollEdgeAppearance = appearance
     }
@@ -39,12 +56,13 @@ struct MainView: View {
             NavigationStack(path: $homeCoordinator.navigationPath) {
                 EmptyView()
                     .navigationDestination(for: AppRoute.self) { route in
-                        homeCoordinator.build(route: route)
+                        homeCoordinator.view(route: route)
                     }
                     .environmentObject(homeCoordinator)
             }
             .tabItem {
-                Label("Home", systemImage: selectedTab == 0 ? "star.fill" : "star")
+                Image(systemName: selectedTab == 0 ? "house.fill" : "house")
+                Text("Home")
             }
             .tag(0)
             
@@ -53,12 +71,13 @@ struct MainView: View {
             NavigationStack(path: $historyCoordinator.navigationPath) {
                 EmptyView()
                     .navigationDestination(for: AppRoute.self) { route in
-                        historyCoordinator.build(route: route)
+                        historyCoordinator.view(route: route)
                     }
                     .environmentObject(historyCoordinator)
             }
             .tabItem {
-                Label("History", systemImage: selectedTab == 0 ? "star.fill" : "star")
+                Image(systemName: selectedTab == 0 ? "book.pages.fill" : "book.pages")
+                Text("History")
             }
             .tag(1)
             
@@ -67,12 +86,13 @@ struct MainView: View {
             NavigationStack(path: $paymentCoordinator.navigationPath) {
                 EmptyView()
                     .navigationDestination(for: AppRoute.self) { route in
-                        paymentCoordinator.build(route: route)
+                        paymentCoordinator.view(route: route)
                     }
                     .environmentObject(paymentCoordinator)
             }
             .tabItem {
-                Label("Payment", systemImage: selectedTab == 0 ? "star.fill" : "star")
+                Image(systemName: selectedTab == 0 ? "creditcard.fill" : "creditcard")
+                Text("Payment")
             }
             .tag(2)
             
@@ -81,12 +101,13 @@ struct MainView: View {
             NavigationStack(path: $accountCoordinator.navigationPath) {
                 EmptyView()
                     .navigationDestination(for: AppRoute.self) { route in
-                        accountCoordinator.build(route: route)
+                        accountCoordinator.view(route: route)
                     }
                     .environmentObject(accountCoordinator)
             }
             .tabItem {
-                Label("Account", systemImage: selectedTab == 0 ? "star.fill" : "star")
+                Image(systemName: selectedTab == 0 ? "person.circle.fill" : "person.circle")
+                Text("Account")
             }
             .tag(3)
         }

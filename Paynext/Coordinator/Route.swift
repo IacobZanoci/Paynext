@@ -8,9 +8,7 @@
 protocol Route: Hashable {}
 
 enum AppRoute: Route {
-    /// Define the Views for navigation
-    ///
-    /// Dashboard Views
-    /// case applyFilters
-    /// ...
+    
+    case login
+    case main
 }

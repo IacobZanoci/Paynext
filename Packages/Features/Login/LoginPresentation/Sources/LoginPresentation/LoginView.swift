@@ -10,7 +10,9 @@ import Combine
 import DesignSystem
 import UIComponents
 
-struct LoginView: View {
+public struct LoginView: View {
+    
+    // MARK: - Properties
     
     @State private var username: String = ""
     @State private var accountNumber: String = ""
@@ -18,9 +20,19 @@ struct LoginView: View {
     @State private var keyboardVisible: Bool = false
     @State private var showForm: Bool = false
     
-    public init () {}
+    private let onLogin: () async -> Void
     
-    var body: some View {
+    // MARK: - Initializers
+    
+    public init (
+        onLogin: @escaping () async -> Void
+    ) {
+        self.onLogin = onLogin
+    }
+    
+    // MARK: - Login View
+    
+    public var body: some View {
         ZStack {
             Color.Paynext.secondaryBackground.ignoresSafeArea()
             
@@ -49,6 +61,8 @@ struct LoginView: View {
         .ignoresSafeArea()
     }
 }
+
+// MARK: - Login View Extension
 
 extension LoginView {
     private var appIcon: some View {
@@ -96,7 +110,9 @@ extension LoginView {
                 }
                 
                 Button {
-                    // Login action
+                    Task {
+                        await onLogin()
+                    }
                 } label : {
                     Text("Log in")
                         .filledButton(.primary)
@@ -115,6 +131,10 @@ extension LoginView {
     }
 }
 
+// MARK: - Preview
+
 #Preview {
-    LoginView()
+    LoginView(onLogin: {
+        await Task.yield()
+    })
 }
