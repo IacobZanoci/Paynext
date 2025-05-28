@@ -20,14 +20,14 @@ public enum FilledButtonStyle {
         case .secondary:
             return Color.Paynext.primaryButton.opacity(0.15)
         case .destructive:
-            return Color.Paynext.destructiveButton
+            return Color.Paynext.primaryButton
         }
     }
     
     var textColor: Color {
         switch self {
         case .primary:
-            return Color.Paynext.contrastText
+            return Color.Paynext.accentText
         case .secondary:
             return Color.Paynext.accentText
         case .destructive:
@@ -36,7 +36,7 @@ public enum FilledButtonStyle {
     }
     
     var font: Font {
-        .Paynext.footnote
+        .Paynext.bodyMedium
     }
 }
 
@@ -46,12 +46,11 @@ public struct FilledButtonView: ViewModifier {
     
     public func body(content: Content) -> some View {
         content
-            .frame(height: 36)
-            .padding(.vertical, .extraSmall)
+            .padding(.vertical, .medium)
             .frame(maxWidth: .infinity)
             .background(style.backgroundColor)
             .foregroundStyle(style.textColor)
-            .clippedRoundedCorners(40)
+            .clippedRoundedCorners(16)
             .font(style.font)
     }
 }

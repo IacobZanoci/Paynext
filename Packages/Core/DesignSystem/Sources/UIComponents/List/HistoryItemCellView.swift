@@ -69,7 +69,7 @@ public struct HistoryItemCellView: View {
                 .foregroundStyle(transactionType.color)
         }
         .padding()
-        .background(Color.Paynext.contrast)
+        .background(Color.Paynext.background)
         .clippedRoundedCorners(24)
     }
 }

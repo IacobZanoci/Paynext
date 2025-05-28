@@ -19,6 +19,11 @@ public extension Font {
         /// Equivalent to the system font with a `32.0` size.
         public static let title = Font.system(size: 32.0)
         
+        /// Medium Font used for title elements.
+        ///
+        /// Equivalent to the system font with a `32.0` size, with a `medium` weight.
+        public static let titleMedium = Font.system(size: 32.0, weight: .medium)
+        
         /// Bold font used for title elements.
         ///
         /// Equivalent to the system font with a `32.0` size, with a `bold` weight.
@@ -30,6 +35,11 @@ public extension Font {
         ///
         /// Equivalent to the system font with a `24.0` size.
         public static let headline = Font.system(size: 24.0)
+        
+        /// Medium font used for headline elements.
+        ///
+        /// Equivalent to the system font with a `24.0` size, with a `medium` weight.
+        public static let headlineMedium = Font.system(size: 24.0, weight: .medium)
         
         /// Bold font used for headline elements.
         ///
@@ -54,6 +64,11 @@ public extension Font {
         ///
         /// Equivalent to the system font with a `16.0` size.
         public static let body = Font.system(size: 16.0)
+        
+        /// Medium font used for body elements.
+        ///
+        /// Equivalent to the system font with a `16.0` size, with a `medium` weight.
+        public static let bodyMedium = Font.system(size: 16.0, weight: .medium)
         
         /// Bold font used for body elements.
         ///

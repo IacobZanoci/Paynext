@@ -20,8 +20,11 @@ public extension Color {
         /// The secondary background color of the application. Success or Failure Transaction Views.
         public static let secondaryBackground = Color("secondaryBackgroundColor", bundle: .module)
         
-        /// The stroke background color of the application. // contrastColor
+        /// The stroke background color of the application.
         public static let strokeBackground = Color("strokeBackgroundColor", bundle: .module)
+        
+        /// The error stroke background color of the application.
+        public static let errorStrokeBackground = Color("errorStrokeBackgroundColor", bundle: .module)
         
         // MARK: - Button
         
@@ -35,6 +38,9 @@ public extension Color {
         public static let tertiaryButton = Color("tertiaryButtonColor", bundle: .module)
         
         // MARK: - Text
+        
+        /// The color used for appName text elements.
+        public static let appNameText = Color("appNameTextColor", bundle: .module)
         
         /// The color used for primary text elements.
         public static let primaryText = Color("primaryTextColor", bundle: .module)
