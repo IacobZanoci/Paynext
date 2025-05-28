@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct PaynextApp: App {
+    
+    @StateObject private var appCoordinator = AppCoordinator()
+    
     var body: some Scene {
         WindowGroup {
-            MainView()
+            AppRootView()
         }
     }
 }

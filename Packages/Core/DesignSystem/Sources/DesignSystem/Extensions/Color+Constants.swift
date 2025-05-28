@@ -6,6 +6,25 @@
 //
 
 import SwiftUI
+import UIKit
+
+public extension UIColor {
+    
+    /// The color scheme used in the Paynext app's TabBar.
+    enum Paynext {
+        
+        // MARK: - TabBar
+        
+        /// The TabBar background color.
+        public static let tabBarBackground = UIColor(named: "tabBarBackgroundColor", in: .module, compatibleWith: nil) ?? UIColor.systemBackground
+        
+        /// The `selected` TabBar item background color.
+        public static let selectedTabBar = UIColor(named: "selectedTabBarColor", in: .module, compatibleWith: nil) ?? UIColor.systemGray2
+        
+        /// The `normal` TabBar item background color.
+        public static let normalTabBar = UIColor(named: "normalTabBarColor", in: .module, compatibleWith: nil) ?? UIColor.secondaryLabel
+    }
+}
 
 public extension Color {
     
