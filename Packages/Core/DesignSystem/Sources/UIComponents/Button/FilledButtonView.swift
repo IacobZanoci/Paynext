@@ -43,34 +43,38 @@ public enum FilledButtonStyle {
 public struct FilledButtonView: ViewModifier {
     
     let style: FilledButtonStyle
+    @Binding public var isButtonDisabled: Bool
     
     public func body(content: Content) -> some View {
         content
             .padding(.vertical, .medium)
             .frame(maxWidth: .infinity)
             .background(style.backgroundColor)
-            .foregroundStyle(style.textColor)
+            .foregroundStyle(isButtonDisabled ? style.textColor.opacity(0.4) : style.textColor)
             .clippedRoundedCorners(16)
             .font(style.font)
     }
 }
 
 public extension View {
-    func filledButton(_ style: FilledButtonStyle) -> some View {
-        modifier(FilledButtonView(style: style))
+    func filledButton(_ style: FilledButtonStyle, isDisabled: Binding<Bool>) -> some View {
+        modifier(FilledButtonView(style: style, isButtonDisabled: isDisabled))
     }
 }
 
 #Preview {
     VStack(spacing: 16) {
         Button("Log in") {}
-            .filledButton(.primary)
+            .filledButton(.primary, isDisabled: .constant(false))
+        
+        Button("Log in") {}
+            .filledButton(.primary, isDisabled: .constant(true))
         
         Button("Save Preset") {}
-            .filledButton(.secondary)
+            .filledButton(.secondary, isDisabled: .constant(false))
         
         Button("Log Out") {}
-            .filledButton(.destructive)
+            .filledButton(.destructive, isDisabled: .constant(false))
     }
     .padding(.horizontal)
 }
