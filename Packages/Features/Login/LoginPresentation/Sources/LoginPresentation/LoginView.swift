@@ -10,24 +10,18 @@ import Combine
 import DesignSystem
 import UIComponents
 
-public struct LoginView: View {
+public struct LoginView<ViewModel: LoginViewModelProtocol>: View {
     
     // MARK: - Properties
     
-    @State private var username: String = ""
-    @State private var accountNumber: String = ""
-    @State private var routingNumber: String = ""
+    @ObservedObject var viewModel: ViewModel
     @State private var keyboardVisible: Bool = false
     @State private var showForm: Bool = false
     
-    private let onLogin: () async -> Void
-    
     // MARK: - Initializers
     
-    public init (
-        onLogin: @escaping () async -> Void
-    ) {
-        self.onLogin = onLogin
+    public init(viewModel: ViewModel) {
+        self.viewModel = viewModel
     }
     
     // MARK: - Login View
@@ -91,31 +85,29 @@ extension LoginView {
                         Text("Username")
                             .font(.Paynext.bodyBold)
                             .foregroundStyle(Color.Paynext.primaryText)
-                        RoundedTextFieldView(text: $username, placeholder: "Enter name and surname")
+                        RoundedTextFieldView(text: $viewModel.userName, placeholder: "Enter name and surname", isValid: $viewModel.usernameValidationState)
                     }
                     
                     VStack(alignment: .leading, spacing: 12) {
                         Text("Account number")
                             .font(.Paynext.bodyBold)
                             .foregroundStyle(Color.Paynext.primaryText)
-                        RoundedTextFieldView(text: $accountNumber, placeholder: "Enter account number")
+                        RoundedTextFieldView(text: $viewModel.accountNumber, placeholder: "Enter account number", isValid: $viewModel.accountNumberValidationState)
                     }
                     
                     VStack(alignment: .leading, spacing: 12) {
                         Text("Routing number")
                             .font(.Paynext.bodyBold)
                             .foregroundStyle(Color.Paynext.primaryText)
-                        RoundedTextFieldView(text: $routingNumber, placeholder: "Enter routing number")
+                        RoundedTextFieldView(text: $viewModel.routingNumber, placeholder: "Enter routing number", isValid: $viewModel.routingNumberValidationState)
                     }
                 }
                 
                 Button {
-                    Task {
-                        await onLogin()
-                    }
+                    viewModel.onLogin()
                 } label : {
                     Text("Log in")
-                        .filledButton(.primary)
+                        .filledButton(.primary, isDisabled: $viewModel.isLoginDisabled)
                 }
                 .padding(.top, 50)
             }
@@ -129,12 +121,4 @@ extension LoginView {
         .padding(.top, keyboardVisible ? 60 : 340)
         .animation(.easeInOut(duration: 0.2), value: keyboardVisible)
     }
-}
-
-// MARK: - Preview
-
-#Preview {
-    LoginView(onLogin: {
-        await Task.yield()
-    })
 }

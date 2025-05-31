@@ -12,16 +12,16 @@ public struct RoundedTextFieldView: View {
     
     @Binding public var text: String
     public var placeholder: String
-    public var isValid: Bool
+    @Binding public var isValid: Bool
     
     public init(
         text: Binding<String>,
         placeholder: String,
-        isValid: Bool = true
+        isValid: Binding<Bool>
     ) {
         self._text = text
         self.placeholder = placeholder
-        self.isValid = isValid
+        self._isValid = isValid
     }
     
     public var body: some View {
@@ -59,9 +59,18 @@ public struct RoundedTextFieldView: View {
 }
 
 #Preview {
-    RoundedTextFieldView(
-        text: .constant(""),
-        placeholder: "Name and Surname"
-    )
+    VStack(spacing: 16) {
+        RoundedTextFieldView(
+            text: .constant(""),
+            placeholder: "Name and Surname",
+            isValid: .constant(true)
+        )
+        
+        RoundedTextFieldView(
+            text: .constant(""),
+            placeholder: "Name and Surname",
+            isValid: .constant(false)
+        )
+    }
     .padding()
 }
