@@ -11,9 +11,7 @@ public enum UserDefaultsKey: String {
     
     // MARK: - User Credentials
     
-    case username
-    case accountNumber
-    case routingNumber
+    case paynextUser
     
     // MARK: - App appearance
     
