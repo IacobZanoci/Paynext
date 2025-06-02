@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import Persistance
+import LoginDomain
 
 public class LoginViewModel: LoginViewModelProtocol {
     
@@ -15,6 +17,8 @@ public class LoginViewModel: LoginViewModelProtocol {
     @Published public var usernameValidationState: Bool = true
     @Published public var accountNumberValidationState: Bool = true
     @Published public var routingNumberValidationState: Bool = true
+    private let persistentStorage: UserDefaultsManagerProtocol
+    private let onLogin: () async -> Void
     
     @Published public var userName: String = "" {
         didSet {
@@ -39,7 +43,13 @@ public class LoginViewModel: LoginViewModelProtocol {
     
     // MARK: - Initializers
     
-    public init() {}
+    public init(
+        persistentStorage: UserDefaultsManagerProtocol,
+        onLogin: @escaping () async -> Void
+    ) {
+        self.persistentStorage = persistentStorage
+        self.onLogin = onLogin
+    }
     
     // MARK: - Methods
     
@@ -77,7 +87,22 @@ public class LoginViewModel: LoginViewModelProtocol {
         }
     }
     
-    public func onLogin() {
+    private func saveUser(_ user: PaynextUser) {
+        persistentStorage.save(value: user, forKey: .paynextUser)
+    }
+    
+    // MARK: - Events
+    
+    public func onLogin() async {
         print("Tapped `Log in` button")
+        
+        let user = PaynextUser(
+            userName: userName,
+            accountNumber: accountNumber,
+            routingNumber: routingNumber
+        )
+        saveUser(user)
+        
+        await onLogin()
     }
 }

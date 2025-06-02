@@ -104,7 +104,9 @@ extension LoginView {
                 }
                 
                 Button {
-                    viewModel.onLogin()
+                    Task {
+                        await viewModel.onLogin()
+                    }
                 } label : {
                     Text("Log in")
                         .filledButton(.primary, isDisabled: $viewModel.isLoginDisabled)

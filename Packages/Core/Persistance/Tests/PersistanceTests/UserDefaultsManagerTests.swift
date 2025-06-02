@@ -13,7 +13,7 @@ final class UserDefaultsManagerTests: XCTestCase {
     // MARK: - Test Setup
     
     var sut: UserDefaultsManager!
-    var testKey = "paynextKey"
+    var testKey: UserDefaultsKey = .paynextUser
     
     override func setUp() {
         super.setUp()

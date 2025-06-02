@@ -7,6 +7,7 @@
 
 import SwiftUI
 import LoginPresentation
+import Persistance
 
 /// A top-level coordinator that manages app-wide navigation flows.
 final class AppCoordinator: Coordinator, ObservableObject {
@@ -53,11 +54,16 @@ final class AppCoordinator: Coordinator, ObservableObject {
     }
     
     /// Builds and returns the view associated with a given app route.
-    @ViewBuilder
+    @MainActor @ViewBuilder
     func view(route: AppRoute) -> some View {
         switch route {
         case .login:
-            LoginView(onLogin: { await self.handleLogin() })
+            LoginView(
+                viewModel: LoginViewModel(
+                    persistentStorage: UserDefaultsManager(),
+                    onLogin: { await self.handleLogin() }
+                )
+            )
             
         case .main:
             MainView()

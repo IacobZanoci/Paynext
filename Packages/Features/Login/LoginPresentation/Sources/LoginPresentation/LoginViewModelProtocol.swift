@@ -7,6 +7,7 @@
 
 import Foundation
 
+@MainActor
 public protocol LoginViewModelProtocol: ObservableObject {
     
     // MARK: - Properties
@@ -21,5 +22,5 @@ public protocol LoginViewModelProtocol: ObservableObject {
     
     // MARK: - Methods
     
-    func onLogin()
+    func onLogin() async
 }

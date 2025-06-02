@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4225EBB12DEB4DD500CC9C6A /* LoginDomain in Frameworks */ = {isa = PBXBuildFile; productRef = 4225EBB02DEB4DD500CC9C6A /* LoginDomain */; };
 		4243BB632DE1D4B500CA1504 /* Persistance in Frameworks */ = {isa = PBXBuildFile; productRef = 4243BB622DE1D4B500CA1504 /* Persistance */; };
 		4243BB922DE7707900CA1504 /* LoginPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = 4243BB912DE7707900CA1504 /* LoginPresentation */; };
 		42A0D43D2DD6596200566812 /* NetworkClient in Frameworks */ = {isa = PBXBuildFile; productRef = 42A0D43C2DD6596200566812 /* NetworkClient */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4225EBAF2DEB4D3A00CC9C6A /* LoginDomain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LoginDomain; sourceTree = "<group>"; };
 		4239625E2DCFD85800F32002 /* Paynext.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Paynext.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4243BB582DE1CED900CA1504 /* Persistance */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Persistance; sourceTree = "<group>"; };
 		4243BB902DE7692000CA1504 /* LoginPresentation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LoginPresentation; sourceTree = "<group>"; };
@@ -48,6 +50,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4225EBB12DEB4DD500CC9C6A /* LoginDomain in Frameworks */,
 				4243BB632DE1D4B500CA1504 /* Persistance in Frameworks */,
 				4243BB922DE7707900CA1504 /* LoginPresentation in Frameworks */,
 				42A0D45D2DD7B66E00566812 /* UIComponents in Frameworks */,
@@ -88,6 +91,7 @@
 		4243BB8F2DE768E800CA1504 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				4225EBAF2DEB4D3A00CC9C6A /* LoginDomain */,
 				4243BB902DE7692000CA1504 /* LoginPresentation */,
 			);
 			path = Login;
@@ -144,6 +148,7 @@
 				42A0D45C2DD7B66E00566812 /* UIComponents */,
 				4243BB622DE1D4B500CA1504 /* Persistance */,
 				4243BB912DE7707900CA1504 /* LoginPresentation */,
+				4225EBB02DEB4DD500CC9C6A /* LoginDomain */,
 			);
 			productName = Paynext;
 			productReference = 4239625E2DCFD85800F32002 /* Paynext.app */;
@@ -417,6 +422,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		4225EBB02DEB4DD500CC9C6A /* LoginDomain */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LoginDomain;
+		};
 		4243BB622DE1D4B500CA1504 /* Persistance */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Persistance;

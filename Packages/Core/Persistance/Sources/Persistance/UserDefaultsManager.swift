@@ -7,11 +7,11 @@
 
 import Foundation
 
-final class UserDefaultsManager {
+public class UserDefaultsManager: UserDefaultsManagerProtocol {
     
     // MARK: - Properties
     
-    @MainActor static let shared = UserDefaultsManager()
+    @MainActor static public let shared = UserDefaultsManager()
     private let defaults = UserDefaults.standard
     
     // MARK: - Inititalizers
@@ -20,14 +20,19 @@ final class UserDefaultsManager {
     
     // MARK: - Save
     
-    public func save<T>(value: T, forKey key: UserDefaultsKey) {
-        defaults.set(value, forKey: key.rawValue)
+    public func save<T: Codable>(value: T, forKey key: UserDefaultsKey) {
+        let encoder = JSONEncoder()
+        if let data = try? encoder.encode(value) {
+            defaults.set(data, forKey: key.rawValue)
+        }
     }
     
     // MARK: - Read
     
-    public func get<T>(forKey key: UserDefaultsKey) -> T? {
-        return defaults.value(forKey: key.rawValue) as? T
+    public func get<T: Codable>(forKey key: UserDefaultsKey) -> T? {
+        guard let data = defaults.data(forKey: key.rawValue) else { return nil }
+        let decoder = JSONDecoder()
+        return try? decoder.decode(T.self, from: data)
     }
     
     // MARK: - Remove
