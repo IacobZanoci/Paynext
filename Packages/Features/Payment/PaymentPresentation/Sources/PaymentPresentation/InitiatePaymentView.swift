@@ -9,7 +9,7 @@ import SwiftUI
 import DesignSystem
 import UIComponents
 
-struct InitiatePaymentView<ViewModel: PaymentViewModelProtocol>: View {
+public struct InitiatePaymentView<ViewModel: PaymentViewModelProtocol>: View {
     
     // MARK: - Properties
     
@@ -21,7 +21,7 @@ struct InitiatePaymentView<ViewModel: PaymentViewModelProtocol>: View {
     
     // MARK: - View
     
-    var body: some View {
+    public var body: some View {
         ZStack {
             Color.Paynext.background.ignoresSafeArea()
             

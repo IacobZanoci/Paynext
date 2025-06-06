@@ -7,8 +7,9 @@
 
 import SwiftUI
 import DesignSystem
+import PaymentPresentation
 
-struct MainView: View {
+struct MainTabView: View {
     
     // MARK: - Properties
     
@@ -84,7 +85,7 @@ struct MainView: View {
             // MARK: - Payment TabBar View
             
             NavigationStack(path: $paymentCoordinator.navigationPath) {
-                EmptyView()
+                InitiatePaymentView(vm: PaymentViewModel())
                     .navigationDestination(for: AppRoute.self) { route in
                         paymentCoordinator.view(route: route)
                     }
@@ -116,5 +117,5 @@ struct MainView: View {
 
 
 #Preview {
-    MainView()
+    MainTabView()
 }
