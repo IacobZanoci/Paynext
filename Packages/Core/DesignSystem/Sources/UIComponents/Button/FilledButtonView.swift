@@ -11,15 +11,18 @@ import SwiftUI
 public enum FilledButtonStyle {
     case primary
     case secondary
-    case destructive
+    case tertiary
+    case quartenary
     
     var backgroundColor: Color {
         switch self {
         case .primary:
             return Color.Paynext.primaryButton
         case .secondary:
-            return Color.Paynext.primaryButton.opacity(0.15)
-        case .destructive:
+            return Color.Paynext.primaryButton.opacity(0.5)
+        case .tertiary:
+            return Color.Paynext.primaryButton
+        case .quartenary:
             return Color.Paynext.primaryButton
         }
     }
@@ -30,8 +33,23 @@ public enum FilledButtonStyle {
             return Color.Paynext.accentText
         case .secondary:
             return Color.Paynext.accentText
-        case .destructive:
+        case .tertiary:
+            return Color.Paynext.primaryText
+        case .quartenary:
             return Color.Paynext.contrastText
+        }
+    }
+    
+    var radius: CGFloat {
+        switch self {
+        case .primary:
+            return CGFloat.medium
+        case .secondary:
+            return CGFloat.medium
+        case .tertiary:
+            return CGFloat.medium
+        case .quartenary:
+            return CGFloat.extraSmall
         }
     }
     
@@ -50,8 +68,8 @@ public struct FilledButtonView: ViewModifier {
             .padding(.vertical, .medium)
             .frame(maxWidth: .infinity)
             .background(style.backgroundColor)
-            .foregroundStyle(isButtonDisabled ? style.textColor.opacity(0.4) : style.textColor)
-            .clippedRoundedCorners(16)
+            .foregroundStyle(style.textColor)
+            .clippedRoundedCorners(style.radius)
             .font(style.font)
     }
 }
@@ -67,14 +85,14 @@ public extension View {
         Button("Log in") {}
             .filledButton(.primary, isDisabled: .constant(false))
         
-        Button("Log in") {}
-            .filledButton(.primary, isDisabled: .constant(true))
-        
         Button("Save Preset") {}
             .filledButton(.secondary, isDisabled: .constant(false))
         
+        Button("Save Preset") {}
+            .filledButton(.tertiary, isDisabled: .constant(false))
+        
         Button("Log Out") {}
-            .filledButton(.destructive, isDisabled: .constant(false))
+            .filledButton(.quartenary, isDisabled: .constant(false))
     }
     .padding(.horizontal)
 }

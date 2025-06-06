@@ -66,7 +66,7 @@ final class AppCoordinator: Coordinator, ObservableObject {
             )
             
         case .main:
-            MainView()
+            MainTabView()
         }
     }
 }
