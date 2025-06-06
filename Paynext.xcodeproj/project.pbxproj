@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4225EBB12DEB4DD500CC9C6A /* LoginDomain in Frameworks */ = {isa = PBXBuildFile; productRef = 4225EBB02DEB4DD500CC9C6A /* LoginDomain */; };
+		4225EC942DF3636500CC9C6A /* PaymentPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = 4225EC932DF3636500CC9C6A /* PaymentPresentation */; };
 		4243BB632DE1D4B500CA1504 /* Persistance in Frameworks */ = {isa = PBXBuildFile; productRef = 4243BB622DE1D4B500CA1504 /* Persistance */; };
 		4243BB922DE7707900CA1504 /* LoginPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = 4243BB912DE7707900CA1504 /* LoginPresentation */; };
 		42A0D43D2DD6596200566812 /* NetworkClient in Frameworks */ = {isa = PBXBuildFile; productRef = 42A0D43C2DD6596200566812 /* NetworkClient */; };
@@ -17,6 +18,7 @@
 
 /* Begin PBXFileReference section */
 		4225EBAF2DEB4D3A00CC9C6A /* LoginDomain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LoginDomain; sourceTree = "<group>"; };
+		4225EC922DF34AC600CC9C6A /* PaymentPresentation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PaymentPresentation; sourceTree = "<group>"; };
 		4239625E2DCFD85800F32002 /* Paynext.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Paynext.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4243BB582DE1CED900CA1504 /* Persistance */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Persistance; sourceTree = "<group>"; };
 		4243BB902DE7692000CA1504 /* LoginPresentation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LoginPresentation; sourceTree = "<group>"; };
@@ -50,6 +52,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4225EC942DF3636500CC9C6A /* PaymentPresentation in Frameworks */,
 				4225EBB12DEB4DD500CC9C6A /* LoginDomain in Frameworks */,
 				4243BB632DE1D4B500CA1504 /* Persistance in Frameworks */,
 				4243BB922DE7707900CA1504 /* LoginPresentation in Frameworks */,
@@ -62,6 +65,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4225EC912DF34A5D00CC9C6A /* Payment */ = {
+			isa = PBXGroup;
+			children = (
+				4225EC922DF34AC600CC9C6A /* PaymentPresentation */,
+			);
+			path = Payment;
+			sourceTree = "<group>";
+		};
 		423962552DCFD85800F32002 = {
 			isa = PBXGroup;
 			children = (
@@ -83,6 +94,7 @@
 		4243BB8E2DE768DB00CA1504 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				4225EC912DF34A5D00CC9C6A /* Payment */,
 				4243BB8F2DE768E800CA1504 /* Login */,
 			);
 			path = Features;
@@ -149,6 +161,7 @@
 				4243BB622DE1D4B500CA1504 /* Persistance */,
 				4243BB912DE7707900CA1504 /* LoginPresentation */,
 				4225EBB02DEB4DD500CC9C6A /* LoginDomain */,
+				4225EC932DF3636500CC9C6A /* PaymentPresentation */,
 			);
 			productName = Paynext;
 			productReference = 4239625E2DCFD85800F32002 /* Paynext.app */;
@@ -425,6 +438,10 @@
 		4225EBB02DEB4DD500CC9C6A /* LoginDomain */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = LoginDomain;
+		};
+		4225EC932DF3636500CC9C6A /* PaymentPresentation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PaymentPresentation;
 		};
 		4243BB622DE1D4B500CA1504 /* Persistance */ = {
 			isa = XCSwiftPackageProductDependency;
