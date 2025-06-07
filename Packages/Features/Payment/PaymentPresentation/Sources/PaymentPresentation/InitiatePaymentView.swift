@@ -69,7 +69,7 @@ extension InitiatePaymentView {
                 Image(systemName: "wallet.bifold.fill")
                     .resizable()
                     .scaledToFit()
-                    .foregroundStyle(Color.Paynext.contrastText)
+                    .foregroundStyle(Color.Paynext.accentText)
                     .frame(width: 20, height: 20)
                     .padding(10)
                     .background(
@@ -166,7 +166,7 @@ extension InitiatePaymentView {
                 // TODO: - Proceed Transaction
             } label: {
                 Text("Start Proceeding")
-                    .filledButton(.quartenary, isDisabled: .constant(true))
+                    .filledButton(.quartenary)
             }
         }
         .padding(.top, 40)
