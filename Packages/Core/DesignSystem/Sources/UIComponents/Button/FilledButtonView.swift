@@ -13,17 +13,20 @@ public enum FilledButtonStyle {
     case secondary
     case tertiary
     case quartenary
+    case error
     
     var backgroundColor: Color {
         switch self {
         case .primary:
             return Color.Paynext.primaryButton
         case .secondary:
-            return Color.Paynext.primaryButton.opacity(0.5)
+            return Color.Paynext.accentText
         case .tertiary:
             return Color.Paynext.primaryButton
         case .quartenary:
             return Color.Paynext.primaryButton
+        case .error:
+            return Color.Paynext.secondaryText
         }
     }
     
@@ -32,11 +35,29 @@ public enum FilledButtonStyle {
         case .primary:
             return Color.Paynext.accentText
         case .secondary:
-            return Color.Paynext.accentText
+            return Color.Paynext.incomeText
         case .tertiary:
             return Color.Paynext.primaryText
         case .quartenary:
-            return Color.Paynext.contrastText
+            return Color.Paynext.accentText
+        case .error:
+            return Color.Paynext.accentText
+        }
+    }
+    
+    var strokeColor: Color {
+        switch self {
+            
+        case .primary:
+            return Color.Paynext.primaryButton
+        case .secondary:
+            return Color.Paynext.incomeText
+        case .tertiary:
+            return Color.Paynext.primaryButton
+        case .quartenary:
+            return Color.Paynext.primaryButton
+        case .error:
+            return Color.Paynext.secondaryText
         }
     }
     
@@ -50,6 +71,8 @@ public enum FilledButtonStyle {
             return CGFloat.medium
         case .quartenary:
             return CGFloat.extraSmall
+        case .error:
+            return CGFloat.extraSmall
         }
     }
     
@@ -61,7 +84,7 @@ public enum FilledButtonStyle {
 public struct FilledButtonView: ViewModifier {
     
     let style: FilledButtonStyle
-    @Binding public var isButtonDisabled: Bool
+    var isButtonDisabled: Bool
     
     public func body(content: Content) -> some View {
         content
@@ -71,11 +94,17 @@ public struct FilledButtonView: ViewModifier {
             .foregroundStyle(style.textColor)
             .clippedRoundedCorners(style.radius)
             .font(style.font)
+            .background(
+                RoundedRectangle(cornerRadius: style.radius)
+                    .stroke(
+                        Color(style.strokeColor), lineWidth: 1
+                    )
+            )
     }
 }
 
 public extension View {
-    func filledButton(_ style: FilledButtonStyle, isDisabled: Binding<Bool>) -> some View {
+    func filledButton(_ style: FilledButtonStyle, isDisabled: Bool = false) -> some View {
         modifier(FilledButtonView(style: style, isButtonDisabled: isDisabled))
     }
 }
@@ -83,16 +112,19 @@ public extension View {
 #Preview {
     VStack(spacing: 16) {
         Button("Log in") {}
-            .filledButton(.primary, isDisabled: .constant(false))
+            .filledButton(.primary)
         
         Button("Save Preset") {}
-            .filledButton(.secondary, isDisabled: .constant(false))
+            .filledButton(.secondary)
         
         Button("Save Preset") {}
-            .filledButton(.tertiary, isDisabled: .constant(false))
+            .filledButton(.tertiary)
         
         Button("Log Out") {}
-            .filledButton(.quartenary, isDisabled: .constant(false))
+            .filledButton(.quartenary)
+        
+        Button("Review payment details") {}
+            .filledButton(.error)
     }
     .padding(.horizontal)
 }

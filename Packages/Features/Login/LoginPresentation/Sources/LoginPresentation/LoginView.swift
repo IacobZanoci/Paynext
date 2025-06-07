@@ -109,7 +109,7 @@ extension LoginView {
                     }
                 } label : {
                     Text("Log in")
-                        .filledButton(.primary, isDisabled: $viewModel.isLoginDisabled)
+                        .filledButton(.primary, isDisabled: $viewModel.isLoginDisabled.wrappedValue)
                 }
                 .padding(.top, 50)
             }

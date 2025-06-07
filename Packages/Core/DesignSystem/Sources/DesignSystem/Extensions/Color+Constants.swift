@@ -81,5 +81,8 @@ public extension Color {
         
         /// The color used for income state representation.
         public static let incomeText = Color("incomeTextColor", bundle: .module)
+        
+        /// The color used for success state representation.
+        public static let successfullyText = Color("successfullyTextColor", bundle: .module)
     }
 }
