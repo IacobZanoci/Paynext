@@ -8,6 +8,7 @@
 import Foundation
 import Persistance
 import LoginDomain
+import CredentialsValidator
 
 public class LoginViewModel: LoginViewModelProtocol {
     
@@ -18,6 +19,7 @@ public class LoginViewModel: LoginViewModelProtocol {
     @Published public var accountNumberValidationState: Bool = true
     @Published public var routingNumberValidationState: Bool = true
     private let persistentStorage: UserDefaultsManagerProtocol
+    private let credentialsValidator: CredentialsValidatorProtocol
     private let onLogin: () async -> Void
     
     @Published public var userName: String = "" {
@@ -45,16 +47,18 @@ public class LoginViewModel: LoginViewModelProtocol {
     
     public init(
         persistentStorage: UserDefaultsManagerProtocol,
-        onLogin: @escaping () async -> Void
+        onLogin: @escaping () async -> Void,
+        credentialsValidator: CredentialsValidatorProtocol
     ) {
         self.persistentStorage = persistentStorage
         self.onLogin = onLogin
+        self.credentialsValidator = credentialsValidator
     }
     
     // MARK: - Methods
     
     private func validateUserName() {
-        if userName.isEmpty || LoginValidator.isUserNameValid(userName) {
+        if userName.isEmpty || credentialsValidator.isNameValid(userName) {
             usernameValidationState = true
         } else {
             usernameValidationState = false
@@ -62,7 +66,7 @@ public class LoginViewModel: LoginViewModelProtocol {
     }
     
     private func validateAccountNumber() {
-        if accountNumber.isEmpty || LoginValidator.isAccountNumberValid(accountNumber) {
+        if accountNumber.isEmpty || credentialsValidator.isAccountNumberValid(accountNumber) {
             accountNumberValidationState = true
         } else {
             accountNumberValidationState = false
@@ -70,7 +74,7 @@ public class LoginViewModel: LoginViewModelProtocol {
     }
     
     private func validateRoutingNumber() {
-        if routingNumber.isEmpty || LoginValidator.isRoutingNumberValid(routingNumber) {
+        if routingNumber.isEmpty || credentialsValidator.isRoutingNumberValid(routingNumber) {
             routingNumberValidationState = true
         } else {
             routingNumberValidationState = false
@@ -78,9 +82,9 @@ public class LoginViewModel: LoginViewModelProtocol {
     }
     
     private func updateLoginButtonState() {
-        if LoginValidator.isUserNameValid(userName) &&
-            LoginValidator.isAccountNumberValid(accountNumber) &&
-            LoginValidator.isRoutingNumberValid(routingNumber) {
+        if credentialsValidator.isNameValid(userName) &&
+            credentialsValidator.isAccountNumberValid(accountNumber) &&
+            credentialsValidator.isRoutingNumberValid(routingNumber) {
             isLoginDisabled = false
         } else {
             isLoginDisabled = true

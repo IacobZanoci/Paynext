@@ -14,6 +14,7 @@
 		42A0D43D2DD6596200566812 /* NetworkClient in Frameworks */ = {isa = PBXBuildFile; productRef = 42A0D43C2DD6596200566812 /* NetworkClient */; };
 		42A0D45B2DD7AA7100566812 /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 42A0D45A2DD7AA7100566812 /* DesignSystem */; };
 		42A0D45D2DD7B66E00566812 /* UIComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 42A0D45C2DD7B66E00566812 /* UIComponents */; };
+		42BF1D072DF589170058C328 /* CredentialsValidator in Frameworks */ = {isa = PBXBuildFile; productRef = 42BF1D062DF589170058C328 /* CredentialsValidator */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +54,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42BF1D072DF589170058C328 /* CredentialsValidator in Frameworks */,
 				4225EC942DF3636500CC9C6A /* PaymentPresentation in Frameworks */,
 				4225EBB12DEB4DD500CC9C6A /* LoginDomain in Frameworks */,
 				4243BB632DE1D4B500CA1504 /* Persistance in Frameworks */,
@@ -164,6 +166,7 @@
 				4243BB912DE7707900CA1504 /* LoginPresentation */,
 				4225EBB02DEB4DD500CC9C6A /* LoginDomain */,
 				4225EC932DF3636500CC9C6A /* PaymentPresentation */,
+				42BF1D062DF589170058C328 /* CredentialsValidator */,
 			);
 			productName = Paynext;
 			productReference = 4239625E2DCFD85800F32002 /* Paynext.app */;
@@ -464,6 +467,10 @@
 		42A0D45C2DD7B66E00566812 /* UIComponents */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = UIComponents;
+		};
+		42BF1D062DF589170058C328 /* CredentialsValidator */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CredentialsValidator;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
