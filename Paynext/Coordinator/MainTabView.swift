@@ -8,6 +8,7 @@
 import SwiftUI
 import DesignSystem
 import PaymentPresentation
+import CredentialsValidator
 
 struct MainTabView: View {
     
@@ -17,6 +18,9 @@ struct MainTabView: View {
     @StateObject private var historyCoordinator = AppCoordinator()
     @StateObject private var paymentCoordinator = AppCoordinator()
     @StateObject private var accountCoordinator = AppCoordinator()
+    @StateObject private var paymentVM = PaymentViewModel(
+        credentialsValidator: CredentialsValidator()
+    )
     
     @State private var selectedTab = 0
     
@@ -85,11 +89,14 @@ struct MainTabView: View {
             // MARK: - Payment TabBar View
             
             NavigationStack(path: $paymentCoordinator.navigationPath) {
-                InitiatePaymentView(vm: PaymentViewModel())
-                    .navigationDestination(for: AppRoute.self) { route in
-                        paymentCoordinator.view(route: route)
-                    }
-                    .environmentObject(paymentCoordinator)
+                InitiatePaymentView(
+                    vm: paymentVM,
+                    onResetToStart: { paymentVM.paymentState = nil }
+                )
+                .navigationDestination(for: AppRoute.self) { route in
+                    paymentCoordinator.view(route: route)
+                }
+                .environmentObject(paymentCoordinator)
             }
             .tabItem {
                 Image(systemName: selectedTab == 0 ? "creditcard.fill" : "creditcard")

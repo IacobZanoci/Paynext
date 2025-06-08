@@ -14,7 +14,8 @@ let package = Package(
     dependencies: [
         .package(path: "../../Core/DesignSystem"),
         .package(path: "../../Core/Persistance"),
-        .package(path: "../LoginDomain")
+        .package(path: "../LoginDomain"),
+        .package(path: "../../CredentialsValidator")
     ],
     targets: [
         .target(
@@ -23,7 +24,8 @@ let package = Package(
                 .product(name: "DesignSystem", package: "DesignSystem"),
                 .product(name: "UIComponents", package: "DesignSystem"),
                 .product(name: "Persistance", package: "Persistance"),
-                .product(name: "LoginDomain", package: "LoginDomain")
+                .product(name: "LoginDomain", package: "LoginDomain"),
+                .product(name: "CredentialsValidator", package: "CredentialsValidator")
             ],
             resources: [
                 .process("Resources")
@@ -31,7 +33,10 @@ let package = Package(
         ),
         .testTarget(
             name: "LoginPresentationTests",
-            dependencies: ["LoginPresentation"]
+            dependencies: [
+                "LoginPresentation",
+                "CredentialsValidator"
+            ]
         ),
     ]
 )

@@ -8,9 +8,10 @@
 import SwiftUI
 import LoginPresentation
 import Persistance
+import CredentialsValidator
 
 /// A top-level coordinator that manages app-wide navigation flows.
-final class AppCoordinator: Coordinator, ObservableObject {
+public final class AppCoordinator: Coordinator, ObservableObject {
     
     // MARK: - Properties
     
@@ -36,7 +37,7 @@ final class AppCoordinator: Coordinator, ObservableObject {
     }
     
     /// Removes all pushed views but keeps the current root view.
-    func navigateToRoot() {
+    public func navigateToRoot() {
         navigationPath.removeLast(navigationPath.count)
     }
     
@@ -61,7 +62,8 @@ final class AppCoordinator: Coordinator, ObservableObject {
             LoginView(
                 viewModel: LoginViewModel(
                     persistentStorage: UserDefaultsManager(),
-                    onLogin: { await self.handleLogin() }
+                    onLogin: { await self.handleLogin() },
+                    credentialsValidator: CredentialsValidator()
                 )
             )
             

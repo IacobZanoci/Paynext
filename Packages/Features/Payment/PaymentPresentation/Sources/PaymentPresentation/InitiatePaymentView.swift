@@ -8,16 +8,27 @@
 import SwiftUI
 import DesignSystem
 import UIComponents
+import CredentialsValidator
 
 public struct InitiatePaymentView<ViewModel: PaymentViewModelProtocol>: View {
     
-    // MARK: - Properties
+    // MARK: - Dependencies
     
     @ObservedObject var vm: ViewModel
     
+    // MARK: - Properties
+    
+    public var onResetToStart: (() -> Void)?
+    
     // MARK: - Initializers
     
-    public init(vm: ViewModel) { self.vm = vm }
+    public init(
+        vm: ViewModel,
+        onResetToStart: (() -> Void)? = nil
+    ) {
+        self.vm = vm
+        self.onResetToStart = onResetToStart
+    }
     
     // MARK: - View
     
@@ -25,19 +36,28 @@ public struct InitiatePaymentView<ViewModel: PaymentViewModelProtocol>: View {
         ZStack {
             Color.Paynext.background.ignoresSafeArea()
             
-            VStack {
-                navigationTitle
-                
-                ScrollView {
-                    VStack {
-                        mainAccountOption
-                        paymentForm
-                        proceedButton
+            if let paymentState = vm.paymentState {
+                TransactionView(
+                    vm: .init(paymentState: paymentState),
+                    paymentVM: vm as! PaymentViewModel,
+                    onResetToStart: onResetToStart
+                )
+                .toolbar(.hidden, for: .tabBar)
+            } else {
+                VStack {
+                    navigationTitle
+                    
+                    ScrollView {
+                        VStack {
+                            mainAccountOption
+                            paymentForm
+                            proceedButton
+                        }
+                        .scrollIndicators(.hidden)
+                        .padding()
                     }
-                    .scrollIndicators(.hidden)
-                    .padding()
+                    Spacer()
                 }
-                Spacer()
             }
         }
     }
@@ -112,7 +132,7 @@ extension InitiatePaymentView {
                 RoundedTextFieldView(
                     text: $vm.accountNumber,
                     placeholder: vm.accountNumberPlaceholder,
-                    isValid: .constant(true),
+                    isValid: $vm.accountNumberValidationState,
                     radius: 6
                 )
             }
@@ -124,7 +144,7 @@ extension InitiatePaymentView {
                 RoundedTextFieldView(
                     text: $vm.routingNumber,
                     placeholder: vm.routingNumberPlaceholder,
-                    isValid: .constant(true),
+                    isValid: $vm.routingNumberValidationState,
                     radius: 6
                 )
             }
@@ -134,9 +154,9 @@ extension InitiatePaymentView {
                     .font(.Paynext.footnoteMedium)
                     .foregroundStyle(Color.Paynext.primaryText)
                 RoundedTextFieldView(
-                    text: $vm.payeeName,
+                    text: $vm.name,
                     placeholder: vm.payeeNamePlaceholder,
-                    isValid: .constant(true),
+                    isValid: $vm.nameValidationState,
                     radius: 6
                 )
             }
@@ -146,9 +166,9 @@ extension InitiatePaymentView {
                     .font(.Paynext.footnoteMedium)
                     .foregroundStyle(Color.Paynext.primaryText)
                 RoundedTextFieldView(
-                    text: $vm.amountRaw,
+                    text: $vm.amount,
                     placeholder: vm.amountPlaceholder,
-                    isValid: .constant(true),
+                    isValid: $vm.amountValidationState,
                     radius: 6,
                     leftIcon: "dollarsign"
                 )
@@ -163,11 +183,17 @@ extension InitiatePaymentView {
     private var proceedButton: some View {
         HStack {
             Button {
-                // TODO: - Proceed Transaction
+                Task { @MainActor [weak vm] in
+                    await vm?.onStartProceeding()
+                }
             } label: {
                 Text("Start Proceeding")
-                    .filledButton(.quartenary)
+                    .filledButton(
+                        .quartenary,
+                        isDisabled: $vm.isStartProceedingDisabled.wrappedValue
+                    )
             }
+            .disabled(vm.isStartProceedingDisabled)
         }
         .padding(.top, 40)
     }
@@ -175,6 +201,8 @@ extension InitiatePaymentView {
 
 #Preview {
     NavigationStack {
-        InitiatePaymentView<PaymentViewModel>(vm: PaymentViewModel())
+        InitiatePaymentView<PaymentViewModel>(
+            vm: PaymentViewModel(credentialsValidator: MockCredentialsValidator())
+        )
     }
 }
