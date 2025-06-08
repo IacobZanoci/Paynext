@@ -9,6 +9,7 @@ import SwiftUI
 import DesignSystem
 import PaymentPresentation
 import CredentialsValidator
+import TransactionHistoryPresentation
 
 struct MainTabView: View {
     
@@ -74,7 +75,7 @@ struct MainTabView: View {
             // MARK: - History TabBar View
             
             NavigationStack(path: $historyCoordinator.navigationPath) {
-                EmptyView()
+                TransactionHistoryView()
                     .navigationDestination(for: AppRoute.self) { route in
                         historyCoordinator.view(route: route)
                     }
