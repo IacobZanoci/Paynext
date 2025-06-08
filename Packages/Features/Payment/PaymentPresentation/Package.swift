@@ -12,14 +12,16 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(path: "../../Core/DesignSystem")
+        .package(path: "../../Core/DesignSystem"),
+        .package(path: "../../Core/CredentialsValidator")
     ],
     targets: [
         .target(
             name: "PaymentPresentation",
             dependencies: [
                 .product(name: "DesignSystem", package: "DesignSystem"),
-                .product(name: "UIComponents", package: "DesignSystem")
+                .product(name: "UIComponents", package: "DesignSystem"),
+                .product(name: "CredentialsValidator", package: "CredentialsValidator")
             ],
             resources: [
                 .process("Resources")

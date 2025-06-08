@@ -91,7 +91,11 @@ public struct FilledButtonView: ViewModifier {
             .padding(.vertical, .medium)
             .frame(maxWidth: .infinity)
             .background(style.backgroundColor)
-            .foregroundStyle(style.textColor)
+            .foregroundStyle(
+                isButtonDisabled
+                ? style.textColor.opacity(0.3)
+                : style.textColor
+            )
             .clippedRoundedCorners(style.radius)
             .font(style.font)
             .background(

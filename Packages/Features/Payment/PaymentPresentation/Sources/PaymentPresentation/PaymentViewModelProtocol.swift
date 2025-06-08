@@ -20,10 +20,15 @@ public protocol PaymentViewModelProtocol: ObservableObject {
     
     var accountNumber: String { get set }
     var routingNumber: String { get set }
-    var payeeName: String { get set }
-    var amount: Double? { get set }
-    var amountRaw: String { get set }
-    var isFormatting: Bool { get set }
+    var name: String { get set }
+    var amount: String { get set }
+    var nameValidationState: Bool { get set }
+    var accountNumberValidationState: Bool { get set }
+    var routingNumberValidationState: Bool { get set }
+    var amountValidationState: Bool { get set }
+    var isStartProceedingDisabled: Bool { get set }
+    var startTime: Date? { get set }
+    var paymentState: TransactionView.TransactionState? { get set }
     
     // MARK: - Placeholders
     
@@ -35,4 +40,8 @@ public protocol PaymentViewModelProtocol: ObservableObject {
     // MARK: - Formatter
     
     var currencyFormatter: NumberFormatter { get }
+    
+    // MARK: - Methods
+    
+    func onStartProceeding() async
 }

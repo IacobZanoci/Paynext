@@ -10,16 +10,7 @@ import Foundation
 @MainActor
 public protocol TransactionViewModelProtocol: ObservableObject {
     
-    // MARK: - Properties
+    // MARK: - Dependencies
     
-    var goToHomeAction: () async -> Void { get }
-    var goToPaymentAction: () async -> Void { get }
-    var goToDashboardAction: () async -> Void { get }
     var paymentState: TransactionView.TransactionState { get set }
-    
-    // MARK: - Methods
-    
-    func goToHome() async
-    func goToPayment() async
-    func goToDashboard() async
 }

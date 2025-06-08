@@ -18,7 +18,9 @@ struct MainTabView: View {
     @StateObject private var historyCoordinator = AppCoordinator()
     @StateObject private var paymentCoordinator = AppCoordinator()
     @StateObject private var accountCoordinator = AppCoordinator()
-    
+    @StateObject private var paymentVM = PaymentViewModel(
+        credentialsValidator: CredentialsValidator()
+    )
     
     @State private var selectedTab = 0
     
@@ -88,7 +90,8 @@ struct MainTabView: View {
             
             NavigationStack(path: $paymentCoordinator.navigationPath) {
                 InitiatePaymentView(
-                    vm: paymentVM
+                    vm: paymentVM,
+                    onResetToStart: { paymentVM.paymentState = nil }
                 )
                 .navigationDestination(for: AppRoute.self) { route in
                     paymentCoordinator.view(route: route)

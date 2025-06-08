@@ -22,17 +22,23 @@ public struct TransactionView: View {
     // MARK: - Dependencies
     
     @ObservedObject var vm: TransactionViewModel
+    @ObservedObject var paymentVM: PaymentViewModel
     
     // MARK: - Properties
     
     @State private var isAnimating = false
+    public var onResetToStart: (() -> Void)?
     
     // MARK: - Initializers
     
     public init(
-        vm: TransactionViewModel
+        vm: TransactionViewModel,
+        paymentVM: PaymentViewModel,
+        onResetToStart: (() -> Void)? = nil
     ) {
         self._vm = ObservedObject(wrappedValue: vm)
+        self.paymentVM = paymentVM
+        self.onResetToStart = onResetToStart
     }
     
     // MARK: - View
@@ -100,23 +106,19 @@ extension TransactionView {
                     .stroke(Color.Paynext.strokeBackground, lineWidth: 1)
                     .frame(width: Constants.successCardWidth, height: Constants.successCardHeight)
                 VStack(spacing: .large) {
-                    confirmationRow(title: "Recipient", value: "James May")
+                    confirmationRow(title: "Recipient", value: paymentVM.name)
                     confirmationRow(title: "Account Number", value: "(929) 617-0714")
                     Divider()
                         .frame(width: Constants.dividerWidth)
-                    confirmationRow(title: "You transferred", value: "$150.00")
-                    confirmationRow(title: "Payee Account Number", value: "3412 3456")
+                    confirmationRow(title: "You transferred", value: paymentVM.amount)
+                    confirmationRow(title: "Payee Account Number", value: paymentVM.accountNumber)
                     confirmationRow(title: "Transaction", value: "84020")
-                    confirmationRow(title: "Date & Time", value: "12:30 20/07/2025")
+                    confirmationRow(title: "Date & Time", value: paymentVM.formattedStartTime())
                 }
                 .padding()
             }
             VStack(spacing: .medium) {
-                Button(action: {
-                    Task {
-                        await vm.goToHome()
-                    }
-                }) {
+                Button(action: {}) {
                     Text("Back to home")
                         .filledButton(.primary)
                 }
@@ -124,7 +126,7 @@ extension TransactionView {
                 
                 Button(action: {
                     Task {
-                        await vm.goToPayment()
+                        onResetToStart?()
                     }
                 }) {
                     Text("Make another payment")
@@ -175,7 +177,7 @@ extension TransactionView {
                     VStack(spacing: .medium) {
                         Button(action: {
                             Task {
-                                await vm.goToPayment()
+                                onResetToStart?()
                             }
                         }) {
                             Text("Review payment details")
@@ -183,11 +185,7 @@ extension TransactionView {
                         }
                         .padding(.top, .large)
                         
-                        Button(action: {
-                            Task {
-                                await vm.goToDashboard()
-                            }
-                        }) {
+                        Button(action: {}) {
                             Text("Go to Dashboard")
                                 .filledButton(.error)
                         }
@@ -245,45 +243,24 @@ extension TransactionView {
 
 #Preview("Loading State") {
     TransactionView(
-        vm: {
-            let vm = TransactionViewModel(
-                amount: 150.0,
-                goToHome: {},
-                goToPayment: {},
-                goToDashboard: {}
-            )
-            vm.paymentState = .loading
-            return vm
-        }()
+        vm: TransactionViewModel(paymentState: .loading),
+        paymentVM: PaymentViewModel(credentialsValidator: MockCredentialsValidator()),
+        onResetToStart: {}
     )
 }
 
 #Preview("Success State") {
     TransactionView(
-        vm: {
-            let vm = TransactionViewModel(
-                amount: 150.0,
-                goToHome: {},
-                goToPayment: {},
-                goToDashboard: {}
-            )
-            vm.paymentState = .successfully
-            return vm
-        }()
+        vm: TransactionViewModel(paymentState: .successfully),
+        paymentVM: PaymentViewModel(credentialsValidator: MockCredentialsValidator()),
+        onResetToStart: {}
     )
 }
 
 #Preview("Failed State") {
     TransactionView(
-        vm: {
-            let vm = TransactionViewModel(
-                amount: 0.0,
-                goToHome: {},
-                goToPayment: {},
-                goToDashboard: {}
-            )
-            vm.paymentState = .failed
-            return vm
-        }()
+        vm: TransactionViewModel(paymentState: .failed),
+        paymentVM: PaymentViewModel(credentialsValidator: MockCredentialsValidator()),
+        onResetToStart: {}
     )
 }
