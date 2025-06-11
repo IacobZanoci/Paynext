@@ -1,0 +1,89 @@
+//
+//  TransactionRowViewModel.swift
+//  TransactionHistoryPresentation
+//
+//  Created by Iacob Zanoci on 11.06.2025.
+//
+
+import Foundation
+import SwiftUI
+import DesignSystem
+import TransactionHistoryDomain
+
+public struct TransactionRowViewModel: TransactionRowViewModelProtocol {
+    
+    // MARK: - Dependencies
+    
+    private let transaction: TransactionItem
+    
+    // MARK: - Initializers
+    
+    public init(
+        transaction: TransactionItem
+    ) {
+        self.transaction = transaction
+    }
+    
+    // MARK: - Properties
+    
+    public var id: UUID { transaction.id }
+    
+    public var title: String { transaction.payeeName }
+    
+    public var formattedDate: String {
+        let input = DateFormatter()
+        input.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        
+        if let date = input.date(from: transaction.createdAt) {
+            let output = DateFormatter()
+            output.dateFormat = "HH:mm dd/MM/yy"
+            return output.string(from: date)
+        }
+        return transaction.createdAt
+    }
+    
+    public var formattedAmount: String {
+        let amount = String(format: "%.2f", abs(transaction.transactionAmount))
+        return "$\(amount)"
+    }
+    
+    public var amountColor: Color {
+        .Paynext.incomeText
+    }
+    
+    public var statusIconName: String {
+        switch transaction.status {
+        case "COMPLETED":
+            return "checkmark.circle"
+        case "PROCESSING":
+            return "clock"
+        case "FAILED":
+            return "x.circle"
+        case "REJECTED":
+            return "exclamationmark.circle"
+        default:
+            return "clock"
+        }
+    }
+    
+    public var statusIconColor: Color {
+        switch transaction.status {
+        case "COMPLETED":
+            return .Paynext.incomeText
+        case "PROCESSING":
+            return .orange
+        case "FAILED", "REJECTED":
+            return .red
+        default:
+            return .gray
+        }
+    }
+    
+    public var rawTransaction: TransactionItem {
+        transaction
+    }
+    
+    public static func == (lhs: TransactionRowViewModel, rhs: TransactionRowViewModel) -> Bool {
+        lhs.transaction == rhs.transaction
+    }
+}

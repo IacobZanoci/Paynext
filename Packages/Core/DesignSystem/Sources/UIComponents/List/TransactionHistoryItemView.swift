@@ -13,6 +13,7 @@ public struct TransactionHistoryItemView: View {
     // MARK: - Properties
     
     let imageName: String
+    let statusIconColor: Color
     let title: String
     let date: String
     let amount: String
@@ -23,12 +24,14 @@ public struct TransactionHistoryItemView: View {
     
     public init(
         imageName: String,
+        statusIconColor: Color,
         title: String,
         date: String,
         amount: String,
         amountColor: Color
     ) {
         self.imageName = imageName
+        self.statusIconColor = statusIconColor
         self.title = title
         self.date = date
         self.amount = amount
@@ -42,6 +45,7 @@ public struct TransactionHistoryItemView: View {
             Image(systemName: imageName)
                 .resizable()
                 .scaledToFit()
+                .foregroundStyle(statusIconColor)
                 .frame(width: 18, height: 18)
             VStack(alignment: .leading, spacing: .extraSmall) {
                 Text(title)
@@ -70,6 +74,7 @@ public struct TransactionHistoryItemView: View {
     VStack(spacing: 16) {
         TransactionHistoryItemView(
             imageName: "clock",
+            statusIconColor: .Paynext.secondaryText,
             title: "James May",
             date: "12:30 10/06/2025",
             amount: "+$300.00",
@@ -78,6 +83,7 @@ public struct TransactionHistoryItemView: View {
         
         TransactionHistoryItemView(
             imageName: "checkmark.circle",
+            statusIconColor: .Paynext.incomeText,
             title: "James May",
             date: "12:30 10/06/2025",
             amount: "+$300.00",
@@ -86,6 +92,7 @@ public struct TransactionHistoryItemView: View {
         
         TransactionHistoryItemView(
             imageName: "x.circle",
+            statusIconColor: .orange,
             title: "James May",
             date: "12:30 10/06/2025",
             amount: "+$300.00",
@@ -94,6 +101,7 @@ public struct TransactionHistoryItemView: View {
         
         TransactionHistoryItemView(
             imageName: "exclamationmark.circle",
+            statusIconColor: .orange,
             title: "James May",
             date: "12:30 10/06/2025",
             amount: "+$300.00",
