@@ -10,6 +10,7 @@ import DesignSystem
 import PaymentPresentation
 import CredentialsValidator
 import TransactionHistoryPresentation
+import TransactionHistoryDomain
 
 struct MainTabView: View {
     
@@ -75,11 +76,13 @@ struct MainTabView: View {
             // MARK: - History TabBar View
             
             NavigationStack(path: $historyCoordinator.navigationPath) {
-                TransactionHistoryView()
-                    .navigationDestination(for: AppRoute.self) { route in
-                        historyCoordinator.view(route: route)
-                    }
-                    .environmentObject(historyCoordinator)
+                TransactionHistoryView(
+                    viewModel: TransactionHistoryViewModel(provider: MockTransactionProvider())
+                )
+                .navigationDestination(for: AppRoute.self) { route in
+                    historyCoordinator.view(route: route)
+                }
+                .environmentObject(historyCoordinator)
             }
             .tabItem {
                 Image(systemName: selectedTab == 0 ? "book.pages.fill" : "book.pages")

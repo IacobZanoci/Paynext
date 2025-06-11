@@ -24,7 +24,7 @@ public enum FilledButtonStyle {
         case .tertiary:
             return Color.Paynext.primaryButton
         case .quartenary:
-            return Color.Paynext.primaryButton
+            return Color.Paynext.primaryText
         case .error:
             return Color.Paynext.secondaryText
         }
@@ -55,7 +55,7 @@ public enum FilledButtonStyle {
         case .tertiary:
             return Color.Paynext.primaryButton
         case .quartenary:
-            return Color.Paynext.primaryButton
+            return Color.Paynext.primaryText
         case .error:
             return Color.Paynext.secondaryText
         }
@@ -70,14 +70,25 @@ public enum FilledButtonStyle {
         case .tertiary:
             return CGFloat.medium
         case .quartenary:
-            return CGFloat.extraSmall
+            return CGFloat.medium
         case .error:
             return CGFloat.extraSmall
         }
     }
     
     var font: Font {
-        .Paynext.bodyMedium
+        switch self {
+        case .primary:
+            return .Paynext.body
+        case .secondary:
+            return .Paynext.body
+        case .tertiary:
+            return .Paynext.body
+        case .quartenary:
+            return .Paynext.footnote
+        case .error:
+            return .Paynext.body
+        }
     }
 }
 
