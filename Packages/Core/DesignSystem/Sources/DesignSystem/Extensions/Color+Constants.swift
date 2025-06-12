@@ -39,6 +39,9 @@ public extension Color {
         /// The secondary background color of the application. Success or Failure Transaction Views.
         public static let secondaryBackground = Color("secondaryBackgroundColor", bundle: .module)
         
+        /// The tertiary background color of the application.
+        public static let tertiaryBackground = Color("tertiaryBackgroundColor", bundle: .module)
+        
         /// The stroke background color of the application.
         public static let strokeBackground = Color("strokeBackgroundColor", bundle: .module)
         

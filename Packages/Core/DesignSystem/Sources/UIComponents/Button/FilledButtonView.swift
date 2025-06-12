@@ -39,7 +39,7 @@ public enum FilledButtonStyle {
         case .tertiary:
             return Color.Paynext.primaryText
         case .quartenary:
-            return Color.Paynext.accentText
+            return Color.Paynext.contrastText
         case .error:
             return Color.Paynext.accentText
         }

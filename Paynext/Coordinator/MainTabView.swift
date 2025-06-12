@@ -11,6 +11,8 @@ import PaymentPresentation
 import CredentialsValidator
 import TransactionHistoryPresentation
 import TransactionHistoryDomain
+import SettingsPresentation
+import Persistance
 
 struct MainTabView: View {
     
@@ -111,11 +113,16 @@ struct MainTabView: View {
             // MARK: - Account TabBar View
             
             NavigationStack(path: $accountCoordinator.navigationPath) {
-                EmptyView()
-                    .navigationDestination(for: AppRoute.self) { route in
-                        accountCoordinator.view(route: route)
-                    }
-                    .environmentObject(accountCoordinator)
+                SettingsView(
+                    viewModel: SettingsViewModel(
+                        persistenceStorage: UserDefaultsManager(),
+                        onLogout: { await accountCoordinator.handleLogin() }
+                    )
+                )
+                .navigationDestination(for: AppRoute.self) { route in
+                    accountCoordinator.view(route: route)
+                }
+                .environmentObject(accountCoordinator)
             }
             .tabItem {
                 Image(systemName: selectedTab == 0 ? "person.circle.fill" : "person.circle")
