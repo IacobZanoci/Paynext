@@ -37,7 +37,7 @@ public final class AppCoordinator: Coordinator, ObservableObject {
     }
     
     /// Removes all pushed views but keeps the current root view.
-    public func navigateToRoot() {
+    func navigateToRoot() {
         navigationPath.removeLast(navigationPath.count)
     }
     
