@@ -21,7 +21,7 @@ struct MainTabView: View {
     @StateObject private var homeCoordinator = AppCoordinator()
     @StateObject private var historyCoordinator = AppCoordinator()
     @StateObject private var paymentCoordinator = AppCoordinator()
-    @StateObject private var accountCoordinator = AppCoordinator()
+    @EnvironmentObject private var accountCoordinator: AppCoordinator
     @StateObject private var paymentVM = PaymentViewModel(
         credentialsValidator: CredentialsValidator()
     )
@@ -116,7 +116,12 @@ struct MainTabView: View {
                 SettingsView(
                     viewModel: SettingsViewModel(
                         persistenceStorage: UserDefaultsManager(),
-                        onLogout: { await accountCoordinator.handleLogin() }
+                        onLogout: { [weak accountCoordinator] in
+                            guard let coordinator = accountCoordinator else { return }
+                            Task {
+                                coordinator.setRoot(to: .login)
+                            }
+                        }
                     )
                 )
                 .navigationDestination(for: AppRoute.self) { route in
