@@ -8,23 +8,23 @@
 import SwiftUI
 import DesignSystem
 import UIComponents
+import SettingsDomain
 
-public struct SettingsView<ViewModel: SettingsViewModelProtocol>: View {
+public struct SettingsView<ViewModel: SettingsViewModelProtocol, ThemeManagerType: ThemeManaging>: View {
     
     //MARK: - Dependencies
     
     @ObservedObject var viewModel: ViewModel
-    
-    //MARK: - Properties
-    
-    @State private var isDarkMode = false
+    @ObservedObject var themeManager: ThemeManagerType
     
     //MARK: - Initializers
     
     public init (
-        viewModel: ViewModel
+        viewModel: ViewModel,
+        themeManager: ThemeManagerType
     ) {
         self.viewModel = viewModel
+        self.themeManager = themeManager
     }
     
     //MARK: - View
@@ -141,7 +141,7 @@ extension  SettingsView {
                 .font(.Paynext.footnoteMedium)
                 .foregroundStyle(Color.Paynext.primaryText)
             Spacer()
-            Toggle("", isOn: $isDarkMode)
+            Toggle("", isOn: $themeManager.isDarkModeEnabled)
                 .labelsHidden()
                 .tint(Color.Paynext.primaryButton)
         }
@@ -167,9 +167,16 @@ extension  SettingsView {
 //MARK: - Preview
 
 #Preview {
-    SettingsView(viewModel: MockSettingsViewModel())
+    SettingsView(
+        viewModel: MockSettingsViewModel(),
+        themeManager: MockThemeManager()
+    )
 }
 
 final class MockSettingsViewModel: SettingsViewModelProtocol {
     func onLogout() async {}
+}
+
+final class MockThemeManager: ThemeManaging, ObservableObject {
+    @Published var isDarkModeEnabled: Bool = false
 }

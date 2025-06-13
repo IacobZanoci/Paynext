@@ -13,7 +13,8 @@ let package = Package(
     dependencies: [
         .package(path: "../../Core/DesignSystem"),
         .package(path: "../../Core/Persistance"),
-        .package(path: "../../Features/LoginPresentation")
+        .package(path: "../../Features/LoginPresentation"),
+        .package(path: "../SettingsDomain")
     ],
     targets: [
         .target(
@@ -22,7 +23,8 @@ let package = Package(
                 .product(name: "DesignSystem", package: "DesignSystem"),
                 .product(name: "UIComponents", package: "DesignSystem"),
                 .product(name: "Persistance", package: "Persistance"),
-                .product(name: "LoginPresentation", package: "LoginPresentation")
+                .product(name: "LoginPresentation", package: "LoginPresentation"),
+                .product(name: "SettingsDomain", package: "SettingsDomain")
             ]
         ),
         .testTarget(

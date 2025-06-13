@@ -25,6 +25,7 @@ struct MainTabView: View {
     @StateObject private var paymentVM = PaymentViewModel(
         credentialsValidator: CredentialsValidator()
     )
+    @EnvironmentObject private var themeManager: ThemeManager
     
     @State private var selectedTab = 0
     
@@ -122,12 +123,14 @@ struct MainTabView: View {
                                 coordinator.setRoot(to: .login)
                             }
                         }
-                    )
+                    ),
+                    themeManager: themeManager
                 )
                 .navigationDestination(for: AppRoute.self) { route in
                     accountCoordinator.view(route: route)
                 }
                 .environmentObject(accountCoordinator)
+                .environmentObject(themeManager)
             }
             .tabItem {
                 Image(systemName: selectedTab == 0 ? "person.circle.fill" : "person.circle")
@@ -141,4 +144,6 @@ struct MainTabView: View {
 
 #Preview {
     MainTabView()
+        .environmentObject(AppCoordinator())
+        .environmentObject(ThemeManager())
 }
