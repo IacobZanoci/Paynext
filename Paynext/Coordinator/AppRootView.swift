@@ -13,6 +13,7 @@ import SwiftUI
 struct AppRootView: View {
     
     @StateObject private var coordinator = AppCoordinator()
+    @StateObject private var themeManager = ThemeManager()
     
     var body: some View {
         
@@ -23,5 +24,7 @@ struct AppRootView: View {
                 }
         }
         .environmentObject(coordinator)
+        .environmentObject(themeManager)
+        .preferredColorScheme(themeManager.isDarkModeEnabled ? .dark : .light)
     }
 }
