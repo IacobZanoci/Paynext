@@ -33,7 +33,7 @@ public struct TransactionDetailsView<ViewModel: TransactionRowViewModelProtocol>
     public var body: some View {
         VStack {
             ZStack {
-                Text("Transaction details")
+                Text(viewModel.detailsSheetTitle)
                     .font(.Paynext.body)
                     .frame(maxWidth: .infinity, alignment: .center)
                 
@@ -43,7 +43,7 @@ public struct TransactionDetailsView<ViewModel: TransactionRowViewModelProtocol>
                     Button(action: {
                         dismiss()
                     }) {
-                        Image(systemName: "xmark")
+                        Image(systemName: viewModel.dismissButtonTitle)
                             .font(.Paynext.bodyBold)
                             .imageScale(.large)
                             .foregroundStyle(Color.Paynext.primaryText)
@@ -55,13 +55,13 @@ public struct TransactionDetailsView<ViewModel: TransactionRowViewModelProtocol>
             
             VStack(spacing: .large) {
                 confirmationRow(
-                    title: "Payee Name",
+                    title: viewModel.detailsPayeeNameSurnameTitle,
                     value: viewModel.rawTransaction.payeeName,
                     field: .payerAccount,
                     isExpandable: false
                 )
                 confirmationRow(
-                    title: "Source Account",
+                    title: viewModel.detailsSourceAccountTitle,
                     value: viewModel.rawTransaction.payerAccountNumber,
                     field: .payerAccount,
                     isExpandable: true
@@ -70,31 +70,31 @@ public struct TransactionDetailsView<ViewModel: TransactionRowViewModelProtocol>
                 Divider()
                 
                 confirmationRow(
-                    title: "Payee Account Number",
+                    title: viewModel.detailsPayeeAccountNumberTitle,
                     value: viewModel.rawTransaction.payeeAccountNumber,
                     field: .payeeAccount,
                     isExpandable: true
                 )
                 confirmationRow(
-                    title: "Payee Routing Number",
+                    title: viewModel.detailsPayeeRoutingNumberTitle,
                     value: viewModel.rawTransaction.payeeRoutingNumber,
                     field: .payerAccount,
                     isExpandable: false
                 )
                 confirmationRow(
-                    title: "Time",
+                    title: viewModel.detailsDateTimeTitle,
                     value: viewModel.formattedDate,
                     field: .payerAccount,
                     isExpandable: false
                 )
                 confirmationRow(
-                    title: "Status",
+                    title: viewModel.detailsStatusTitle,
                     value: viewModel.rawTransaction.status,
                     field: .payerAccount,
                     isExpandable: false
                 )
                 confirmationRow(
-                    title: "Amount",
+                    title: viewModel.detailsAmountTitle,
                     value: viewModel.formattedAmount,
                     field: .payerAccount,
                     isExpandable: false

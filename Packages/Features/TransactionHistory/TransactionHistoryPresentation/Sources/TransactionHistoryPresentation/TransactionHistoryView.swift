@@ -63,7 +63,7 @@ extension TransactionHistoryView {
     
     private var navigationTitle: some View {
         VStack {
-            Text("Transaction History")
+            Text(viewModel.transactionNavigationTitle)
                 .font(.Paynext.subheadlineBold)
                 .foregroundStyle(Color.Paynext.primaryText)
         }
@@ -78,20 +78,20 @@ extension TransactionHistoryView {
                 CustomSearchBar()
                     .frame(width: 250)
                 Button {
-                    // Filter transactions
+                    // TODO: Push modal view for filtering
                 } label : {
-                    Text("Filter")
+                    Text(viewModel.filterButtonTitle)
                         .filledButton(.quartenary)
                 }
             }
             Button {
-                // sort transactions
+                // TODO: Implement transaction sorting logic
             } label : {
                 HStack {
-                    Text("Sort by Creation Date Newest to Oldest")
+                    Text(viewModel.sortButtonTitle)
                         .font(.Paynext.caption)
                         .foregroundStyle(Color.Paynext.primaryText.opacity(0.5))
-                    Image(systemName: "chevron.up.chevron.down")
+                    Image(systemName: viewModel.sortButtonImageTitle)
                         .resizable()
                         .scaledToFit()
                         .frame(width: .small, height: .small)

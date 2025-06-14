@@ -31,6 +31,7 @@ public struct TransactionRowViewModel: TransactionRowViewModelProtocol {
     public var title: String { transaction.payeeName }
     
     public var formattedDate: String {
+        
         let input = DateFormatter()
         input.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         
@@ -86,4 +87,16 @@ public struct TransactionRowViewModel: TransactionRowViewModelProtocol {
     public static func == (lhs: TransactionRowViewModel, rhs: TransactionRowViewModel) -> Bool {
         lhs.transaction == rhs.transaction
     }
+    
+    // MARK: - Titles
+    
+    public var detailsSheetTitle: String = "Transaction Details"
+    public var dismissButtonTitle: String = "xmark"
+    public var detailsPayeeNameSurnameTitle: String = "Payee Name/Surname"
+    public var detailsSourceAccountTitle: String = "Source Account"
+    public var detailsPayeeAccountNumberTitle: String = "Payee Account Number"
+    public var detailsPayeeRoutingNumberTitle: String = "Payee Routing Number"
+    public var detailsDateTimeTitle: String = "Creation Date/Time"
+    public var detailsStatusTitle: String = "Status"
+    public var detailsAmountTitle: String = "Amount"
 }

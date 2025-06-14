@@ -18,4 +18,11 @@ public protocol TransactionHistoryViewModelProtocol: ObservableObject {
     // MARK: - Methods
     
     func load() async
+    
+    // MARK: - Titles
+    
+    var transactionNavigationTitle: String { get }
+    var filterButtonTitle: String { get }
+    var sortButtonTitle: String { get }
+    var sortButtonImageTitle: String { get }
 }

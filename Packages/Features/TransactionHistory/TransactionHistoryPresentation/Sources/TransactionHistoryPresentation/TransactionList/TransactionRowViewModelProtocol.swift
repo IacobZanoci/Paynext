@@ -10,6 +10,8 @@ import TransactionHistoryDomain
 
 public protocol TransactionRowViewModelProtocol: Identifiable, Equatable {
     
+    // MARK: - Properties
+    
     var id: UUID { get }
     var title: String { get }
     var formattedDate: String { get }
@@ -18,4 +20,16 @@ public protocol TransactionRowViewModelProtocol: Identifiable, Equatable {
     var statusIconName: String { get }
     var statusIconColor: Color { get }
     var rawTransaction: TransactionItem { get }
+    
+    // MARK: - Titles
+    
+    var detailsSheetTitle: String { get }
+    var dismissButtonTitle: String { get }
+    var detailsPayeeNameSurnameTitle: String { get }
+    var detailsSourceAccountTitle: String { get }
+    var detailsPayeeAccountNumberTitle: String { get }
+    var detailsPayeeRoutingNumberTitle: String { get }
+    var detailsDateTimeTitle: String { get }
+    var detailsStatusTitle: String { get }
+    var detailsAmountTitle: String { get }
 }
