@@ -13,6 +13,7 @@ import TransactionHistoryPresentation
 import TransactionHistoryDomain
 import SettingsPresentation
 import Persistance
+import DashboardPresentation
 
 struct MainTabView: View {
     
@@ -64,7 +65,7 @@ struct MainTabView: View {
         
         TabView(selection: $selectedTab) {
             NavigationStack(path: $homeCoordinator.navigationPath) {
-                EmptyView()
+                DashboardView(viewModel: DashboardViewModel())
                     .navigationDestination(for: AppRoute.self) { route in
                         homeCoordinator.view(route: route)
                     }

@@ -16,6 +16,7 @@
 		42A0D43D2DD6596200566812 /* NetworkClient in Frameworks */ = {isa = PBXBuildFile; productRef = 42A0D43C2DD6596200566812 /* NetworkClient */; };
 		42A0D45B2DD7AA7100566812 /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 42A0D45A2DD7AA7100566812 /* DesignSystem */; };
 		42A0D45D2DD7B66E00566812 /* UIComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 42A0D45C2DD7B66E00566812 /* UIComponents */; };
+		42B80B382DFD5BCA000A486E /* DashboardPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = 42B80B372DFD5BCA000A486E /* DashboardPresentation */; };
 		42BF1D072DF589170058C328 /* CredentialsValidator in Frameworks */ = {isa = PBXBuildFile; productRef = 42BF1D062DF589170058C328 /* CredentialsValidator */; };
 		42BF1D382DF5C58B0058C328 /* TransactionHistoryPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = 42BF1D372DF5C58B0058C328 /* TransactionHistoryPresentation */; };
 		42BF1D672DF5CC260058C328 /* TransactionHistoryDomain in Frameworks */ = {isa = PBXBuildFile; productRef = 42BF1D662DF5CC260058C328 /* TransactionHistoryDomain */; };
@@ -31,6 +32,7 @@
 		4278CA882DFC9E58003C4010 /* SettingsDomain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SettingsDomain; sourceTree = "<group>"; };
 		42A0D43A2DD6581C00566812 /* NetworkClient */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = NetworkClient; sourceTree = "<group>"; };
 		42A0D4592DD7AA4700566812 /* DesignSystem */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DesignSystem; sourceTree = "<group>"; };
+		42B80B362DFD5BB2000A486E /* DashboardPresentation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DashboardPresentation; sourceTree = "<group>"; };
 		42BF1D052DF585890058C328 /* CredentialsValidator */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = CredentialsValidator; sourceTree = "<group>"; };
 		42BF1D362DF5C5840058C328 /* TransactionHistoryPresentation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = TransactionHistoryPresentation; sourceTree = "<group>"; };
 		42BF1D652DF5CC1F0058C328 /* TransactionHistoryDomain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = TransactionHistoryDomain; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 				4225EBB12DEB4DD500CC9C6A /* LoginDomain in Frameworks */,
 				4243BB632DE1D4B500CA1504 /* Persistance in Frameworks */,
 				4243BB922DE7707900CA1504 /* LoginPresentation in Frameworks */,
+				42B80B382DFD5BCA000A486E /* DashboardPresentation in Frameworks */,
 				42A0D45D2DD7B66E00566812 /* UIComponents in Frameworks */,
 				4278CA5B2DFB6180003C4010 /* SettingsPresentation in Frameworks */,
 				42A0D43D2DD6596200566812 /* NetworkClient in Frameworks */,
@@ -109,6 +112,7 @@
 		4243BB8E2DE768DB00CA1504 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				42B80B352DFD5B80000A486E /* Dashboard */,
 				4278CA582DFB5853003C4010 /* Settings */,
 				42BF1D352DF5C55F0058C328 /* TransactionHistory */,
 				4225EC912DF34A5D00CC9C6A /* Payment */,
@@ -162,6 +166,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		42B80B352DFD5B80000A486E /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				42B80B362DFD5BB2000A486E /* DashboardPresentation */,
+			);
+			path = Dashboard;
+			sourceTree = "<group>";
+		};
 		42BF1D352DF5C55F0058C328 /* TransactionHistory */ = {
 			isa = PBXGroup;
 			children = (
@@ -203,6 +215,7 @@
 				42BF1D662DF5CC260058C328 /* TransactionHistoryDomain */,
 				4278CA5A2DFB6180003C4010 /* SettingsPresentation */,
 				4278CA8B2DFC9FAA003C4010 /* SettingsDomain */,
+				42B80B372DFD5BCA000A486E /* DashboardPresentation */,
 			);
 			productName = Paynext;
 			productReference = 4239625E2DCFD85800F32002 /* Paynext.app */;
@@ -511,6 +524,10 @@
 		42A0D45C2DD7B66E00566812 /* UIComponents */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = UIComponents;
+		};
+		42B80B372DFD5BCA000A486E /* DashboardPresentation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DashboardPresentation;
 		};
 		42BF1D062DF589170058C328 /* CredentialsValidator */ = {
 			isa = XCSwiftPackageProductDependency;
