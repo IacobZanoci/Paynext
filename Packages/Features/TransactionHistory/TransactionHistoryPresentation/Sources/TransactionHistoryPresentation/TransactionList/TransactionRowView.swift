@@ -9,15 +9,23 @@ import SwiftUI
 import UIComponents
 import TransactionHistoryDomain
 
-struct TransactionRowView: View {
+public struct TransactionRowView: View {
     
     // MARK: - Dependencies
     
     let viewModel: any TransactionRowViewModelProtocol
     
+    // MARK: - Initializers
+    
+    public init(
+        viewModel: some TransactionRowViewModelProtocol
+    ) {
+        self.viewModel = viewModel
+    }
+    
     // MARK: - View
     
-    var body: some View {
+    public var body: some View {
         TransactionHistoryItemView(
             imageName: viewModel.statusIconName,
             statusIconColor: viewModel.statusIconColor,

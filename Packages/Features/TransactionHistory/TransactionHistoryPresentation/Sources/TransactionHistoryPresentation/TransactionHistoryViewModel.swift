@@ -37,4 +37,11 @@ public final class TransactionHistoryViewModel: TransactionHistoryViewModelProto
             self.errorMessage = "Failed to load: \(error.localizedDescription)"
         }
     }
+    
+    // MARK: - Titles
+    
+    @Published public var transactionNavigationTitle: String = "Transaction History"
+    @Published public var filterButtonTitle: String = "Filter"
+    @Published public var sortButtonTitle: String = "Sort by Creation Date Newest to Oldest"
+    @Published public var sortButtonImageTitle: String = "chevron.up.chevron.down"
 }
