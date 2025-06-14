@@ -43,6 +43,21 @@ public class LoginViewModel: LoginViewModelProtocol {
         }
     }
     
+    // MARK: - Titles
+    
+    @Published public var appIconTitle: String = "appIcon"
+    @Published public var loginFormTitle: String = "Log in"
+    @Published public var nameSurnameTitle: String = "Name and Surname"
+    @Published public var accountNumberTitle: String = "Account Number"
+    @Published public var routingNumberTitle: String = "Routing Number"
+    @Published public var loginButtonTitle: String = "Log in"
+    
+    // MARK: - Placeholders
+    
+    @Published public var nameSurnamePlaceholder: String = "Enter name and surname"
+    @Published public var accountNumberPlaceholder: String = "Enter account number"
+    @Published public var routingNumberPlaceholder: String = "Enter routing number"
+    
     // MARK: - Initializers
     
     public init(

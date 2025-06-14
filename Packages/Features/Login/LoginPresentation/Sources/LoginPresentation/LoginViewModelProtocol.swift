@@ -20,7 +20,22 @@ public protocol LoginViewModelProtocol: ObservableObject {
     var routingNumberValidationState: Bool { get set }
     var isLoginDisabled: Bool { get set }
     
-    // MARK: - Methods
+    // MARK: - Titles
+    
+    var appIconTitle: String { get }
+    var loginFormTitle: String { get }
+    var nameSurnameTitle: String { get }
+    var accountNumberTitle: String { get }
+    var routingNumberTitle: String { get }
+    var loginButtonTitle: String { get }
+    
+    // MARK: - Placeholders
+    
+    var nameSurnamePlaceholder: String { get }
+    var accountNumberPlaceholder: String { get }
+    var routingNumberPlaceholder: String { get }
+    
+    // MARK: - Events
     
     func onLogin() async
 }

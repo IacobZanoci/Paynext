@@ -61,7 +61,7 @@ public struct LoginView<ViewModel: LoginViewModelProtocol>: View {
 extension LoginView {
     private var appIcon: some View {
         VStack(spacing: 0) {
-            Image("appIcon", bundle: .module)
+            Image(viewModel.appIconTitle, bundle: .module)
                 .resizable()
                 .scaledToFit()
                 .frame(width: 150, height: 150)
@@ -75,31 +75,43 @@ extension LoginView {
     private var loginForm: some View {
         ScrollView {
             VStack {
-                Text("Log in")
+                Text(viewModel.loginFormTitle)
                     .font(.Paynext.headlineBold)
                     .foregroundStyle(Color.Paynext.primaryText)
                     .padding(.bottom, 6)
                 
                 VStack(spacing: 20) {
                     VStack(alignment: .leading, spacing: 12) {
-                        Text("Username")
+                        Text(viewModel.nameSurnameTitle)
                             .font(.Paynext.bodyBold)
                             .foregroundStyle(Color.Paynext.primaryText)
-                        RoundedTextFieldView(text: $viewModel.userName, placeholder: "Enter name and surname", isValid: $viewModel.usernameValidationState)
+                        RoundedTextFieldView(
+                            text: $viewModel.userName,
+                            placeholder: viewModel.nameSurnamePlaceholder,
+                            isValid: $viewModel.usernameValidationState
+                        )
                     }
                     
                     VStack(alignment: .leading, spacing: 12) {
-                        Text("Account number")
+                        Text(viewModel.accountNumberTitle)
                             .font(.Paynext.bodyBold)
                             .foregroundStyle(Color.Paynext.primaryText)
-                        RoundedTextFieldView(text: $viewModel.accountNumber, placeholder: "Enter account number", isValid: $viewModel.accountNumberValidationState)
+                        RoundedTextFieldView(
+                            text: $viewModel.accountNumber,
+                            placeholder: viewModel.accountNumberPlaceholder,
+                            isValid: $viewModel.accountNumberValidationState
+                        )
                     }
                     
                     VStack(alignment: .leading, spacing: 12) {
-                        Text("Routing number")
+                        Text(viewModel.routingNumberTitle)
                             .font(.Paynext.bodyBold)
                             .foregroundStyle(Color.Paynext.primaryText)
-                        RoundedTextFieldView(text: $viewModel.routingNumber, placeholder: "Enter routing number", isValid: $viewModel.routingNumberValidationState)
+                        RoundedTextFieldView(
+                            text: $viewModel.routingNumber,
+                            placeholder: viewModel.routingNumberPlaceholder,
+                            isValid: $viewModel.routingNumberValidationState
+                        )
                     }
                 }
                 
@@ -108,7 +120,7 @@ extension LoginView {
                         await viewModel.onLogin()
                     }
                 } label : {
-                    Text("Log in")
+                    Text(viewModel.loginButtonTitle)
                         .filledButton(.primary, isDisabled: $viewModel.isLoginDisabled.wrappedValue)
                 }
                 .padding(.top, 50)
