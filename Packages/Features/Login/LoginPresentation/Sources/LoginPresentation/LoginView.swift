@@ -82,35 +82,29 @@ extension LoginView {
                 
                 VStack(spacing: 20) {
                     VStack(alignment: .leading, spacing: 12) {
-                        Text(viewModel.nameSurnameTitle)
-                            .font(.Paynext.bodyBold)
-                            .foregroundStyle(Color.Paynext.primaryText)
                         RoundedTextFieldView(
                             text: $viewModel.userName,
                             placeholder: viewModel.nameSurnamePlaceholder,
-                            isValid: $viewModel.usernameValidationState
+                            isValid: $viewModel.usernameValidationState,
+                            title: viewModel.nameSurnameTitle
                         )
                     }
                     
                     VStack(alignment: .leading, spacing: 12) {
-                        Text(viewModel.accountNumberTitle)
-                            .font(.Paynext.bodyBold)
-                            .foregroundStyle(Color.Paynext.primaryText)
                         RoundedTextFieldView(
                             text: $viewModel.accountNumber,
                             placeholder: viewModel.accountNumberPlaceholder,
-                            isValid: $viewModel.accountNumberValidationState
+                            isValid: $viewModel.accountNumberValidationState,
+                            title: viewModel.accountNumberTitle
                         )
                     }
                     
                     VStack(alignment: .leading, spacing: 12) {
-                        Text(viewModel.routingNumberTitle)
-                            .font(.Paynext.bodyBold)
-                            .foregroundStyle(Color.Paynext.primaryText)
                         RoundedTextFieldView(
                             text: $viewModel.routingNumber,
                             placeholder: viewModel.routingNumberPlaceholder,
-                            isValid: $viewModel.routingNumberValidationState
+                            isValid: $viewModel.routingNumberValidationState,
+                            title: viewModel.routingNumberTitle
                         )
                     }
                 }

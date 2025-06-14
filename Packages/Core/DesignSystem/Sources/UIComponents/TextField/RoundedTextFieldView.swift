@@ -15,6 +15,7 @@ public struct RoundedTextFieldView: View {
     @Binding public var text: String
     @Binding public var isValid: Bool
     
+    public var title: String
     public var placeholder: String
     public var radius: CGFloat
     public var leftIcon: String?
@@ -25,12 +26,14 @@ public struct RoundedTextFieldView: View {
         text: Binding<String>,
         placeholder: String,
         isValid: Binding<Bool>,
+        title: String,
         radius: CGFloat = 16,
         leftIcon: String? = nil
     ) {
         self._text = text
         self.placeholder = placeholder
         self._isValid = isValid
+        self.title = title
         self.radius = radius
         self.leftIcon = leftIcon
     }
@@ -38,43 +41,60 @@ public struct RoundedTextFieldView: View {
     // MARK: - View
     
     public var body: some View {
-        HStack(spacing: 0) {
-            if let leftIcon {
-                Image(systemName: leftIcon)
-                    .font(.Paynext.bodyMedium)
-                    .foregroundStyle(Color.Paynext.primaryText)
-                    .padding(.leading, 12)
-            }
-            
-            TextField(placeholder, text: $text)
+        HStack {
+            Text(title)
                 .font(.Paynext.body)
                 .foregroundStyle(Color.Paynext.primaryText)
-                .padding(.medium)
             
-            if !text.isEmpty {
-                Button(action: {
-                    text = ""
-                }) {
-                    Image(systemName: "xmark.circle.fill")
-                        .foregroundStyle(Color.Paynext.secondaryText.opacity(0.6))
-                        .padding(.trailing, 16)
-                }
-                .buttonStyle(.plain)
+            Spacer()
+            if !isValid {
+                Text("Wrong format")
+                    .foregroundStyle(Color.Paynext.errorStrokeBackground)
+                    .font(.Paynext.caption)
+                    .padding([.top, .trailing], 8)
             }
         }
-        .background(
-            RoundedRectangle(cornerRadius: radius)
-                .fill(Color.Paynext.background)
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: radius)
-                .stroke(
-                    isValid
-                    ? Color.Paynext.strokeBackground
-                    : Color.Paynext.errorStrokeBackground,
-                    lineWidth: 1.5
+        ZStack(alignment: .topTrailing) {
+            VStack(spacing: 0) {
+                HStack(spacing: 0) {
+                    if let leftIcon {
+                        Image(systemName: leftIcon)
+                            .font(.Paynext.bodyMedium)
+                            .foregroundStyle(Color.Paynext.primaryText)
+                            .padding(.leading, 12)
+                    }
+                    
+                    TextField(placeholder, text: $text)
+                        .font(.Paynext.body)
+                        .foregroundStyle(Color.Paynext.primaryText)
+                        .padding(.medium)
+                    
+                    if !text.isEmpty {
+                        Button(action: {
+                            text = ""
+                        }) {
+                            Image(systemName: "xmark.circle.fill")
+                                .foregroundStyle(Color.Paynext.secondaryText.opacity(0.6))
+                                .padding(.trailing, 16)
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+                .background(
+                    RoundedRectangle(cornerRadius: radius)
+                        .fill(Color.Paynext.background)
                 )
-        )
+                .overlay(
+                    RoundedRectangle(cornerRadius: radius)
+                        .stroke(
+                            isValid
+                            ? Color.Paynext.strokeBackground
+                            : Color.Paynext.errorStrokeBackground,
+                            lineWidth: 1.5
+                        )
+                )
+            }
+        }
     }
 }
 
@@ -85,19 +105,22 @@ public struct RoundedTextFieldView: View {
         RoundedTextFieldView(
             text: .constant(""),
             placeholder: "Name and Surname",
-            isValid: .constant(true)
+            isValid: .constant(true),
+            title: "Name"
         )
         
         RoundedTextFieldView(
             text: .constant(""),
             placeholder: "Name and Surname",
-            isValid: .constant(false)
+            isValid: .constant(false),
+            title: "Name"
         )
         
         RoundedTextFieldView(
             text: .constant(""),
             placeholder: "0.00",
             isValid: .constant(true),
+            title: "Amount",
             radius: 6,
             leftIcon: "dollarsign"
         )

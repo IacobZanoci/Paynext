@@ -126,49 +126,41 @@ extension InitiatePaymentView {
     private var paymentForm: some View {
         VStack(spacing: 26) {
             VStack(alignment: .leading, spacing: 6) {
-                Text(vm.accountNumberTextField)
-                    .font(.Paynext.footnoteMedium)
-                    .foregroundStyle(Color.Paynext.primaryText)
                 RoundedTextFieldView(
                     text: $vm.accountNumber,
                     placeholder: vm.accountNumberPlaceholder,
                     isValid: $vm.accountNumberValidationState,
+                    title: vm.accountNumberTextField,
                     radius: 6
                 )
             }
             
             VStack(alignment: .leading, spacing: 6) {
-                Text(vm.routingNumberTextField)
-                    .font(.Paynext.footnoteMedium)
-                    .foregroundStyle(Color.Paynext.primaryText)
                 RoundedTextFieldView(
                     text: $vm.routingNumber,
                     placeholder: vm.routingNumberPlaceholder,
                     isValid: $vm.routingNumberValidationState,
+                    title: vm.routingNumberTextField,
                     radius: 6
                 )
             }
             
             VStack(alignment: .leading, spacing: 6) {
-                Text(vm.payeeNameTextField)
-                    .font(.Paynext.footnoteMedium)
-                    .foregroundStyle(Color.Paynext.primaryText)
                 RoundedTextFieldView(
                     text: $vm.name,
                     placeholder: vm.payeeNamePlaceholder,
                     isValid: $vm.nameValidationState,
+                    title: vm.payeeNameTextField,
                     radius: 6
                 )
             }
             
             VStack(alignment: .leading, spacing: 6) {
-                Text(vm.amountTextField)
-                    .font(.Paynext.footnoteMedium)
-                    .foregroundStyle(Color.Paynext.primaryText)
                 RoundedTextFieldView(
                     text: $vm.amount,
                     placeholder: vm.amountPlaceholder,
                     isValid: $vm.amountValidationState,
+                    title: vm.amountTextField,
                     radius: 6,
                     leftIcon: "dollarsign"
                 )
