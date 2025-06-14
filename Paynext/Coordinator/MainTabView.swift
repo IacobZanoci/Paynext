@@ -65,11 +65,15 @@ struct MainTabView: View {
         
         TabView(selection: $selectedTab) {
             NavigationStack(path: $homeCoordinator.navigationPath) {
-                DashboardView(viewModel: DashboardViewModel())
-                    .navigationDestination(for: AppRoute.self) { route in
-                        homeCoordinator.view(route: route)
-                    }
-                    .environmentObject(homeCoordinator)
+                DashboardView(
+                    viewModel: DashboardViewModel(provider: MockTransactionProvider()),
+                    onSeeAllTap: { selectedTab = 1 },
+                    onTransferTap: { selectedTab = 2 }
+                )
+                .navigationDestination(for: AppRoute.self) { route in
+                    homeCoordinator.view(route: route)
+                }
+                .environmentObject(homeCoordinator)
             }
             .tabItem {
                 Image(systemName: selectedTab == 0 ? "house.fill" : "house")

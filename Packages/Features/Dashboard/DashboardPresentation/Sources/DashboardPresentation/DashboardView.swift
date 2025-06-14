@@ -6,26 +6,52 @@
 //
 
 import SwiftUI
+import DesignSystem
+import TransactionHistoryPresentation
+import TransactionHistoryDomain
 
 public struct DashboardView<ViewModel: DashboardViewModelProtocol>: View {
     
     // MARK: - Dependencies
     
-    @ObservedObject var viewModel: ViewModel
+    @StateObject private var viewModel: ViewModel
+    
+    // MARK: - Properties
+    
+    private let onSeeAllTap: () -> Void
+    private let onTransferTap: () -> Void
     
     // MARK: - Initializers
     
     public init(
-        viewModel: ViewModel
+        viewModel: @autoclosure @escaping () -> ViewModel,
+        onSeeAllTap: @escaping () -> Void = {},
+        onTransferTap: @escaping () -> Void = {}
     ) {
-        self.viewModel = viewModel
+        _viewModel = StateObject(wrappedValue: viewModel())
+        self.onSeeAllTap = onSeeAllTap
+        self.onTransferTap = onTransferTap
     }
     
     // MARK: - View
     
     public var body: some View {
-        VStack {
-            dashboard
+        ZStack {
+            Color.Paynext.background.ignoresSafeArea()
+            
+            ScrollView {
+                VStack(spacing: .extraLarge) {
+                    dashboard
+                    
+                    VStack {
+                        transactionHistory
+                    }
+                    .padding(.horizontal, .large)
+                }
+                .padding(.bottom, .medium)
+            }
+            .ignoresSafeArea(.container, edges: .top)
+            .scrollIndicators(.hidden)
         }
     }
 }
@@ -35,11 +61,11 @@ public struct DashboardView<ViewModel: DashboardViewModelProtocol>: View {
 extension DashboardView {
     
     private var dashboard: some View {
-        ScrollView {
+        VStack {
             VStack(spacing: .small) {
                 HStack {
                     VStack(alignment: .leading) {
-                        Text("Welcome back!")
+                        Text(viewModel.dashboardTitle)
                             .font(.Paynext.titleBold)
                             .foregroundStyle(Color.Paynext.accentText)
                             .padding(.vertical, .small)
@@ -53,7 +79,7 @@ extension DashboardView {
                     Spacer()
                 }
                 .padding(.large)
-                Image("welcomeImage", bundle: .module)
+                Image(viewModel.welcomeImageTitle, bundle: .module)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 140, height: 140)
@@ -71,7 +97,8 @@ extension DashboardView {
                             title: action.title,
                             titleFont: action.titleFont,
                             iconColor: action.iconColor,
-                            backgroundColor: action.backgroundColor
+                            backgroundColor: action.backgroundColor,
+                            action: action.handler(onTransferTap: onTransferTap)
                         )
                     }
                 }
@@ -90,7 +117,7 @@ extension DashboardView {
                     .multilineTextAlignment(.leading)
                     .layoutPriority(1)
                     
-                    Image("dashboardCardImage", bundle: .module)
+                    Image(viewModel.dashboardCardImageTitle, bundle: .module)
                         .resizable()
                         .scaledToFit()
                         .foregroundStyle(Color.Paynext.accentText)
@@ -102,7 +129,7 @@ extension DashboardView {
                 .cornerRadius(.large)
                 
                 Button(action: {}) {
-                    Image(systemName: "xmark")
+                    Image(systemName: viewModel.dashboardCardHideButtonTitle)
                         .resizable()
                         .frame(width: .small, height: .small)
                         .foregroundStyle(Color.Paynext.accentText)
@@ -110,20 +137,22 @@ extension DashboardView {
                 }
             }
             .padding(.horizontal, .large)
-            Spacer()
         }
-        .ignoresSafeArea(.container, edges: .top)
     }
     
+    // Custom Circle Button
     func circleButton(
         icon: String,
         title: String,
         titleFont: Font,
         iconColor: Color,
-        backgroundColor: Color
+        backgroundColor: Color,
+        action: @escaping () -> Void
     ) -> some View {
         VStack(spacing: .small) {
-            Button(action: {}) {
+            Button(action: {
+                action()
+            }) {
                 ZStack {
                     Circle()
                         .fill(backgroundColor)
@@ -141,10 +170,53 @@ extension DashboardView {
                 .foregroundStyle(Color.Paynext.primaryText)
         }
     }
+    
+    // Transaction History
+    private var transactionHistory: some View {
+        VStack {
+            HStack {
+                Text(viewModel.transactionsSectionTitle)
+                    .font(.Paynext.subheadlineMedium)
+                    .foregroundStyle(Color.Paynext.primaryText)
+                Spacer()
+                Button {
+                    onSeeAllTap()
+                } label: {
+                    HStack(spacing: .extraSmall) {
+                        Text(viewModel.transactionsSectionButtonTitle)
+                            .font(.Paynext.caption)
+                            .foregroundStyle(Color.Paynext.secondaryText)
+                        Image(systemName: viewModel.transactionsSectionButtonImageTitle)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: .small, height: .small)
+                            .foregroundStyle(Color.Paynext.secondaryText)
+                    }
+                }
+            }
+            
+            if viewModel.recentTransactions.isEmpty {
+                ProgressView()
+            } else {
+                LazyVStack(spacing: .medium) {
+                    ForEach(viewModel.recentTransactions) { row in
+                        TransactionRowView(viewModel: row)
+                    }
+                }
+            }
+        }
+        .task {
+            await viewModel.load()
+        }
+    }
 }
 
 // MARK: - Preview
 
-#Preview {
-    DashboardView(viewModel: MockDashboardViewModel())
+struct DashboardView_Previews: PreviewProvider {
+    static var previews: some View {
+        DashboardView(
+            viewModel: DashboardViewModel(provider: MockTransactionProvider())
+        )
+    }
 }

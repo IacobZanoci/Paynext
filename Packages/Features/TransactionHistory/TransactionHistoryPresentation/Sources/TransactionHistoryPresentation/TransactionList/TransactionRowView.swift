@@ -58,8 +58,6 @@ public struct TransactionRowView: View {
         transaction: mockTransaction
     )
     
-    return TransactionRowView(
-        viewModel: mockViewModel
-    )
-    .padding()
+    TransactionRowView(viewModel: mockViewModel)
+        .padding()
 }
