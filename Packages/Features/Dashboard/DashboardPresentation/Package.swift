@@ -13,7 +13,9 @@ let package = Package(
     dependencies: [
         .package(path: "../../Core/DesignSystem"),
         .package(path: "../../Core/Persistance"),
-        .package(path: "../LoginDomain")
+        .package(path: "../LoginDomain"),
+        .package(path: "../TransactionHistoryPresentation"),
+        .package(path: "../TransactionHistoryDomain")
     ],
     targets: [
         .target(
@@ -22,7 +24,9 @@ let package = Package(
                 .product(name: "DesignSystem", package: "DesignSystem"),
                 .product(name: "UIComponents", package: "DesignSystem"),
                 .product(name: "Persistance", package: "Persistance"),
-                .product(name: "LoginDomain", package: "LoginDomain")
+                .product(name: "LoginDomain", package: "LoginDomain"),
+                .product(name: "TransactionHistoryPresentation", package: "TransactionHistoryPresentation"),
+                .product(name: "TransactionHistoryDomain", package: "TransactionHistoryDomain")
             ],
             resources: [
                 .process("Resources")

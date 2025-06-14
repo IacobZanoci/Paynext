@@ -53,6 +53,11 @@ public extension Font {
         /// Equivalent to the system font with a `20.0` size.
         public static let subheadline = Font.system(size: 20.0)
         
+        /// Medium font used for subheadline elements.
+        ///
+        /// Equivalent to the system font with a `20.0` size, with a `medium` weight.
+        public static let subheadlineMedium = Font.system(size: 20.0, weight: .medium)
+        
         /// Bold font used for subheadline elements.
         ///
         /// Equivalent to the system font with a `20.0` size, with a `bold` weight.
