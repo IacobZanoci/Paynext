@@ -16,6 +16,7 @@ public struct TransactionHistoryView<ViewModel: TransactionHistoryViewModelProto
     
     @StateObject private var viewModel: ViewModel
     @State private var selectedTransaction: TransactionItem?
+    @State private var isFilterPresented: Bool = false
     
     // MARK: - Initializers
     
@@ -52,6 +53,9 @@ public struct TransactionHistoryView<ViewModel: TransactionHistoryViewModelProto
         .fullScreenCover(item: $selectedTransaction) { transaction in
             TransactionDetailsView(viewModel: TransactionRowViewModel(transaction: transaction))
         }
+        .sheet(isPresented: $isFilterPresented) {
+            TransactionFilterView(viewModel: TransactionFilterViewModel())
+        }
     }
 }
 
@@ -78,7 +82,7 @@ extension TransactionHistoryView {
                 CustomSearchBar()
                     .frame(width: 250)
                 Button {
-                    // TODO: Push modal view for filtering
+                    isFilterPresented = true
                 } label : {
                     Text(viewModel.filterButtonTitle)
                         .filledButton(.quartenary)
