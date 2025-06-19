@@ -10,7 +10,7 @@ import DesignSystem
 import PaymentPresentation
 import CredentialsValidator
 import TransactionHistoryPresentation
-import TransactionHistoryDomain
+import Transaction
 import SettingsPresentation
 import Persistance
 import DashboardPresentation
@@ -66,7 +66,7 @@ struct MainTabView: View {
         TabView(selection: $selectedTab) {
             NavigationStack(path: $homeCoordinator.navigationPath) {
                 DashboardView(
-                    viewModel: DashboardViewModel(provider: MockTransactionProvider()),
+                    viewModel: DashboardViewModel(service: MockTransactionService()),
                     onSeeAllTap: { selectedTab = 1 },
                     onTransferTap: { selectedTab = 2 }
                 )
@@ -85,7 +85,7 @@ struct MainTabView: View {
             
             NavigationStack(path: $historyCoordinator.navigationPath) {
                 TransactionHistoryView(
-                    viewModel: TransactionHistoryViewModel(provider: MockTransactionProvider())
+                    viewModel: TransactionHistoryViewModel(service: MockTransactionService())
                 )
                 .navigationDestination(for: AppRoute.self) { route in
                     historyCoordinator.view(route: route)

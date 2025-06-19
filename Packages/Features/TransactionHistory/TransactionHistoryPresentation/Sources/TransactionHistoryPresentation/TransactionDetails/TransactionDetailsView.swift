@@ -8,7 +8,7 @@
 import SwiftUI
 import DesignSystem
 import UIComponents
-import TransactionHistoryDomain
+import Transaction
 
 // MARK: - Expandable TextFields Enum
 

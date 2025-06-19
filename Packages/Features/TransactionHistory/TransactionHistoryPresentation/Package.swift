@@ -11,16 +11,14 @@ let package = Package(
             targets: ["TransactionHistoryPresentation"]),
     ],
     dependencies: [
-        .package(path: "../../Core/DesignSystem"),
-        .package(path: "../TransactionHistoryDomain")
+        .package(path: "../../Core/DesignSystem")
     ],
     targets: [
         .target(
             name: "TransactionHistoryPresentation",
             dependencies: [
                 .product(name: "DesignSystem", package: "DesignSystem"),
-                .product(name: "UIComponents", package: "DesignSystem"),
-                .product(name: "TransactionHistoryDomain", package: "TransactionHistoryDomain")
+                .product(name: "UIComponents", package: "DesignSystem")
             ]
         ),
         .testTarget(

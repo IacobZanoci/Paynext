@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import TransactionHistoryDomain
+import Transaction
 
 public final class TransactionHistoryViewModel: TransactionHistoryViewModelProtocol {
     
@@ -15,21 +15,21 @@ public final class TransactionHistoryViewModel: TransactionHistoryViewModelProto
     @Published public private(set) var rows: [TransactionRowViewModel] = []
     @Published public private(set) var errorMessage: String?
     
-    private let provider: TransactionProviding
+    private let service: TransactionService
     
     // MARK: - Initializers
     
     public init(
-        provider: TransactionProviding
+        service: TransactionService = MockTransactionService()
     ) {
-        self.provider = provider
+        self.service = service
     }
     
     // MARK: - Methods
     
     public func load() async {
         do {
-            let transactions = try await provider.fetchTransactions()
+            let transactions = try await service.fetchAllTransactions()
             self.rows = transactions
                 .sorted { $0.createdAt > $1.createdAt }
                 .map(TransactionRowViewModel.init)

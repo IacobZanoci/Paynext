@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 import DesignSystem
-import TransactionHistoryDomain
+import Transaction
 
 public struct TransactionRowViewModel: TransactionRowViewModelProtocol {
     

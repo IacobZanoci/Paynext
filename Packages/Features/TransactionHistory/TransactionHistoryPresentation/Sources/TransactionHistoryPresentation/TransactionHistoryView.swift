@@ -8,7 +8,7 @@
 import SwiftUI
 import DesignSystem
 import UIComponents
-import TransactionHistoryDomain
+import Transaction
 
 public struct TransactionHistoryView<ViewModel: TransactionHistoryViewModelProtocol>: View {
     
@@ -130,7 +130,7 @@ struct TransactionHistoryView_Preview: PreviewProvider {
     static var previews: some View {
         TransactionHistoryView(
             viewModel: TransactionHistoryViewModel(
-                provider: MockTransactionProvider()
+                service: MockTransactionService()
             )
         )
     }

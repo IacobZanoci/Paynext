@@ -3,23 +3,23 @@
 import PackageDescription
 
 let package = Package(
-    name: "TransactionHistoryDomain",
+    name: "Transaction",
     platforms: [.iOS(.v17)],
     products: [
         .library(
-            name: "TransactionHistoryDomain",
-            targets: ["TransactionHistoryDomain"]),
+            name: "Transaction",
+            targets: ["Transaction"]),
     ],
     targets: [
         .target(
-            name: "TransactionHistoryDomain",
+            name: "Transaction",
             resources: [
                 .process("Resources")
             ]
         ),
         .testTarget(
-            name: "TransactionHistoryDomainTests",
-            dependencies: ["TransactionHistoryDomain"]
+            name: "TransactionTests",
+            dependencies: ["Transaction"]
         ),
     ]
 )

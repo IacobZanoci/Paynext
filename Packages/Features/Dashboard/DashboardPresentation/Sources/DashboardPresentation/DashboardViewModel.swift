@@ -9,13 +9,13 @@ import Foundation
 import LoginDomain
 import Persistance
 import TransactionHistoryPresentation
-import TransactionHistoryDomain
+import Transaction
 
 public final class DashboardViewModel: DashboardViewModelProtocol {
     
     // MARK: - Dependencies
     
-    private let provider: TransactionProviding
+    private let service: TransactionService
     
     // MARK: - Properties
     
@@ -43,16 +43,16 @@ public final class DashboardViewModel: DashboardViewModelProtocol {
     // MARK: - Initializers
     
     public init(
-        provider: TransactionProviding
+        service: TransactionService
     ) {
-        self.provider = provider
+        self.service = service
     }
     
     // MARK: - Methods
     
     public func load() async {
         do {
-            let transactions = try await provider.fetchTransactions()
+            let transactions = try await service.fetchAllTransactions()
             let sorted = Array(transactions.sorted { $0.createdAt > $1.createdAt }.prefix(3))
             self.recentTransactions = sorted.map { TransactionRowViewModel(transaction: $0) }
         } catch {
