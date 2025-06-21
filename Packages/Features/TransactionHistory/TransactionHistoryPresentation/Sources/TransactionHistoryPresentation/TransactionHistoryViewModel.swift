@@ -16,19 +16,31 @@ public final class TransactionHistoryViewModel: TransactionHistoryViewModelProto
     @Published public private(set) var rows: [TransactionRowViewModel] = []
     @Published public private(set) var errorMessage: String?
     
+    // MARK: - Dependencies
+    
     private let service: TransactionService
-    private let filterService = TransactionFilterService()
+    private let filterService: TransactionFilterService
+    private let sortingService: TransactionSortingServiceProtocol
+    
+    // MARK: - Internal State
+    
     private var allTransactions: [TransactionItem] = []
+    private var currentFilter: TransactionFilterCriteria?
+    private var currentSorting: TransactionSortingOption = .dateDescending
     
     // MARK: - Initializers
     
     public init(
-        service: TransactionService = MockTransactionService()
+        service: TransactionService = MockTransactionService(),
+        filterService: TransactionFilterService = TransactionFilterService(),
+        sortingService: TransactionSortingServiceProtocol = TransactionSortingService()
     ) {
         self.service = service
+        self.filterService = filterService
+        self.sortingService = sortingService
     }
     
-    // MARK: - Methods
+    // MARK: - Data Loading
     
     public func load() async {
         do {
@@ -42,12 +54,37 @@ public final class TransactionHistoryViewModel: TransactionHistoryViewModelProto
         }
     }
     
+    // MARK: - Filtering
+    
     public func applyFiltersLocally(_ criteria: TransactionFilterCriteria) {
+        // store filtering
+        self.currentFilter = criteria
+        
         let filtered = filterService
             .apply(filters: criteria, to: allTransactions)
-            .sorted { $0.createdAt > $1.createdAt }
-            .map(TransactionRowViewModel.init)
-        self.rows = filtered
+        
+        applySorting(to: filtered)
+    }
+    
+    // MARK: - Sorting
+    
+    public func setSortOption(_ option: TransactionSortingOption) {
+        currentSorting = option
+        sortButtonTitle = option.label
+        applyFiltersAndSorting()
+    }
+    
+    private func applySorting(to items: [TransactionItem]) {
+        let sorted = sortingService.sort(items, by: currentSorting)
+        self.rows = sorted.map(TransactionRowViewModel.init)
+    }
+    
+    private func applyFiltersAndSorting() {
+        let filtered = currentFilter.map {
+            filterService.apply(filters: $0, to: allTransactions)
+        } ?? allTransactions
+        
+        applySorting(to: filtered)
     }
     
     // MARK: - Titles
@@ -60,4 +97,8 @@ public final class TransactionHistoryViewModel: TransactionHistoryViewModelProto
     @Published public var noDataMatchFilterCriteriaMessage: String = "No data matches the filtered criteria.\nPlease adjust the filters or reset them."
     @Published public var noTransactionsImageTitle: String = "text.page.badge.magnifyingglass"
     @Published public var noTransactionsTitle: String = "No Transactions"
+    @Published public var dateDescendingOptionTitle: String = "Date: Newest > Oldest"
+    @Published public var dateAscendingOptionTitle: String = "Date: Oldest > Newest"
+    @Published public var amountDescendingOptionTitle: String = "Amount: Highest > Lowest"
+    @Published public var amountAscendingOptionTitle: String = "Amount: Lowest > Highest"
 }

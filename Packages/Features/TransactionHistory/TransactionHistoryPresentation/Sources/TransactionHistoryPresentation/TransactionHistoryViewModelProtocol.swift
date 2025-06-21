@@ -11,15 +11,10 @@ import Transaction
 @MainActor
 public protocol TransactionHistoryViewModelProtocol: ObservableObject {
     
-    // MARK: - Properties
+    // MARK: - Data
     
     var rows: [TransactionRowViewModel] { get }
     var errorMessage: String? { get }
-    
-    // MARK: - Methods
-    
-    func load() async
-    func applyFiltersLocally(_ criteria: TransactionFilterCriteria)
     
     // MARK: - Titles
     
@@ -31,4 +26,14 @@ public protocol TransactionHistoryViewModelProtocol: ObservableObject {
     var noDataMatchFilterCriteriaMessage: String { get }
     var noTransactionsImageTitle: String { get }
     var noTransactionsTitle: String { get }
+    var dateDescendingOptionTitle: String { get }
+    var dateAscendingOptionTitle: String { get }
+    var amountDescendingOptionTitle: String { get }
+    var amountAscendingOptionTitle: String { get }
+    
+    // MARK: - Actions
+    
+    func load() async
+    func applyFiltersLocally(_ criteria: TransactionFilterCriteria)
+    func setSortOption(_ option: TransactionSortingOption)
 }
