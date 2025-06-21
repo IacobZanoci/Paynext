@@ -22,17 +22,20 @@ struct MainTabView: View {
     @StateObject private var homeCoordinator = AppCoordinator()
     @StateObject private var historyCoordinator = AppCoordinator()
     @StateObject private var paymentCoordinator = AppCoordinator()
-    @EnvironmentObject private var accountCoordinator: AppCoordinator
+    @StateObject private var accountCoordinator = AppCoordinator()
     @StateObject private var paymentVM = PaymentViewModel(
         credentialsValidator: CredentialsValidator()
     )
     @EnvironmentObject private var themeManager: ThemeManager
+    @StateObject private var settingsVM: SettingsViewModel
     
     @State private var selectedTab = 0
     
     // MARK: - Initializers
     
-    init() {
+    init(
+        coordinator: AppCoordinator
+    ) {
         let appearance = UITabBarAppearance()
         let itemAppearance = UITabBarItemAppearance()
         
@@ -55,6 +58,20 @@ struct MainTabView: View {
         appearance.stackedLayoutAppearance = itemAppearance
         UITabBar.appearance().standardAppearance = appearance
         UITabBar.appearance().scrollEdgeAppearance = appearance
+        
+        _accountCoordinator = StateObject(wrappedValue: coordinator)
+        
+        let settingsVM = SettingsViewModel(
+            persistenceStorage: UserDefaultsManager(),
+            onLogout: { [weak coordinator] in
+                coordinator?.setRoot(to: .login)
+            },
+            onToggleAction: { [weak accountCoordinator = coordinator] toEnable in
+                guard let coordinator = accountCoordinator else { return }
+                coordinator.navigate(to: toEnable ? .enterNewPin : .disablePin)
+            }
+        )
+        _settingsVM = StateObject(wrappedValue: settingsVM)
     }
     
     // MARK: - View
@@ -71,7 +88,10 @@ struct MainTabView: View {
                     onTransferTap: { selectedTab = 2 }
                 )
                 .navigationDestination(for: AppRoute.self) { route in
-                    homeCoordinator.view(route: route)
+                    homeCoordinator.view(
+                        route: route,
+                        coordinator: homeCoordinator
+                    )
                 }
                 .environmentObject(homeCoordinator)
             }
@@ -88,7 +108,10 @@ struct MainTabView: View {
                     viewModel: TransactionHistoryViewModel(service: MockTransactionService())
                 )
                 .navigationDestination(for: AppRoute.self) { route in
-                    historyCoordinator.view(route: route)
+                    historyCoordinator.view(
+                        route: route,
+                        coordinator: historyCoordinator
+                    )
                 }
                 .environmentObject(historyCoordinator)
             }
@@ -106,7 +129,10 @@ struct MainTabView: View {
                     onResetToStart: { paymentVM.paymentState = nil }
                 )
                 .navigationDestination(for: AppRoute.self) { route in
-                    paymentCoordinator.view(route: route)
+                    paymentCoordinator.view(
+                        route: route,
+                        coordinator: paymentCoordinator
+                    )
                 }
                 .environmentObject(paymentCoordinator)
             }
@@ -120,19 +146,14 @@ struct MainTabView: View {
             
             NavigationStack(path: $accountCoordinator.navigationPath) {
                 SettingsView(
-                    viewModel: SettingsViewModel(
-                        persistenceStorage: UserDefaultsManager(),
-                        onLogout: { [weak accountCoordinator] in
-                            guard let coordinator = accountCoordinator else { return }
-                            Task {
-                                coordinator.setRoot(to: .login)
-                            }
-                        }
-                    ),
+                    viewModel: settingsVM,
                     themeManager: themeManager
                 )
                 .navigationDestination(for: AppRoute.self) { route in
-                    accountCoordinator.view(route: route)
+                    accountCoordinator.view(
+                        route: route,
+                        coordinator: accountCoordinator
+                    )
                 }
                 .environmentObject(accountCoordinator)
                 .environmentObject(themeManager)
@@ -146,9 +167,8 @@ struct MainTabView: View {
     }
 }
 
-
 #Preview {
-    MainTabView()
+    MainTabView(coordinator: AppCoordinator())
         .environmentObject(AppCoordinator())
         .environmentObject(ThemeManager())
 }

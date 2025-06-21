@@ -9,6 +9,7 @@ import SwiftUI
 import DesignSystem
 import UIComponents
 import SettingsDomain
+import Persistance
 
 public struct SettingsView<ViewModel: SettingsViewModelProtocol, ThemeManagerType: ThemeManaging>: View {
     
@@ -36,11 +37,14 @@ public struct SettingsView<ViewModel: SettingsViewModelProtocol, ThemeManagerTyp
             VStack {
                 userDetails
                 
-                VStack {
+                VStack(spacing: 0) {
                     settingsSection
+                    
                     Divider()
                         .padding()
+                    
                     darkModeSetting
+                    pinAccess
                     logoutButton
                 }
                 .padding(.horizontal, .medium)
@@ -149,6 +153,27 @@ extension  SettingsView {
         .background(Color.Paynext.background)
     }
     
+    // MARK: - Pin Access
+    
+    private var pinAccess: some View {
+        HStack {
+            Text(viewModel.pinAccessButton)
+                .font(.Paynext.footnoteMedium)
+                .foregroundStyle(Color.Paynext.primaryText)
+            Spacer()
+            Toggle(isOn: .constant(viewModel.isOn)) {}
+                .labelsHidden()
+                .tint(Color.Paynext.secondaryButton)
+                .disabled(true)
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    viewModel.onToggle(toEnable: !viewModel.isOn)
+                }
+        }
+        .padding(.medium)
+        .background(Color.Paynext.background)
+    }
+    
     // MARK: - Logout Button
     
     private var logoutButton: some View {
@@ -174,7 +199,13 @@ extension  SettingsView {
 }
 
 final class MockSettingsViewModel: SettingsViewModelProtocol {
+    
+    @Published var isOn: Bool = false
+    var pinAccessButton: String = "Use PIN access"
+    
     func onLogout() async {}
+    func onToggle(toEnable: Bool) {}
+    func refreshPinStatus() {}
 }
 
 final class MockThemeManager: ThemeManaging, ObservableObject {
