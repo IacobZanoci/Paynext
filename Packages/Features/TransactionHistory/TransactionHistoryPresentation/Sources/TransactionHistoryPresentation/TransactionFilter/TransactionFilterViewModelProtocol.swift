@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import Transaction
 
 @MainActor
 public protocol TransactionFilterViewModelProtocol: ObservableObject {
@@ -20,8 +21,8 @@ public protocol TransactionFilterViewModelProtocol: ObservableObject {
     var myAccountNumber: String { get set }
     var payeeAccountNumber: String { get set }
     var payeeName: String { get set }
-    var transactionStatus: String { get set }
-    var allStatuses: [String] { get }
+    var transactionStatus: TransactionStatus? { get set }
+    var allStatuses: [TransactionStatus] { get }
     var hideCompleted: Bool { get set }
     var dateRange: ClosedRange<Date> { get set }
     
@@ -66,8 +67,5 @@ public protocol TransactionFilterViewModelProtocol: ObservableObject {
     // MARK: - Actions
     
     func reset()
-    
-    // MARK: - Date Formatting
-    
-    func formattedDate(_ date: Date) -> String
+    func applyFilters()
 }

@@ -147,14 +147,14 @@ extension TransactionFilterView {
             
             Menu {
                 ForEach(viewModel.allStatuses, id: \.self) { status in
-                    Button(status) {
+                    Button(status.status) {
                         viewModel.transactionStatus = status
                     }
                 }
             } label: {
                 dropdownField(
                     title: viewModel.transactionStatusMenuTitle,
-                    value: viewModel.transactionStatus,
+                    value: viewModel.transactionStatus?.status ?? "",
                     icon: viewModel.transactionStatusMenuIconTitle,
                     onTap: {}
                 )
@@ -176,11 +176,11 @@ extension TransactionFilterView {
             Spacer()
             
             HStack {
-                Text(viewModel.formattedDate(viewModel.dateRange.lowerBound))
+                Text(formattedDate(viewModel.dateRange.lowerBound))
                     .foregroundStyle(Color.Paynext.contrastText)
                 Text(viewModel.dateRangePickerDividerTitle)
                     .foregroundStyle(Color.Paynext.contrastText)
-                Text(viewModel.formattedDate(viewModel.dateRange.upperBound))
+                Text(formattedDate(viewModel.dateRange.upperBound))
                     .foregroundStyle(Color.Paynext.contrastText)
             }
             .lineLimit(1)
@@ -250,7 +250,7 @@ extension TransactionFilterView {
         VStack(spacing: .medium) {
             HStack(spacing: .large) {
                 Button {
-                    // TODO: Apply Filters
+                    viewModel.applyFilters()
                     dismiss()
                 } label: {
                     Text(viewModel.applyFiltersButtonTitle)
@@ -354,4 +354,14 @@ extension TransactionFilterView {
     TransactionFilterView(
         viewModel: TransactionFilterViewModel()
     )
+}
+
+// MARK: - Date Formatting Helper
+
+extension TransactionFilterView {
+    private func formattedDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "d/MM/yyyy"
+        return formatter.string(from: date)
+    }
 }

@@ -53,8 +53,9 @@ public struct TransactionItem: Identifiable, Codable, Equatable, Sendable {
     
     // MARK: - Date Conversion
     
-    private var createdAtDate: Date {
+    public var createdAtDate: Date {
         let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         formatter.timeZone = TimeZone(secondsFromGMT: 0)
         return formatter.date(from: createdAt) ?? Date.distantPast

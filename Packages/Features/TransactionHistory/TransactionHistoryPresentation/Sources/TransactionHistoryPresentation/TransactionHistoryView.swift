@@ -38,7 +38,11 @@ public struct TransactionHistoryView<ViewModel: TransactionHistoryViewModelProto
                     transactionToolbarView
                     
                     if viewModel.rows.isEmpty {
-                        ProgressView()
+                        if viewModel.errorMessage != nil {
+                            errorFetchTransactionsView
+                        } else {
+                            noDataMatchFilterCriteriaView
+                        }
                     } else {
                         transactionListView
                     }
@@ -54,7 +58,13 @@ public struct TransactionHistoryView<ViewModel: TransactionHistoryViewModelProto
             TransactionDetailsView(viewModel: TransactionRowViewModel(transaction: transaction))
         }
         .sheet(isPresented: $isFilterPresented) {
-            TransactionFilterView(viewModel: TransactionFilterViewModel())
+            TransactionFilterView(
+                viewModel: TransactionFilterViewModel(
+                    onApply: { criteria in
+                        viewModel.applyFiltersLocally(criteria)
+                    }
+                )
+            )
         }
     }
 }
@@ -121,6 +131,36 @@ extension TransactionHistoryView {
             }
         }
         .scrollIndicators(.hidden)
+    }
+    
+    private var errorFetchTransactionsView: some View {
+        VStack {
+            Spacer()
+            Text(viewModel.errorFetchTransactionMessage)
+                .font(.Paynext.footnoteMedium)
+                .foregroundStyle(Color.Paynext.secondaryText)
+            Spacer()
+        }
+    }
+    
+    private var noDataMatchFilterCriteriaView: some View {
+        VStack(spacing: .medium) {
+            Spacer()
+            Image(systemName: viewModel.noTransactionsImageTitle)
+                .resizable()
+                .scaledToFit()
+                .foregroundStyle(Color.Paynext.primaryText)
+                .frame(width: 120, height: 80)
+            Text(viewModel.noTransactionsTitle)
+                .font(.Paynext.headlineBold)
+                .foregroundStyle(Color.Paynext.primaryText)
+            Text(viewModel.noDataMatchFilterCriteriaMessage)
+                .multilineTextAlignment(.center)
+                .font(.Paynext.footnoteMedium)
+                .foregroundStyle(Color.Paynext.secondaryText)
+                .padding(.bottom, 180)
+            Spacer()
+        }
     }
 }
 

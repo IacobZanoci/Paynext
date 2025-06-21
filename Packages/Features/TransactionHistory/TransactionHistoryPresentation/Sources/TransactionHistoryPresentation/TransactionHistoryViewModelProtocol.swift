@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Transaction
 
 @MainActor
 public protocol TransactionHistoryViewModelProtocol: ObservableObject {
@@ -18,6 +19,7 @@ public protocol TransactionHistoryViewModelProtocol: ObservableObject {
     // MARK: - Methods
     
     func load() async
+    func applyFiltersLocally(_ criteria: TransactionFilterCriteria)
     
     // MARK: - Titles
     
@@ -25,4 +27,8 @@ public protocol TransactionHistoryViewModelProtocol: ObservableObject {
     var filterButtonTitle: String { get }
     var sortButtonTitle: String { get }
     var sortButtonImageTitle: String { get }
+    var errorFetchTransactionMessage: String { get }
+    var noDataMatchFilterCriteriaMessage: String { get }
+    var noTransactionsImageTitle: String { get }
+    var noTransactionsTitle: String { get }
 }

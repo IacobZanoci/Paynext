@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Transaction
 
 public enum FilterTab: String, CaseIterable, Equatable {
     
@@ -24,14 +25,15 @@ public final class TransactionFilterViewModel: TransactionFilterViewModelProtoco
     @Published public var myAccountNumber: String = ""
     @Published public var payeeAccountNumber: String = ""
     @Published public var payeeName: String = ""
-    @Published public var transactionStatus: String = ""
-    @Published public var allStatuses: [String] = ["COMPLETED", "PROCESSING", "FAILED", "REJECTED"]
+    @Published public var transactionStatus: TransactionStatus? = nil
+    @Published public var allStatuses: [TransactionStatus] = TransactionStatus.allCases
     @Published public var hideCompleted: Bool = false
     @Published public var dateRange: ClosedRange<Date>
     
     // MARK: - Constants
     
     private let defaultDateRangeValue: ClosedRange<Date>
+    private let onApply: (TransactionFilterCriteria) -> Void
     
     // MARK: - State
     
@@ -39,7 +41,7 @@ public final class TransactionFilterViewModel: TransactionFilterViewModelProtoco
         !myAccountNumber.isEmpty ||
         !payeeAccountNumber.isEmpty ||
         !payeeName.isEmpty ||
-        !transactionStatus.isEmpty ||
+        transactionStatus != nil ||
         hideCompleted ||
         dateRange != defaultDateRangeValue
     }
@@ -82,7 +84,11 @@ public final class TransactionFilterViewModel: TransactionFilterViewModelProtoco
     
     // MARK: - Initializers
     
-    public init() {
+    public init(
+        onApply: @escaping (TransactionFilterCriteria) -> Void = { _ in }
+    ) {
+        self.onApply = onApply
+        
         let calendar = Calendar.current
         let now = Date()
         
@@ -106,16 +112,20 @@ public final class TransactionFilterViewModel: TransactionFilterViewModelProtoco
         myAccountNumber = ""
         payeeAccountNumber = ""
         payeeName = ""
-        transactionStatus = ""
+        transactionStatus = nil
         hideCompleted = false
         dateRange = defaultDateRangeValue
     }
     
-    // MARK: - Date Formatting
-    
-    public func formattedDate(_ date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "d/MM/yyyy"
-        return formatter.string(from: date)
+    public func applyFilters() {
+        let criteria = TransactionFilterCriteria(
+            myAccountNumber: myAccountNumber,
+            payeeAccountNumber: payeeAccountNumber,
+            payeeName: payeeName,
+            transactionStatus: transactionStatus,
+            dateRange: dateRange,
+            hideCompleted: hideCompleted
+        )
+        onApply(criteria)
     }
 }

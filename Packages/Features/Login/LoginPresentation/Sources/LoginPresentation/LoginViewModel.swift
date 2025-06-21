@@ -113,8 +113,6 @@ public class LoginViewModel: LoginViewModelProtocol {
     // MARK: - Events
     
     public func onLogin() async {
-        print("Tapped `Log in` button")
-        
         let user = PaynextUser(
             userName: userName,
             accountNumber: accountNumber,
