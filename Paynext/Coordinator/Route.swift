@@ -10,5 +10,9 @@ protocol Route: Hashable {}
 enum AppRoute: Route {
     
     case login
+    case enterPin
+    case enterNewPin
+    case disablePin
+    
     case main
 }

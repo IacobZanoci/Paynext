@@ -12,19 +12,25 @@ import SwiftUI
 /// Uses NavigationStack to display the view that should be used as the main entry point.
 struct AppRootView: View {
     
-    @StateObject private var coordinator = AppCoordinator()
-    @StateObject private var themeManager = ThemeManager()
+    @EnvironmentObject var appCoordinator: AppCoordinator
+    @EnvironmentObject var themeManager: ThemeManager
     
     var body: some View {
         
-        NavigationStack(path: $coordinator.navigationPath) {
-            coordinator.view(route: coordinator.currentRoute)
-                .navigationDestination(for: AppRoute.self) { route in
-                    coordinator.view(route: route)
+        Group {
+            switch appCoordinator.currentRoute {
+            case .main:
+                MainTabView(coordinator: appCoordinator)
+                
+            default:
+                NavigationStack(path: $appCoordinator.navigationPath) {
+                    appCoordinator.view(route: appCoordinator.currentRoute, coordinator: appCoordinator)
+                        .navigationDestination(for: AppRoute.self) { route in
+                            appCoordinator.view(route: route, coordinator: appCoordinator)
+                        }
                 }
+            }
         }
-        .environmentObject(coordinator)
-        .environmentObject(themeManager)
         .preferredColorScheme(themeManager.isDarkModeEnabled ? .dark : .light)
     }
 }

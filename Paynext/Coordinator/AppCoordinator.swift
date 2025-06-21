@@ -9,6 +9,7 @@ import SwiftUI
 import LoginPresentation
 import Persistance
 import CredentialsValidator
+import AuthenticationPresentation
 
 /// A top-level coordinator that manages app-wide navigation flows.
 public final class AppCoordinator: Coordinator, ObservableObject {
@@ -23,6 +24,17 @@ public final class AppCoordinator: Coordinator, ObservableObject {
     /// Changing this value replaces the base view in the NavigationStack.
     @Published var currentRoute: AppRoute = .login
     
+    // MARK: - Initializers
+    
+    @MainActor
+    init() {
+        if let savedPin: String = UserDefaultsManager.shared.get(forKey: .paynextUserSecurePin), !savedPin.isEmpty {
+            currentRoute = .enterPin
+        } else {
+            currentRoute = .login
+        }
+    }
+    
     // MARK: - Navigation Methods
     
     /// Pushes a new view onto the NavigationStack.
@@ -33,7 +45,9 @@ public final class AppCoordinator: Coordinator, ObservableObject {
     
     /// Removes the last view from the NavigationStack.
     func navigateBack() {
-        navigationPath.removeLast()
+        if !navigationPath.isEmpty {
+            navigationPath.removeLast()
+        }
     }
     
     /// Removes all pushed views but keeps the current root view.
@@ -54,21 +68,76 @@ public final class AppCoordinator: Coordinator, ObservableObject {
         await self.setRoot(to: .main)
     }
     
-    /// Builds and returns the view associated with a given app route.
-    @MainActor @ViewBuilder
-    func view(route: AppRoute) -> some View {
+    @MainActor
+    func createAuthenticationViewModel(
+        flow: AuthenticationFlow,
+        coordinator: AppCoordinator
+    ) -> AuthenticationViewModel {
+        let vm = AuthenticationViewModel(
+            flow: flow,
+            onPinSuccess: {
+                Task {
+                    coordinator.navigateBack()
+                }
+            },
+            onPin: {
+                Task {
+                    await coordinator.handleLogin()
+                }
+            }
+        )
+        return vm
+    }
+    
+    @MainActor
+    func view(
+        route: AppRoute,
+        coordinator: AppCoordinator
+    ) -> some View {
         switch route {
+        case .enterNewPin:
+            return AnyView(
+                AuthenticationView(
+                    viewModel: createAuthenticationViewModel(
+                        flow: .setupNewPin,
+                        coordinator: coordinator
+                    )
+                )
+            )
+            
+        case .disablePin:
+            return AnyView(
+                AuthenticationView(
+                    viewModel: createAuthenticationViewModel(
+                        flow: .disableFromSettings,
+                        coordinator: coordinator
+                    )
+                )
+            )
+            
+        case .enterPin:
+            return AnyView(
+                AuthenticationView(
+                    viewModel: createAuthenticationViewModel(
+                        flow: .authenticate,
+                        coordinator: coordinator
+                    )
+                )
+            )
+            
         case .login:
-            LoginView(
-                viewModel: LoginViewModel(
-                    persistentStorage: UserDefaultsManager(),
-                    onLogin: { await self.handleLogin() },
-                    credentialsValidator: CredentialsValidator()
+            return AnyView(
+                LoginView(
+                    viewModel: LoginViewModel(
+                        persistentStorage: UserDefaultsManager(),
+                        onLogin: { await coordinator.handleLogin() },
+                        credentialsValidator: CredentialsValidator()
+                    )
                 )
             )
             
         case .main:
-            MainTabView()
+            fatalError("MainTabView")
         }
     }
 }
