@@ -98,12 +98,23 @@ extension TransactionHistoryView {
                         .filledButton(.quartenary)
                 }
             }
-            Button {
-                // TODO: Implement transaction sorting logic
+            Menu {
+                Button(viewModel.dateDescendingOptionTitle) {
+                    viewModel.setSortOption(.dateDescending)
+                }
+                Button(viewModel.dateAscendingOptionTitle) {
+                    viewModel.setSortOption(.dateAscending)
+                }
+                Button(viewModel.amountDescendingOptionTitle) {
+                    viewModel.setSortOption(.amountDescending)
+                }
+                Button(viewModel.amountAscendingOptionTitle) {
+                    viewModel.setSortOption(.amountAscending)
+                }
             } label : {
                 HStack {
                     Text(viewModel.sortButtonTitle)
-                        .font(.Paynext.caption)
+                        .font(.Paynext.footnote)
                         .foregroundStyle(Color.Paynext.primaryText.opacity(0.5))
                     Image(systemName: viewModel.sortButtonImageTitle)
                         .resizable()
@@ -112,6 +123,7 @@ extension TransactionHistoryView {
                         .foregroundStyle(Color.Paynext.primaryText.opacity(0.5))
                     Spacer()
                 }
+                .padding(.bottom, .small)
             }
         }
     }
