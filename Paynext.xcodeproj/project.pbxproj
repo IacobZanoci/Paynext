@@ -11,6 +11,7 @@
 		4225EC942DF3636500CC9C6A /* PaymentPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = 4225EC932DF3636500CC9C6A /* PaymentPresentation */; };
 		4243BB632DE1D4B500CA1504 /* Persistance in Frameworks */ = {isa = PBXBuildFile; productRef = 4243BB622DE1D4B500CA1504 /* Persistance */; };
 		4243BB922DE7707900CA1504 /* LoginPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = 4243BB912DE7707900CA1504 /* LoginPresentation */; };
+		4253E5132E04850C0016EB8D /* Transaction in Frameworks */ = {isa = PBXBuildFile; productRef = 4253E5122E04850C0016EB8D /* Transaction */; };
 		4278CA5B2DFB6180003C4010 /* SettingsPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = 4278CA5A2DFB6180003C4010 /* SettingsPresentation */; };
 		4278CA8C2DFC9FAA003C4010 /* SettingsDomain in Frameworks */ = {isa = PBXBuildFile; productRef = 4278CA8B2DFC9FAA003C4010 /* SettingsDomain */; };
 		42A0D43D2DD6596200566812 /* NetworkClient in Frameworks */ = {isa = PBXBuildFile; productRef = 42A0D43C2DD6596200566812 /* NetworkClient */; };
@@ -19,10 +20,10 @@
 		42B80B382DFD5BCA000A486E /* DashboardPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = 42B80B372DFD5BCA000A486E /* DashboardPresentation */; };
 		42BF1D072DF589170058C328 /* CredentialsValidator in Frameworks */ = {isa = PBXBuildFile; productRef = 42BF1D062DF589170058C328 /* CredentialsValidator */; };
 		42BF1D382DF5C58B0058C328 /* TransactionHistoryPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = 42BF1D372DF5C58B0058C328 /* TransactionHistoryPresentation */; };
-		42BF1D672DF5CC260058C328 /* TransactionHistoryDomain in Frameworks */ = {isa = PBXBuildFile; productRef = 42BF1D662DF5CC260058C328 /* TransactionHistoryDomain */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		421912F82E0484E500D82A6B /* Transaction */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Transaction; sourceTree = "<group>"; };
 		4225EBAF2DEB4D3A00CC9C6A /* LoginDomain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LoginDomain; sourceTree = "<group>"; };
 		4225EC922DF34AC600CC9C6A /* PaymentPresentation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PaymentPresentation; sourceTree = "<group>"; };
 		4239625E2DCFD85800F32002 /* Paynext.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Paynext.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -35,7 +36,6 @@
 		42B80B362DFD5BB2000A486E /* DashboardPresentation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DashboardPresentation; sourceTree = "<group>"; };
 		42BF1D052DF585890058C328 /* CredentialsValidator */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = CredentialsValidator; sourceTree = "<group>"; };
 		42BF1D362DF5C5840058C328 /* TransactionHistoryPresentation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = TransactionHistoryPresentation; sourceTree = "<group>"; };
-		42BF1D652DF5CC1F0058C328 /* TransactionHistoryDomain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = TransactionHistoryDomain; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -65,8 +65,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				42BF1D072DF589170058C328 /* CredentialsValidator in Frameworks */,
+				4253E5132E04850C0016EB8D /* Transaction in Frameworks */,
 				4225EC942DF3636500CC9C6A /* PaymentPresentation in Frameworks */,
-				42BF1D672DF5CC260058C328 /* TransactionHistoryDomain in Frameworks */,
 				4278CA8C2DFC9FAA003C4010 /* SettingsDomain in Frameworks */,
 				4225EBB12DEB4DD500CC9C6A /* LoginDomain in Frameworks */,
 				4243BB632DE1D4B500CA1504 /* Persistance in Frameworks */,
@@ -151,6 +151,7 @@
 		42A0D4392DD657DD00566812 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				421912F82E0484E500D82A6B /* Transaction */,
 				42BF1D052DF585890058C328 /* CredentialsValidator */,
 				4243BB582DE1CED900CA1504 /* Persistance */,
 				42A0D4592DD7AA4700566812 /* DesignSystem */,
@@ -177,7 +178,6 @@
 		42BF1D352DF5C55F0058C328 /* TransactionHistory */ = {
 			isa = PBXGroup;
 			children = (
-				42BF1D652DF5CC1F0058C328 /* TransactionHistoryDomain */,
 				42BF1D362DF5C5840058C328 /* TransactionHistoryPresentation */,
 			);
 			path = TransactionHistory;
@@ -212,10 +212,10 @@
 				4225EC932DF3636500CC9C6A /* PaymentPresentation */,
 				42BF1D062DF589170058C328 /* CredentialsValidator */,
 				42BF1D372DF5C58B0058C328 /* TransactionHistoryPresentation */,
-				42BF1D662DF5CC260058C328 /* TransactionHistoryDomain */,
 				4278CA5A2DFB6180003C4010 /* SettingsPresentation */,
 				4278CA8B2DFC9FAA003C4010 /* SettingsDomain */,
 				42B80B372DFD5BCA000A486E /* DashboardPresentation */,
+				4253E5122E04850C0016EB8D /* Transaction */,
 			);
 			productName = Paynext;
 			productReference = 4239625E2DCFD85800F32002 /* Paynext.app */;
@@ -505,6 +505,10 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = LoginPresentation;
 		};
+		4253E5122E04850C0016EB8D /* Transaction */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Transaction;
+		};
 		4278CA5A2DFB6180003C4010 /* SettingsPresentation */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SettingsPresentation;
@@ -536,10 +540,6 @@
 		42BF1D372DF5C58B0058C328 /* TransactionHistoryPresentation */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = TransactionHistoryPresentation;
-		};
-		42BF1D662DF5CC260058C328 /* TransactionHistoryDomain */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = TransactionHistoryDomain;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

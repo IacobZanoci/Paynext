@@ -22,9 +22,6 @@ let package = Package(
                 .product(name: "DesignSystem", package: "DesignSystem"),
                 .product(name: "UIComponents", package: "DesignSystem"),
                 .product(name: "CredentialsValidator", package: "CredentialsValidator")
-            ],
-            resources: [
-                .process("Resources")
             ]
         ),
         .testTarget(

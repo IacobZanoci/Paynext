@@ -8,7 +8,7 @@
 import SwiftUI
 import DesignSystem
 import TransactionHistoryPresentation
-import TransactionHistoryDomain
+import Transaction
 
 public struct DashboardView<ViewModel: DashboardViewModelProtocol>: View {
     
@@ -216,7 +216,7 @@ extension DashboardView {
 struct DashboardView_Previews: PreviewProvider {
     static var previews: some View {
         DashboardView(
-            viewModel: DashboardViewModel(provider: MockTransactionProvider())
+            viewModel: DashboardViewModel(service: MockTransactionService())
         )
     }
 }

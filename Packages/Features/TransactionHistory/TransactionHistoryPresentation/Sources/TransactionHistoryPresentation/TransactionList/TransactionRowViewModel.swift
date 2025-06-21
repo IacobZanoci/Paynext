@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 import DesignSystem
-import TransactionHistoryDomain
+import Transaction
 
 public struct TransactionRowViewModel: TransactionRowViewModelProtocol {
     
@@ -31,17 +31,21 @@ public struct TransactionRowViewModel: TransactionRowViewModelProtocol {
     public var title: String { transaction.payeeName }
     
     public var formattedDate: String {
-        
         let input = DateFormatter()
+        input.locale = Locale(identifier: "en_US_POSIX")
+        input.timeZone = TimeZone(secondsFromGMT: 0)
         input.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         
         if let date = input.date(from: transaction.createdAt) {
             let output = DateFormatter()
+            output.locale = Locale.current
             output.dateFormat = "HH:mm dd/MM/yy"
             return output.string(from: date)
+        } else {
+            return transaction.createdAt
         }
-        return transaction.createdAt
     }
+    
     
     public var formattedAmount: String {
         let amount = String(format: "%.2f", abs(transaction.transactionAmount))

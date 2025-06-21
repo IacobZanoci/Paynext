@@ -7,7 +7,7 @@
 
 import SwiftUI
 import UIComponents
-import TransactionHistoryDomain
+import Transaction
 
 public struct TransactionRowView: View {
     

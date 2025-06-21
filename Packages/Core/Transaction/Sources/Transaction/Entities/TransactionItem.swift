@@ -1,13 +1,13 @@
 //
 //  TransactionItem.swift
-//  TransactionHistoryDomain
+//  Transaction
 //
-//  Created by Iacob Zanoci on 08.06.2025.
+//  Created by Iacob Zanoci on 19.06.2025.
 //
 
 import Foundation
 
-public struct TransactionItem: Identifiable, Codable, Equatable {
+public struct TransactionItem: Identifiable, Codable, Equatable, Sendable {
     
     // MARK: - Properties
     
@@ -49,5 +49,15 @@ public struct TransactionItem: Identifiable, Codable, Equatable {
         self.status = status
         self.createdAt = createdAt
         self.updatedAt = updatedAt
+    }
+    
+    // MARK: - Date Conversion
+    
+    public var createdAtDate: Date {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        return formatter.date(from: createdAt) ?? Date.distantPast
     }
 }
