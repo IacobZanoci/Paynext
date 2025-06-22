@@ -66,7 +66,7 @@ struct MainTabView: View {
             onLogout: { [weak coordinator] in
                 coordinator?.setRoot(to: .login)
             },
-            onToggleAction: { [weak accountCoordinator = coordinator] toEnable in
+            onTogglePinAction: { [weak accountCoordinator = coordinator] toEnable in
                 guard let coordinator = accountCoordinator else { return }
                 coordinator.navigate(to: toEnable ? .enterNewPin : .disablePin)
             }
