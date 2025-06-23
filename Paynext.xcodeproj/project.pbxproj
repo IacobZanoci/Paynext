@@ -17,6 +17,7 @@
 		42A0D43D2DD6596200566812 /* NetworkClient in Frameworks */ = {isa = PBXBuildFile; productRef = 42A0D43C2DD6596200566812 /* NetworkClient */; };
 		42A0D45B2DD7AA7100566812 /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 42A0D45A2DD7AA7100566812 /* DesignSystem */; };
 		42A0D45D2DD7B66E00566812 /* UIComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 42A0D45C2DD7B66E00566812 /* UIComponents */; };
+		42B67F452E09C64700C98CB8 /* BiometricsAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 42B67F442E09C64700C98CB8 /* BiometricsAuth */; };
 		42B80B382DFD5BCA000A486E /* DashboardPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = 42B80B372DFD5BCA000A486E /* DashboardPresentation */; };
 		42BF1D072DF589170058C328 /* CredentialsValidator in Frameworks */ = {isa = PBXBuildFile; productRef = 42BF1D062DF589170058C328 /* CredentialsValidator */; };
 		42BF1D382DF5C58B0058C328 /* TransactionHistoryPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = 42BF1D372DF5C58B0058C328 /* TransactionHistoryPresentation */; };
@@ -34,6 +35,7 @@
 		4278CA882DFC9E58003C4010 /* SettingsDomain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SettingsDomain; sourceTree = "<group>"; };
 		42A0D43A2DD6581C00566812 /* NetworkClient */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = NetworkClient; sourceTree = "<group>"; };
 		42A0D4592DD7AA4700566812 /* DesignSystem */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DesignSystem; sourceTree = "<group>"; };
+		42B67F432E09C5B400C98CB8 /* BiometricsAuth */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = BiometricsAuth; sourceTree = "<group>"; };
 		42B80B362DFD5BB2000A486E /* DashboardPresentation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DashboardPresentation; sourceTree = "<group>"; };
 		42BF1D052DF585890058C328 /* CredentialsValidator */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = CredentialsValidator; sourceTree = "<group>"; };
 		42BF1D362DF5C5840058C328 /* TransactionHistoryPresentation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = TransactionHistoryPresentation; sourceTree = "<group>"; };
@@ -75,6 +77,7 @@
 				42E9D8812E0720390041514D /* AuthenticationPresentation in Frameworks */,
 				4243BB922DE7707900CA1504 /* LoginPresentation in Frameworks */,
 				42B80B382DFD5BCA000A486E /* DashboardPresentation in Frameworks */,
+				42B67F452E09C64700C98CB8 /* BiometricsAuth in Frameworks */,
 				42A0D45D2DD7B66E00566812 /* UIComponents in Frameworks */,
 				4278CA5B2DFB6180003C4010 /* SettingsPresentation in Frameworks */,
 				42A0D43D2DD6596200566812 /* NetworkClient in Frameworks */,
@@ -155,6 +158,7 @@
 		42A0D4392DD657DD00566812 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				42B67F432E09C5B400C98CB8 /* BiometricsAuth */,
 				421912F82E0484E500D82A6B /* Transaction */,
 				42BF1D052DF585890058C328 /* CredentialsValidator */,
 				4243BB582DE1CED900CA1504 /* Persistance */,
@@ -229,6 +233,7 @@
 				42B80B372DFD5BCA000A486E /* DashboardPresentation */,
 				4253E5122E04850C0016EB8D /* Transaction */,
 				42E9D8802E0720390041514D /* AuthenticationPresentation */,
+				42B67F442E09C64700C98CB8 /* BiometricsAuth */,
 			);
 			productName = Paynext;
 			productReference = 4239625E2DCFD85800F32002 /* Paynext.app */;
@@ -541,6 +546,10 @@
 		42A0D45C2DD7B66E00566812 /* UIComponents */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = UIComponents;
+		};
+		42B67F442E09C64700C98CB8 /* BiometricsAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = BiometricsAuth;
 		};
 		42B80B372DFD5BCA000A486E /* DashboardPresentation */ = {
 			isa = XCSwiftPackageProductDependency;

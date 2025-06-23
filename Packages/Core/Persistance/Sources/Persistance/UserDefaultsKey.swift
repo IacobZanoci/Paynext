@@ -9,11 +9,13 @@ import Foundation
 
 public enum UserDefaultsKey: String {
     
-    // MARK: - User Credentials
+    // MARK: - User
     
     case paynextUser
     case paynextUserSecurePin
     case securePinLength
+    case isFaceIDOn
+    case isPinEnabled
     
     // MARK: - App appearance
     
