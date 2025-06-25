@@ -14,7 +14,8 @@ let package = Package(
         .package(path: "../../Core/DesignSystem"),
         .package(path: "../../Core/Persistance"),
         .package(path: "../../Features/LoginPresentation"),
-        .package(path: "../SettingsDomain")
+        .package(path: "../SettingsDomain"),
+        .package(path: "../../Core/BiometricsAuth")
     ],
     targets: [
         .target(
@@ -24,7 +25,8 @@ let package = Package(
                 .product(name: "UIComponents", package: "DesignSystem"),
                 .product(name: "Persistance", package: "Persistance"),
                 .product(name: "LoginPresentation", package: "LoginPresentation"),
-                .product(name: "SettingsDomain", package: "SettingsDomain")
+                .product(name: "SettingsDomain", package: "SettingsDomain"),
+                .product(name: "BiometricsAuth", package: "BiometricsAuth")
             ]
         ),
         .testTarget(

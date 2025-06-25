@@ -17,6 +17,7 @@ public struct SettingsView<ViewModel: SettingsViewModelProtocol, ThemeManagerTyp
     
     @ObservedObject var viewModel: ViewModel
     @ObservedObject var themeManager: ThemeManagerType
+    @State private var showFaceIdAlert = false
     
     //MARK: - Initializers
     
@@ -45,6 +46,7 @@ public struct SettingsView<ViewModel: SettingsViewModelProtocol, ThemeManagerTyp
                     
                     darkModeSetting
                     pinAccess
+                    faceIdAccess
                     logoutButton
                 }
                 .padding(.horizontal, .medium)
@@ -157,21 +159,56 @@ extension  SettingsView {
     
     private var pinAccess: some View {
         HStack {
-            Text(viewModel.pinAccessButton)
+            Toggle(isOn: Binding(
+                get: { viewModel.isOn },
+                set: { newValue in
+                    viewModel.onToggle(toEnable: newValue)
+                }
+            )) {
+                Text(viewModel.pinAccessButton)
+                    .font(.Paynext.footnoteMedium)
+                    .foregroundStyle(Color.Paynext.primaryText)
+            }
+            .tint(Color.Paynext.secondaryButton)
+            .padding(.medium)
+            .background(Color.Paynext.background)
+        }
+    }
+    
+    // MARK: - Face ID Access
+    
+    private var faceIdAccess: some View {
+        HStack {
+            Text(viewModel.faceIdLabel)
                 .font(.Paynext.footnoteMedium)
                 .foregroundStyle(Color.Paynext.primaryText)
             Spacer()
-            Toggle(isOn: .constant(viewModel.isOn)) {}
+            Toggle(isOn: Binding(
+                get: { viewModel.isFaceIdOn },
+                set: { _ in }
+            )) {}
                 .labelsHidden()
                 .tint(Color.Paynext.secondaryButton)
                 .disabled(true)
                 .contentShape(Rectangle())
                 .onTapGesture {
-                    viewModel.onToggle(toEnable: !viewModel.isOn)
+                    guard viewModel.isOn else { return }
+                    let nextState = !viewModel.isFaceIdOn
+                    viewModel.onToggleFaceId(toEnable: nextState) { success in
+                        if !success && nextState {
+                            showFaceIdAlert = true
+                        }
+                    }
                 }
+                .opacity(viewModel.isOn ? 1 : 0.5)
         }
         .padding(.medium)
         .background(Color.Paynext.background)
+        .alert(viewModel.alertTitle, isPresented: $showFaceIdAlert) {
+            Button(viewModel.alertDismissButtonTitle, role: .cancel) {}
+        } message: {
+            Text(viewModel.alertMessage)
+        }
     }
     
     // MARK: - Logout Button
@@ -198,14 +235,26 @@ extension  SettingsView {
     )
 }
 
-final class MockSettingsViewModel: SettingsViewModelProtocol {
+final class MockSettingsViewModel: SettingsViewModelProtocol, ObservableObject {
     
-    @Published var isOn: Bool = false
+    @Published var isOn: Bool = true
+    @Published var isFaceIdOn: Bool = true
+    @Published var isAuthenticateFaceId: Bool = false
+    
     var pinAccessButton: String = "Use PIN access"
+    
+    var faceIdLabel: String = "Use Face ID for app access"
+    var alertTitle: String = "Face ID Unavailable"
+    var alertMessage: String = "Face ID is not available or not enrolled on the device."
+    var alertDismissButtonTitle: String = "OK"
     
     func onLogout() async {}
     func onToggle(toEnable: Bool) {}
     func refreshPinStatus() {}
+    func onToggleFaceId(toEnable: Bool, completion: @escaping (Bool) -> Void) {
+        completion(true)
+    }
+    func cleanupObservers() {}
 }
 
 final class MockThemeManager: ThemeManaging, ObservableObject {

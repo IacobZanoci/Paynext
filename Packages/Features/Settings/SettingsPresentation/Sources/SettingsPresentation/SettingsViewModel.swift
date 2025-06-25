@@ -7,6 +7,7 @@
 
 import Foundation
 import Persistance
+import BiometricsAuth
 
 @MainActor
 public final class SettingsViewModel: SettingsViewModelProtocol {
@@ -14,62 +15,130 @@ public final class SettingsViewModel: SettingsViewModelProtocol {
     // MARK: - Dependencies
     
     private let persistenceStorage: UserDefaultsManagerProtocol
+    private let notificationCenter: NotificationCenterProtocol
+    private let biometricsService: BiometricsServiceProtocol
     
     // MARK: - Properties
     
+    private var pinObserver: NSObjectProtocol?
+    private var faceIDObserver: NSObjectProtocol?
+    
     public var onLogout: () async -> Void
-    public var onToggleAction: (Bool) -> Void
+    public var onTogglePinAction: (Bool) -> Void
     @Published public var isOn: Bool = false
+    @Published public var isFaceIdOn: Bool = false
+    @Published public var isAuthenticateFaceId: Bool = false
+    
+    // MARK: - Titles
+    
     @Published public var pinAccessButton: String = "Use PIN access"
+    @Published public var faceIdLabel: String = "Use Face ID for app access"
+    @Published public var alertTitle: String = "Face ID Unvailable"
+    @Published public var alertMessage: String = "Face ID is not available or not enrolled on the device."
+    @Published public var alertDismissButtonTitle: String = "OK"
     
     // MARK: - Initializers
     
     public init(
         persistenceStorage: UserDefaultsManagerProtocol,
+        notificationCenter: NotificationCenterProtocol,
+        biometricsService: BiometricsServiceProtocol,
         onLogout: @escaping () async -> Void,
-        onToggleAction: @escaping (Bool) -> Void
+        onTogglePinAction: @escaping (Bool) -> Void
     ) {
         self.persistenceStorage = persistenceStorage
+        self.notificationCenter = notificationCenter
+        self.biometricsService = biometricsService
         self.onLogout = onLogout
-        self.onToggleAction = onToggleAction
-        self.refreshPinStatus()
+        self.onTogglePinAction = onTogglePinAction
         
-        NotificationCenter.default.addObserver(
+        refreshPinStatus()
+        refreshFaceIDStatus()
+        
+        pinObserver = notificationCenter.addObserver(
             forName: .pinStatusChanged,
             object: nil,
             queue: .main
         ) { [weak self] _ in
+            guard let self = self else { return }
             Task { @MainActor in
-                self?.refreshPinStatus()
+                self.refreshPinStatus()
+            }
+        }
+        
+        faceIDObserver = notificationCenter.addObserver(
+            forName: .faceIDSettingsChanged,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            guard let self = self else { return }
+            Task { @MainActor in
+                self.refreshFaceIDStatus()
             }
         }
     }
     
-    // MARK: - Deinitializers
+    // MARK: - Remove Observers
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
+    public func cleanupObservers() {
+        if let pinObserver = pinObserver {
+            notificationCenter.removeObserver(pinObserver)
+            self.pinObserver = nil
+        }
+        
+        if let faceIDObserver = faceIDObserver {
+            notificationCenter.removeObserver(faceIDObserver)
+            self.faceIDObserver = nil
+        }
     }
     
     // MARK: - Actions
     
     public func onLogout() async {
+        cleanupObservers()
         persistenceStorage.remove(forKey: .paynextUser)
         await onLogout()
     }
     
     public func onToggle(toEnable: Bool) {
-        onToggleAction(toEnable)
+        isOn = toEnable
+        onTogglePinAction(toEnable)
+    }
+    
+    public func onToggleFaceId(toEnable: Bool, completion: @escaping (Bool) -> Void) {
+        guard isOn else {
+            completion(false)
+            return
+        }
+        
+        guard biometricsService.isBiometricAvailable() else {
+            completion(false)
+            return
+        }
+        
+        isAuthenticateFaceId = true
+        let reason = toEnable
+        ? "Enable Face ID for app access"
+        : "Disable Face ID for app access"
+        
+        biometricsService.authenticate(reason: reason) { [weak self] success in
+            DispatchQueue.main.async {
+                self?.isAuthenticateFaceId = false
+                if success {
+                    self?.isFaceIdOn = toEnable
+                    self?.biometricsService.setFaceIDEnabled(toEnable)
+                }
+                completion(success)
+            }
+        }
     }
     
     public func refreshPinStatus() {
-        let pin: String? = UserDefaultsManager.shared.get(forKey: .paynextUserSecurePin)
+        let pin: String? = persistenceStorage.get(forKey: .paynextUserSecurePin)
         self.isOn = pin != nil
     }
-}
-
-// MARK: - Extensions
-
-public extension Notification.Name {
-    static let pinStatusChanged = Notification.Name("pinStatusChanged")
+    
+    public func refreshFaceIDStatus() {
+        self.isFaceIdOn = biometricsService.isFaceIDEnabled
+    }
 }

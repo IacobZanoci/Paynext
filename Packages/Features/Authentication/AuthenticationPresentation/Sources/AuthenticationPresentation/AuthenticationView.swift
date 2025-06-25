@@ -7,6 +7,7 @@
 
 import SwiftUI
 import DesignSystem
+import Persistance
 
 public struct AuthenticationView<ViewModel: AuthenticationViewModelProtocol>: View {
     
@@ -17,6 +18,7 @@ public struct AuthenticationView<ViewModel: AuthenticationViewModelProtocol>: Vi
     // MARK: - Properties
     
     @FocusState private var focusBinding: Int?
+    @State private var showFaceIDAlert = false
     
     // MARK: - Initializers
     
@@ -28,32 +30,7 @@ public struct AuthenticationView<ViewModel: AuthenticationViewModelProtocol>: Vi
     
     public var body: some View {
         VStack(spacing: .medium) {
-            VStack(spacing: 0) {
-                HStack {
-                    Button(action: {
-                        viewModel.cancelFlow()
-                    }) {
-                        Text(viewModel.cancelButton)
-                            .font(.Paynext.navigationTitleMedium)
-                            .foregroundStyle(Color.Paynext.primaryText)
-                    }
-                    .opacity(viewModel.currentStep == .confirmNewPin ? 1 : 0)
-                    .disabled(viewModel.currentStep != .confirmNewPin)
-                    Spacer()
-                    Text(viewModel.titleText)
-                        .font(.Paynext.navigationTitleMedium)
-                        .foregroundStyle(Color.Paynext.primaryText)
-                    
-                    Spacer()
-                    
-                    Color.clear
-                        .frame(width: 44, height: 44)
-                }
-                .padding(.horizontal, .medium)
-                
-                Divider()
-                    .background(Color.gray.opacity(0.3))
-            }
+            navigationHeader
             VStack {
                 VStack {
                     if viewModel.currentStep == .enterNewPin {
@@ -66,101 +43,145 @@ public struct AuthenticationView<ViewModel: AuthenticationViewModelProtocol>: Vi
                 .padding(.vertical, .small)
                 
                 VStack(spacing: .extraLarge) {
-                    HStack(spacing: .medium) {
-                        ForEach(0..<viewModel.pin.count, id: \.self) { index in
-                            VStack {
-                                ZStack {
-                                    TextField("", text: $viewModel.pin[index])
-                                        .keyboardType(.numberPad)
-                                        .multilineTextAlignment(.center)
-                                        .frame(width: 40, height: 40)
-                                        .font(.title)
-                                        .foregroundStyle(Color.clear)
-                                        .accentColor(.black)
-                                        .focused($focusBinding, equals: index)
-                                        .onChange(of: viewModel.pin[index]) { _, newValue in
-                                            if newValue.count > 1 {
-                                                viewModel.pin[index] = String(newValue.prefix(1))
-                                            }
-                                            if !newValue.isEmpty && index < viewModel.pin.count - 1 {
-                                                viewModel.focusedIndex = index + 1
-                                            }
-                                        }
-                                    
-                                    Text(viewModel.pin[index].isEmpty ? "" : "*")
-                                        .foregroundColor(viewModel.showErrorAlert
-                                                         ? .Paynext.errorStrokeBackground
-                                                         : .Paynext.primaryText
-                                        )
-                                        .font(.title)
-                                        .frame(width: 40, height: 40)
-                                }
-                                
-                                Rectangle()
-                                    .frame(width: 40, height: 2)
-                                    .foregroundColor(viewModel.showErrorAlert || viewModel.pinNotMatchingError
-                                                     ? .Paynext.errorStrokeBackground
-                                                     : .Paynext.primaryText
-                                    )
-                            }
-                        }
-                    }
-                    .onChange(of: viewModel.focusedIndex) { _, newIndex in
-                        focusBinding = newIndex
-                    }
-                    .onAppear {
-                        focusBinding = viewModel.focusedIndex
-                    }
-                    
-                    VStack {
-                        Text(viewModel.errorOrInfoText)
-                            .font(.Paynext.caption)
-                            .foregroundStyle(viewModel.errorTextColor)
-                            .multilineTextAlignment(.center)
-                            .padding(.horizontal)
-                            .transition(.opacity)
-                            .id(viewModel.errorOrInfoText)
-                    }
+                    pinCodeInput
+                    infoText
                 }
-                
-                LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 3)) {
-                    ForEach(viewModel.buttons, id: \.self) { row in
-                        ForEach(row, id: \.self) { item in
-                            if item.isEmpty {
-                                Color.clear
-                                    .frame(width: 80, height: 80)
-                            } else {
-                                Button(action: {
-                                    if item == viewModel.clearButton {
-                                        viewModel.handleDelete()
-                                    } else {
-                                        viewModel.handleDigit(item)
-                                    }
-                                }) {
-                                    Text(item)
-                                        .font(.Paynext.navigationTitle)
-                                        .frame(width: 80, height: 80)
-                                        .background(Color.Paynext.primaryText)
-                                        .foregroundStyle(Color.Paynext.contrastText)
-                                        .clipShape(Circle())
-                                }
-                            }
-                        }
-                    }
-                }
-                .padding(50)
+                pinPad
             }
             Spacer()
+        }
+        .alert("Face ID Not Enabled", isPresented: $showFaceIDAlert) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text("Please enable Face ID in Settings to use biometric authentication.")
+        }
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                viewModel.authenticateWithFaceID()
+            }
         }
         .navigationBarBackButtonHidden(true)
         .toolbar(.hidden, for: .tabBar)
     }
     
+    // MARK: - Navigation Header
+    
+    @ViewBuilder
+    private var navigationHeader: some View {
+        VStack(spacing: 0) {
+            HStack {
+                cancelButton
+                Spacer()
+                Text(viewModel.titleText)
+                    .font(.Paynext.navigationTitleMedium)
+                    .foregroundStyle(Color.Paynext.primaryText)
+                Spacer()
+                Color.clear.frame(width: 44, height: 44)
+            }
+            .padding(.horizontal, .medium)
+            
+            Divider()
+                .background(Color.gray.opacity(0.3))
+        }
+    }
+    
+    // MARK: - Navigation Cancel Button
+    
+    @ViewBuilder
+    private var cancelButton: some View {
+        Button(action: {
+            viewModel.cancelFlow()
+        }) {
+            Text("Cancel")
+                .font(.Paynext.navigationTitleMedium)
+                .foregroundStyle(Color.Paynext.primaryText)
+        }
+        .opacity(isCancelVisible ? 1 : 0)
+        .disabled(!isCancelVisible)
+    }
+    
+    private var isCancelVisible: Bool {
+        switch viewModel.currentStep {
+        case .enterNewPin, .confirmNewPin, .disablePin:
+            return true
+        default:
+            return false
+        }
+    }
+    
+    // MARK: - Pin Code Input
+    
+    @ViewBuilder
+    private var pinCodeInput: some View {
+        HStack(spacing: .medium) {
+            ForEach(0..<viewModel.pin.count, id: \.self) { index in
+                VStack {
+                    ZStack {
+                        TextField("", text: $viewModel.pin[index])
+                            .keyboardType(.numberPad)
+                            .multilineTextAlignment(.center)
+                            .frame(width: 40, height: 40)
+                            .font(.title)
+                            .foregroundStyle(Color.clear)
+                            .accentColor(.black)
+                            .focused($focusBinding, equals: index)
+                            .onChange(of: viewModel.pin[index]) { _, newValue in
+                                if newValue.count > 1 {
+                                    viewModel.pin[index] = String(newValue.prefix(1))
+                                }
+                                if !newValue.isEmpty && index < viewModel.pin.count - 1 {
+                                    viewModel.focusedIndex = index + 1
+                                }
+                            }
+                        
+                        Text(viewModel.pin[index].isEmpty ? "" : "*")
+                            .foregroundColor(viewModel.showErrorAlert
+                                             ? .Paynext.errorStrokeBackground
+                                             : .Paynext.primaryText
+                            )
+                            .font(.title)
+                            .frame(width: 40, height: 40)
+                    }
+                    
+                    Rectangle()
+                        .frame(width: 40, height: 2)
+                        .foregroundColor(viewModel.showErrorAlert || viewModel.pinNotMatchingError
+                                         ? .Paynext.errorStrokeBackground
+                                         : .Paynext.primaryText
+                        )
+                }
+            }
+        }
+        .onChange(of: viewModel.focusedIndex) { _, newIndex in
+            focusBinding = newIndex
+        }
+        .onAppear {
+            focusBinding = viewModel.focusedIndex
+        }
+    }
+    
+    // MARK: - Info Text
+    
+    @ViewBuilder
+    private var infoText: some View {
+        VStack {
+            Text(viewModel.errorOrInfoText)
+                .font(.Paynext.caption)
+                .foregroundStyle(viewModel.errorTextColor)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal)
+                .transition(.opacity)
+                .id(viewModel.errorOrInfoText)
+        }
+    }
+    
+    // MARK: - Pin Length Picker
+    
     @ViewBuilder
     private func pinLengthPicker(hidden: Bool) -> some View {
         Picker("", selection: hidden ? .constant(viewModel.selectedOption) : $viewModel.selectedOption) {
-            Text(viewModel.fourDigitOption).tag(0)
-            Text(viewModel.sixDigitOption).tag(1)
+            Text("4 digits").tag(0)
+            Text("6 digits").tag(1)
         }
         .pickerStyle(.segmented)
         .background(hidden ? Color.clear : Color.Paynext.background)
@@ -170,6 +191,61 @@ public struct AuthenticationView<ViewModel: AuthenticationViewModelProtocol>: Vi
             if !hidden {
                 viewModel.resetState()
             }
+        }
+    }
+    
+    // MARK: - Pin Pad
+    
+    @ViewBuilder
+    private var pinPad: some View {
+        LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 3)) {
+            ForEach(viewModel.buttons, id: \.self) { row in
+                ForEach(row, id: \.self) { item in
+                    if item.isEmpty {
+                        faceIDButton
+                    } else {
+                        Button(action: {
+                            if item == "Clear" {
+                                viewModel.handleDelete()
+                            } else {
+                                viewModel.handleDigit(item)
+                            }
+                        }) {
+                            Text(item)
+                                .font(.Paynext.navigationTitle)
+                                .frame(width: 80, height: 80)
+                                .background(Color.Paynext.primaryText)
+                                .foregroundStyle(Color.Paynext.contrastText)
+                                .clipShape(Circle())
+                        }
+                    }
+                }
+            }
+        }
+        .padding(50)
+    }
+    
+    // MARK: - Face ID Button
+    
+    @ViewBuilder
+    private var faceIDButton: some View {
+        if viewModel.currentStep == .enterPin || viewModel.currentStep == .disablePin {
+            Button(action: {
+                let isEnabled = UserDefaultsManager.shared.get(forKey: .isFaceIDOn) ?? false
+                if isEnabled {
+                    viewModel.authenticateWithFaceID()
+                } else {
+                    showFaceIDAlert = true
+                }
+            }) {
+                Image(systemName: "faceid")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 50, height: 50)
+                    .foregroundStyle(Color.Paynext.primaryText)
+            }
+        } else {
+            Color.clear.frame(width: 50, height: 50)
         }
     }
 }

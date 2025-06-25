@@ -24,15 +24,48 @@ public final class AppCoordinator: Coordinator, ObservableObject {
     /// Changing this value replaces the base view in the NavigationStack.
     @Published var currentRoute: AppRoute = .login
     
+    var lastActiveRoute: AppRoute? = nil
+    var backgroundDate: Date? = nil
+    private var persistentAuthViewModel: AuthenticationViewModel? = nil
+    
     // MARK: - Initializers
     
     @MainActor
     init() {
-        if let savedPin: String = UserDefaultsManager.shared.get(forKey: .paynextUserSecurePin), !savedPin.isEmpty {
+        let isPinEnabled = UserDefaultsManager.shared.get(forKey: .isPinEnabled) ?? false
+        let savedPin = UserDefaultsManager.shared.get(forKey: .paynextUserSecurePin) ?? ""
+        if isPinEnabled && !savedPin.isEmpty {
             currentRoute = .enterPin
         } else {
             currentRoute = .login
         }
+    }
+    
+    @MainActor
+    func makePersistentAuthViewModel(
+        flow: AuthenticationFlow,
+        onSuccess: @escaping () -> Void
+    ) -> AuthenticationViewModel {
+        if let existing = persistentAuthViewModel {
+            return existing
+        }
+        
+        let vm = AuthenticationViewModel(
+            flow: flow,
+            onPinSuccess: {
+                self.backgroundDate = nil
+                onSuccess()
+                self.persistentAuthViewModel = nil
+            },
+            onPin: {
+                self.backgroundDate = nil
+                onSuccess()
+                self.persistentAuthViewModel = nil
+            },
+            launchedFromAppStart: false
+        )
+        self.persistentAuthViewModel = vm
+        return vm
     }
     
     // MARK: - Navigation Methods
@@ -64,8 +97,9 @@ public final class AppCoordinator: Coordinator, ObservableObject {
     }
     
     /// Handles the login flow and sets the root to the main view.
+    @MainActor
     func handleLogin() async {
-        await self.setRoot(to: .main)
+        setRoot(to: .main)
     }
     
     @MainActor
@@ -84,7 +118,8 @@ public final class AppCoordinator: Coordinator, ObservableObject {
                 Task {
                     await coordinator.handleLogin()
                 }
-            }
+            },
+            launchedFromAppStart: true
         )
         return vm
     }
@@ -138,6 +173,21 @@ public final class AppCoordinator: Coordinator, ObservableObject {
             
         case .main:
             fatalError("MainTabView")
+            
+        case .enterPinAfterBackground:
+            return AnyView(
+                AuthenticationView(
+                    viewModel: makePersistentAuthViewModel(flow: .authenticate) {
+                        Task { @MainActor in
+                            if let route = self.lastActiveRoute {
+                                self.setRoot(to: route)
+                            } else {
+                                self.setRoot(to: .main)
+                            }
+                        }
+                    }
+                )
+            )
         }
     }
 }
