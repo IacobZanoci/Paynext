@@ -13,6 +13,7 @@ enum AppRoute: Route {
     case enterPin
     case enterNewPin
     case disablePin
+    case enterPinAfterBackground
     
     case main
 }

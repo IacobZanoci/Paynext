@@ -16,7 +16,6 @@ struct AppRootView: View {
     @EnvironmentObject var themeManager: ThemeManager
     
     var body: some View {
-        
         Group {
             switch appCoordinator.currentRoute {
             case .main:

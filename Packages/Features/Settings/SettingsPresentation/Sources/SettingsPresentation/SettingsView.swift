@@ -159,21 +159,20 @@ extension  SettingsView {
     
     private var pinAccess: some View {
         HStack {
-            Text(viewModel.pinAccessButton)
-                .font(.Paynext.footnoteMedium)
-                .foregroundStyle(Color.Paynext.primaryText)
-            Spacer()
-            Toggle(isOn: .constant(viewModel.isOn)) {}
-                .labelsHidden()
-                .tint(Color.Paynext.secondaryButton)
-                .disabled(true)
-                .contentShape(Rectangle())
-                .onTapGesture {
-                    viewModel.onToggle(toEnable: !viewModel.isOn)
+            Toggle(isOn: Binding(
+                get: { viewModel.isOn },
+                set: { newValue in
+                    viewModel.onToggle(toEnable: newValue)
                 }
+            )) {
+                Text(viewModel.pinAccessButton)
+                    .font(.Paynext.footnoteMedium)
+                    .foregroundStyle(Color.Paynext.primaryText)
+            }
+            .tint(Color.Paynext.secondaryButton)
+            .padding(.medium)
+            .background(Color.Paynext.background)
         }
-        .padding(.medium)
-        .background(Color.Paynext.background)
     }
     
     // MARK: - Face ID Access
@@ -237,6 +236,7 @@ extension  SettingsView {
 }
 
 final class MockSettingsViewModel: SettingsViewModelProtocol, ObservableObject {
+    
     @Published var isOn: Bool = true
     @Published var isFaceIdOn: Bool = true
     @Published var isAuthenticateFaceId: Bool = false
@@ -254,6 +254,7 @@ final class MockSettingsViewModel: SettingsViewModelProtocol, ObservableObject {
     func onToggleFaceId(toEnable: Bool, completion: @escaping (Bool) -> Void) {
         completion(true)
     }
+    func cleanupObservers() {}
 }
 
 final class MockThemeManager: ThemeManaging, ObservableObject {

@@ -11,41 +11,48 @@ import Persistance
 
 public final class BiometricsService: BiometricsServiceProtocol {
     
-    //MARK: - Dependencies
+    // MARK: - Dependencies
     
-    private let context: LAContext
     private let storage: UserDefaultsManagerProtocol
     private let notificationCenter: NotificationCenterProtocol
     
-    //MARK: - Initializers
+    // MARK: - Init
     
     public init(
-        context: LAContext = .init(),
         storage: UserDefaultsManagerProtocol,
         notificationCenter: NotificationCenterProtocol
     ) {
-        self.context = context
         self.storage = storage
         self.notificationCenter = notificationCenter
     }
     
-    //MARK: - Properties
+    // MARK: - Properties
     
     public var isFaceIDEnabled: Bool {
         storage.get(forKey: .isFaceIDOn) ?? false
     }
     
-    //MARK: - Methods
+    // MARK: - Methods
     
     public func isBiometricAvailable() -> Bool {
         var error: NSError?
-        return context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error)
+        return LAContext().canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error)
     }
     
     public func authenticate(reason: String, completion: @escaping (Bool) -> Void) {
+#if targetEnvironment(simulator)
+        completion(true)
+#else
+        let context = LAContext()
+        var error: NSError?
+        guard context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) else {
+            completion(false)
+            return
+        }
         context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, _ in
             completion(success)
         }
+#endif
     }
     
     public func setFaceIDEnabled(_ enabled: Bool) {

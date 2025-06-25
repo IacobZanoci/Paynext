@@ -37,7 +37,7 @@ public final class DashboardViewModel: DashboardViewModelProtocol {
     @Published public var dashboardCardImageTitle: String = "dashboardCardImage"
     @Published public var dashboardCardHideButtonTitle: String = "xmark"
     @Published public var transactionsSectionTitle: String = "Transaction History"
-    @Published public var transactionsSectionButtonTitle: String = "See all"
+    @Published public var transactionsSectionButtonTitle: String = "View All"
     @Published public var transactionsSectionButtonImageTitle: String = "chevron.right"
     
     // MARK: - Initializers

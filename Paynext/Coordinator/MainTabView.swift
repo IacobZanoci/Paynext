@@ -14,6 +14,7 @@ import Transaction
 import SettingsPresentation
 import Persistance
 import DashboardPresentation
+import BiometricsAuth
 
 struct MainTabView: View {
     
@@ -61,8 +62,17 @@ struct MainTabView: View {
         
         _accountCoordinator = StateObject(wrappedValue: coordinator)
         
+        let userDefaults = UserDefaultsManager()
+        let notificationCenter: NotificationCenterProtocol = NotificationCenter.default
+        let biometricsService = BiometricsService(
+            storage: userDefaults,
+            notificationCenter: notificationCenter
+        )
+        
         let settingsVM = SettingsViewModel(
-            persistenceStorage: UserDefaultsManager(),
+            persistenceStorage: userDefaults,
+            notificationCenter: notificationCenter,
+            biometricsService: biometricsService,
             onLogout: { [weak coordinator] in
                 coordinator?.setRoot(to: .login)
             },
@@ -71,6 +81,7 @@ struct MainTabView: View {
                 coordinator.navigate(to: toEnable ? .enterNewPin : .disablePin)
             }
         )
+        
         _settingsVM = StateObject(wrappedValue: settingsVM)
     }
     

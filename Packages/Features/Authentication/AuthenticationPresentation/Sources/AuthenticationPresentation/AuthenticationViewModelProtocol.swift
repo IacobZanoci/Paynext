@@ -28,10 +28,6 @@ public protocol AuthenticationViewModelProtocol: ObservableObject {
     
     // MARK: - Titles
     
-    var clearButton: String { get }
-    var cancelButton: String { get }
-    var fourDigitOption: String { get }
-    var sixDigitOption: String { get }
     var titleText: String { get }
     var buttons: [[String]] { get }
     var errorOrInfoText: String { get }
@@ -43,4 +39,5 @@ public protocol AuthenticationViewModelProtocol: ObservableObject {
     func handleDigit(_ digit: String)
     func handleDelete()
     func resetState()
+    func authenticateWithFaceID()
 }

@@ -30,4 +30,5 @@ public protocol SettingsViewModelProtocol: ObservableObject {
     func onToggle(toEnable: Bool)
     func refreshPinStatus()
     func onToggleFaceId(toEnable: Bool, completion: @escaping (Bool) -> Void)
+    func cleanupObservers()
 }

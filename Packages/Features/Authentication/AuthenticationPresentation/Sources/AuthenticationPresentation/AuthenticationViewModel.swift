@@ -10,6 +10,7 @@ import SwiftUI
 import DesignSystem
 import Persistance
 import SettingsPresentation
+@preconcurrency import LocalAuthentication
 
 public enum AuthenticationEntryStep {
     case enterPin
@@ -37,9 +38,12 @@ public class AuthenticationViewModel: AuthenticationViewModelProtocol {
     @Published public var showErrorAlert: Bool = false
     @Published public var pinNotMatchingError: Bool = false
     @Published public var pin: [String] = []
+    private var faceIDEnabled: Bool = false
     public var onPinSuccess: (() -> Void)?
     public var onPin: (() -> Void)?
     private var firstEnteredPin: [String] = []
+    private var launchedFromAppStart: Bool
+    @Published public var isEnabled = UserDefaultsManager.shared.get(forKey: .isFaceIDOn) ?? false
     
     @Published public var selectedOption: Int = 0 {
         didSet {
@@ -53,11 +57,6 @@ public class AuthenticationViewModel: AuthenticationViewModelProtocol {
     }
     
     // MARK: - Titles
-    
-    @Published public var clearButton: String = "Clear"
-    @Published public var cancelButton: String = "Cancel"
-    @Published public var fourDigitOption: String = "4 digits"
-    @Published public var sixDigitOption: String = "6 digits"
     
     public var titleText: String {
         switch currentStep {
@@ -108,19 +107,17 @@ public class AuthenticationViewModel: AuthenticationViewModelProtocol {
     public init(
         flow: AuthenticationFlow,
         onPinSuccess: (() -> Void)?,
-        onPin: (() -> Void)?
+        onPin: (() -> Void)?,
+        launchedFromAppStart: Bool = false
     ) {
         self.flow = flow
         self.onPinSuccess = onPinSuccess
         self.onPin = onPin
         
-        let savedPin = UserDefaultsManager.shared.get(forKey: .paynextUserSecurePin) as String? ?? ""
-        let pinCount = savedPin.count
-        let selected = (flow == .authenticate || flow == .disableFromSettings) ? (pinCount == 6 ? 1 : 0) : 0
-        let initialPinLength = selected == 0 ? 4 : 6
-        
-        self.selectedOption = selected
-        self.pin = Array(repeating: "", count: initialPinLength)
+        self.launchedFromAppStart = launchedFromAppStart
+        let defaultSelectedOption = 0
+        self.selectedOption = defaultSelectedOption
+        self.pin = Array(repeating: "", count: defaultSelectedOption == 0 ? 4 : 6)
         
         switch flow {
         case .setupNewPin:
@@ -130,6 +127,27 @@ public class AuthenticationViewModel: AuthenticationViewModelProtocol {
         case .disableFromSettings:
             self.currentStep = .disablePin
         }
+        
+        let savedPin = UserDefaultsManager.shared.get(forKey: .paynextUserSecurePin) as String? ?? ""
+        let pinCount = savedPin.count
+        let selected = (flow == .authenticate || flow == .disableFromSettings) ? (pinCount == 6 ? 1 : 0) : 0
+        let initialPinLength = selected == 0 ? 4 : 6
+        
+        self.selectedOption = selected
+        self.pin = Array(repeating: "", count: initialPinLength)
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(refreshFaceIDStatus),
+            name: .faceIDSettingsChanged,
+            object: nil
+        )
+    }
+    
+    // MARK: - Deinitializers
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     // MARK: - Events
@@ -201,7 +219,10 @@ public class AuthenticationViewModel: AuthenticationViewModelProtocol {
             let savedPin = UserDefaultsManager.shared.get(forKey: .paynextUserSecurePin) as String? ?? ""
             if currentPin.joined() == savedPin {
                 UserDefaultsManager.shared.remove(forKey: .paynextUserSecurePin)
+                UserDefaultsManager.shared.remove(forKey: .isPinEnabled)
+                UserDefaultsManager.shared.remove(forKey: .isFaceIDOn)
                 NotificationCenter.default.post(name: .pinStatusChanged, object: nil)
+                NotificationCenter.default.post(name: .faceIDSettingsChanged, object: nil)
                 onPinSuccess?()
             } else {
                 showErrorAlert = true
@@ -214,10 +235,13 @@ public class AuthenticationViewModel: AuthenticationViewModelProtocol {
         case .confirmNewPin:
             if currentPin == firstEnteredPin {
                 let savedPin = currentPin.joined()
-                UserDefaultsManager.shared.save(value: pin.count, forKey: .securePinLength)
                 UserDefaultsManager.shared.save(value: savedPin, forKey: .paynextUserSecurePin)
+                UserDefaultsManager.shared.save(value: true, forKey: .isPinEnabled)
+                //let check: Bool = UserDefaultsManager.shared.get(forKey: .isPinEnabled) ?? false
+                UserDefaults.standard.synchronize()
                 NotificationCenter.default.post(name: .pinStatusChanged, object: nil)
                 onPinSuccess?()
+                NotificationCenter.default.post(name: .pinStatusChanged, object: nil)
             } else {
                 pinNotMatchingError = true
                 pin = Array(repeating: "", count: pinLength)
@@ -226,4 +250,54 @@ public class AuthenticationViewModel: AuthenticationViewModelProtocol {
             }
         }
     }
+    
+    public func authenticateWithFaceID() {
+        guard currentStep == .enterPin || currentStep == .disablePin else { return }
+        guard UserDefaultsManager.shared.get(forKey: .isFaceIDOn) ?? false else { return }
+        
+        let context = LAContext()
+        context.localizedFallbackTitle = ""
+        context.interactionNotAllowed = false
+        
+        let reason = "Authenticate using Face ID"
+        
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            guard let self else { return }
+            
+            var error: NSError?
+            if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+                context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, evaluateError in
+                    DispatchQueue.main.async {
+                        if success {
+                            if self.currentStep == .disablePin {
+                                self.disableSecurityDirectly()
+                            } else {
+                                self.launchedFromAppStart ? self.onPin?() : self.onPinSuccess?()
+                            }
+                        } else {
+                            print("Biometric failed: \(evaluateError?.localizedDescription ?? "Unknown error")")
+                        }
+                    }
+                }
+            } else {
+                print("Can't evaluate policy: \(error?.localizedDescription ?? "Unknown error")")
+            }
+        }
+    }
+    
+    @objc private func refreshFaceIDStatus() {
+        let rawValue: Bool? = UserDefaultsManager.shared.get(forKey: .isFaceIDOn)
+        self.faceIDEnabled = rawValue ?? false
+    }
+    
+    private func disableSecurityDirectly() {
+        UserDefaultsManager.shared.remove(forKey: .isFaceIDOn)
+        NotificationCenter.default.post(name: .pinStatusChanged, object: nil)
+        NotificationCenter.default.post(name: .faceIDSettingsChanged, object: nil)
+        onPinSuccess?()
+    }
+}
+
+public extension Notification.Name {
+    static let faceIDSettingsChanged = Notification.Name("faceIDSettingsChanged")
 }
