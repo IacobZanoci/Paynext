@@ -21,7 +21,7 @@ public class CredentialsValidator: CredentialsValidatorProtocol {
     }
     
     public func isAccountNumberValid(_ accountNumber: String) -> Bool {
-        let predicate = NSPredicate(format: "SELF MATCHES %@", "^[A-Z]{2}[0-9]{2}[A-Z]{2}[0-9]{18,255}$")
+        let predicate = NSPredicate(format: "SELF MATCHES %@", "^[A-Z]{6}[0-9]{18,255}$")
         return predicate.evaluate(with: accountNumber)
     }
     
