@@ -180,10 +180,7 @@ extension InitiatePaymentView {
                 }
             } label: {
                 Text("Start Proceeding")
-                    .filledButton(
-                        .quartenary,
-                        isDisabled: $vm.isStartProceedingDisabled.wrappedValue
-                    )
+                    .primary()
             }
             .disabled(vm.isStartProceedingDisabled)
         }

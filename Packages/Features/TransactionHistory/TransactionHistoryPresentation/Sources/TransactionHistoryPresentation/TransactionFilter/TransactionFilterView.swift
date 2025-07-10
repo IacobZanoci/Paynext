@@ -229,7 +229,7 @@ extension TransactionFilterView {
                 showDateRangePicker = false
             } label: {
                 Text(viewModel.sheetButtonTitle)
-                    .filledButton(.quartenary)
+                    .primary()
             }
             .padding(.top, .medium)
         }
@@ -242,7 +242,7 @@ extension TransactionFilterView {
                 .font(.Paynext.footnoteMedium)
                 .foregroundStyle(Color.Paynext.primary)
         }
-        .toggleStyle(SwitchToggleStyle(tint: Color.Paynext.primary))
+        .toggleStyle(SwitchToggleStyle(tint: Color.Paynext.positive))
         .padding(.top, .large)
     }
     
@@ -254,14 +254,14 @@ extension TransactionFilterView {
                     dismiss()
                 } label: {
                     Text(viewModel.applyFiltersButtonTitle)
-                        .filledButton(.quartenary)
+                        .primary()
                 }
                 
                 Button {
                     // TODO: Save Preset Logic
                 } label: {
                     Text(viewModel.savePresetButtonTitle)
-                        .filledButton(.quartenary)
+                        .secondary()
                 }
             }
             
@@ -269,7 +269,7 @@ extension TransactionFilterView {
                 viewModel.reset()
             } label: {
                 Text(viewModel.resetButtonTitle)
-                    .filledButton(.quartenary)
+                    .tertiary(tone: .destructive)
             }
             .disabled(!viewModel.isResetEnabled)
             .opacity(viewModel.isResetEnabled ? 1 : 0.5)
@@ -337,7 +337,7 @@ extension TransactionFilterView {
                     )
                 Spacer()
                 Image(systemName: "chevron.down")
-                    .foregroundStyle(Color.Paynext.accent)
+                    .foregroundStyle(Color.Paynext.tertiary)
             }
             .padding()
             .background(

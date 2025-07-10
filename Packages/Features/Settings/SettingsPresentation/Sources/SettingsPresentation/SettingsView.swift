@@ -242,7 +242,7 @@ extension  SettingsView {
             }
         }) {
             Text("Log out")
-                .filledButton(.quartenary)
+                .tertiary()
         }
         .padding(.top, .large)
     }

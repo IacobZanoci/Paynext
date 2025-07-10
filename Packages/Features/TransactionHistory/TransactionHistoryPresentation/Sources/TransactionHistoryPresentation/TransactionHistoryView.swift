@@ -97,7 +97,7 @@ extension TransactionHistoryView {
                     isFilterPresented = true
                 } label : {
                     Text(viewModel.filterButtonTitle)
-                        .filledButton(.quartenary)
+                        .primary()
                 }
             }
             Menu {

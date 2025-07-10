@@ -90,7 +90,7 @@ extension TransactionView {
         VStack(spacing: .large) {
             ZStack {
                 Circle()
-                    .fill(Color.Paynext.contrast)
+                    .fill(Color.Paynext.accent)
                     .frame(width: Constants.circleSize, height: Constants.circleSize)
                 Image(systemName: "checkmark.circle.fill")
                     .resizable()
@@ -120,7 +120,7 @@ extension TransactionView {
             VStack(spacing: .medium) {
                 Button(action: {}) {
                     Text("Back to home")
-                        .filledButton(.primary)
+                        .primary()
                 }
                 .padding(.top, .large)
                 
@@ -130,7 +130,7 @@ extension TransactionView {
                     }
                 }) {
                     Text("Make another payment")
-                        .filledButton(.secondary)
+                        .secondary()
                 }
             }
         }
@@ -162,7 +162,7 @@ extension TransactionView {
                     VStack(spacing: .medium) {
                         Text("Transaction Failed")
                             .font(.Paynext.headlineBold)
-                            .foregroundStyle(Color.Paynext.negative)
+                            .foregroundStyle(Color.Paynext.primary)
                         
                         Text("""
                             There was an issue processing your
@@ -181,13 +181,13 @@ extension TransactionView {
                             }
                         }) {
                             Text("Review payment details")
-                                .filledButton(.error)
+                                .tertiary()
                         }
                         .padding(.top, .large)
                         
                         Button(action: {}) {
                             Text("Go to Dashboard")
-                                .filledButton(.error)
+                                .secondary(tone: .destructive)
                         }
                     }
                     .padding(.horizontal, .large)
