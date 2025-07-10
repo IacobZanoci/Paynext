@@ -17,6 +17,7 @@ public struct TransactionHistoryView<ViewModel: TransactionHistoryViewModelProto
     @StateObject private var viewModel: ViewModel
     @State private var selectedTransaction: TransactionItem?
     @State private var isFilterPresented: Bool = false
+    @State private var searchText: String = ""
     
     // MARK: - Initializers
     
@@ -91,7 +92,7 @@ extension TransactionHistoryView {
     private var transactionToolbarView: some View {
         VStack(spacing: .medium) {
             HStack {
-                CustomSearchBar()
+                CustomSearchBar(searchText: $searchText)
                     .frame(width: 250)
                 Button {
                     isFilterPresented = true
