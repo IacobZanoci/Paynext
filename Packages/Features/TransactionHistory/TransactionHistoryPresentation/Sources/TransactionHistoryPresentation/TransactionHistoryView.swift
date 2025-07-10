@@ -39,7 +39,9 @@ public struct TransactionHistoryView<ViewModel: TransactionHistoryViewModelProto
                     
                     if viewModel.rows.isEmpty {
                         if viewModel.errorMessage != nil {
-                            errorFetchTransactionsView
+                            Spacer()
+                            ProgressView()
+                            Spacer()
                         } else {
                             noDataMatchFilterCriteriaView
                         }
@@ -138,21 +140,16 @@ extension TransactionHistoryView {
                         selectedTransaction = row.rawTransaction
                     } label: {
                         TransactionRowView(viewModel: row)
+                            .onAppear {
+                                Task {
+                                    await viewModel.loadNextPageIfNeeded(currentItem: row)
+                                }
+                            }
                     }
                 }
             }
         }
         .scrollIndicators(.hidden)
-    }
-    
-    private var errorFetchTransactionsView: some View {
-        VStack {
-            Spacer()
-            Text(viewModel.errorFetchTransactionMessage)
-                .font(.Paynext.footnoteMedium)
-                .foregroundStyle(Color.Paynext.secondaryText)
-            Spacer()
-        }
     }
     
     private var noDataMatchFilterCriteriaView: some View {

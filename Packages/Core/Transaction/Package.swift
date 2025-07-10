@@ -10,9 +10,15 @@ let package = Package(
             name: "Transaction",
             targets: ["Transaction"]),
     ],
+    dependencies: [
+        .package(path: "../NetworkClient")
+    ],
     targets: [
         .target(
             name: "Transaction",
+            dependencies: [
+                .product(name: "NetworkClient", package: "NetworkClient")
+            ],
             resources: [
                 .process("Resources")
             ]

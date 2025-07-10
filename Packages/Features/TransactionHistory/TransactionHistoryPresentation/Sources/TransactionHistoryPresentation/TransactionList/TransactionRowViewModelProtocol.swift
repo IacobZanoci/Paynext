@@ -12,7 +12,7 @@ public protocol TransactionRowViewModelProtocol: Identifiable, Equatable {
     
     // MARK: - Properties
     
-    var id: UUID { get }
+    var id: String { get }
     var title: String { get }
     var formattedDate: String { get }
     var formattedAmount: String { get }

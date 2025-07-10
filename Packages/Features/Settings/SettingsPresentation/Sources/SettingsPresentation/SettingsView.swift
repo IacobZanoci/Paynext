@@ -44,9 +44,12 @@ public struct SettingsView<ViewModel: SettingsViewModelProtocol, ThemeManagerTyp
                     Divider()
                         .padding()
                     
-                    darkModeSetting
-                    pinAccess
-                    faceIdAccess
+                    VStack(spacing: .medium) {
+                        darkModeSetting
+                        pinAccess
+                        faceIdAccess
+                        remoteSourceTransactions
+                    }
                     logoutButton
                 }
                 .padding(.horizontal, .medium)
@@ -56,7 +59,7 @@ public struct SettingsView<ViewModel: SettingsViewModelProtocol, ThemeManagerTyp
     }
 }
 
-//MARK: - View Extension
+//MARK: - Subviews
 
 extension  SettingsView {
     
@@ -136,7 +139,7 @@ extension  SettingsView {
         }
         .padding(.horizontal, .large)
         .background(Color.Paynext.background)
-        .padding(.top, .extraLarge)
+        .padding(.vertical, .small)
     }
     
     // MARK: - Dark Mode Setting
@@ -170,7 +173,7 @@ extension  SettingsView {
                     .foregroundStyle(Color.Paynext.primaryText)
             }
             .tint(Color.Paynext.secondaryButton)
-            .padding(.medium)
+            .padding(.horizontal, .medium)
             .background(Color.Paynext.background)
         }
     }
@@ -202,13 +205,32 @@ extension  SettingsView {
                 }
                 .opacity(viewModel.isOn ? 1 : 0.5)
         }
-        .padding(.medium)
+        .padding(.horizontal, .medium)
         .background(Color.Paynext.background)
         .alert(viewModel.alertTitle, isPresented: $showFaceIdAlert) {
             Button(viewModel.alertDismissButtonTitle, role: .cancel) {}
         } message: {
             Text(viewModel.alertMessage)
         }
+    }
+    
+    // MARK: - Remote Source Transactions
+    
+    private var remoteSourceTransactions: some View {
+        HStack {
+            Text("Use Remote Transactions")
+                .font(.Paynext.footnoteMedium)
+                .foregroundStyle(Color.Paynext.primaryText)
+            Spacer()
+            Toggle("", isOn: Binding(
+                get: { viewModel.isRemoteSourceEnabled },
+                set: { viewModel.toggleTransactionSource(toRemote: $0) }
+            ))
+            .labelsHidden()
+            .tint(Color.Paynext.secondaryButton)
+        }
+        .padding(.horizontal, .medium)
+        .background(Color.Paynext.background)
     }
     
     // MARK: - Logout Button
@@ -222,41 +244,17 @@ extension  SettingsView {
             Text("Log out")
                 .filledButton(.quartenary)
         }
-        .padding(.top, .medium)
+        .padding(.top, .large)
     }
 }
 
 //MARK: - Preview
 
-#Preview {
-    SettingsView(
-        viewModel: MockSettingsViewModel(),
-        themeManager: MockThemeManager()
-    )
-}
-
-final class MockSettingsViewModel: SettingsViewModelProtocol, ObservableObject {
-    
-    @Published var isOn: Bool = true
-    @Published var isFaceIdOn: Bool = true
-    @Published var isAuthenticateFaceId: Bool = false
-    
-    var pinAccessButton: String = "Use PIN access"
-    
-    var faceIdLabel: String = "Use Face ID for app access"
-    var alertTitle: String = "Face ID Unavailable"
-    var alertMessage: String = "Face ID is not available or not enrolled on the device."
-    var alertDismissButtonTitle: String = "OK"
-    
-    func onLogout() async {}
-    func onToggle(toEnable: Bool) {}
-    func refreshPinStatus() {}
-    func onToggleFaceId(toEnable: Bool, completion: @escaping (Bool) -> Void) {
-        completion(true)
+struct SettingsView_Previews: PreviewProvider {
+    static var previews: some View {
+        SettingsView(
+            viewModel: MockSettingsViewModel(),
+            themeManager: MockThemeManager()
+        )
     }
-    func cleanupObservers() {}
-}
-
-final class MockThemeManager: ThemeManaging, ObservableObject {
-    @Published var isDarkModeEnabled: Bool = false
 }

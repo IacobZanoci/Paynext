@@ -28,6 +28,7 @@ public final class SettingsViewModel: SettingsViewModelProtocol {
     @Published public var isOn: Bool = false
     @Published public var isFaceIdOn: Bool = false
     @Published public var isAuthenticateFaceId: Bool = false
+    @Published public var isRemoteSourceEnabled: Bool = false
     
     // MARK: - Titles
     
@@ -51,6 +52,7 @@ public final class SettingsViewModel: SettingsViewModelProtocol {
         self.biometricsService = biometricsService
         self.onLogout = onLogout
         self.onTogglePinAction = onTogglePinAction
+        self.isRemoteSourceEnabled = persistenceStorage.get(forKey: .isRemoteSourceEnabled) ?? false
         
         refreshPinStatus()
         refreshFaceIDStatus()
@@ -140,5 +142,12 @@ public final class SettingsViewModel: SettingsViewModelProtocol {
     
     public func refreshFaceIDStatus() {
         self.isFaceIdOn = biometricsService.isFaceIDEnabled
+    }
+    
+    // MARK: - Remote Transactions Source
+    
+    public func toggleTransactionSource(toRemote: Bool) {
+        isRemoteSourceEnabled = toRemote
+        persistenceStorage.save(value: toRemote, forKey: .isRemoteSourceEnabled)
     }
 }

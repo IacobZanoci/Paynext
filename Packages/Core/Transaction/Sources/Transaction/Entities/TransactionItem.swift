@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct TransactionItem: Identifiable, Codable, Equatable, Sendable {
+public struct TransactionItem: Identifiable, Codable, Equatable, Sendable, Hashable {
     
     // MARK: - Properties
     

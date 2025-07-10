@@ -15,6 +15,7 @@ public protocol TransactionHistoryViewModelProtocol: ObservableObject {
     
     var rows: [TransactionRowViewModel] { get }
     var errorMessage: String? { get }
+    var isLoading: Bool { get }
     
     // MARK: - Titles
     
@@ -36,4 +37,5 @@ public protocol TransactionHistoryViewModelProtocol: ObservableObject {
     func load() async
     func applyFiltersLocally(_ criteria: TransactionFilterCriteria)
     func setSortOption(_ option: TransactionSortingOption)
+    func loadNextPageIfNeeded(currentItem: TransactionRowViewModel?) async
 }
