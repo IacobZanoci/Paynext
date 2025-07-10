@@ -85,7 +85,7 @@ extension InitiatePaymentView {
         Button {
             // TODO: - Go to Main Account Options
         } label: {
-            HStack(spacing: 16) {
+            HStack(spacing: .medium) {
                 Image(systemName: "wallet.bifold.fill")
                     .resizable()
                     .scaledToFit()
@@ -111,10 +111,10 @@ extension InitiatePaymentView {
                     .font(.Paynext.caption)
                     .foregroundStyle(Color.Paynext.secondary)
             }
-            .padding(.horizontal, 16)
+            .padding(.horizontal, .medium)
             .padding(.vertical, 20)
             .background(
-                RoundedRectangle(cornerRadius: 6)
+                RoundedRectangle(cornerRadius: .medium)
                     .stroke(Color.Paynext.tertiary, lineWidth: 1)
                     .fill(Color.Paynext.background)
             )
@@ -125,43 +125,43 @@ extension InitiatePaymentView {
     
     private var paymentForm: some View {
         VStack(spacing: 26) {
-            VStack(alignment: .leading, spacing: 6) {
+            VStack(alignment: .leading, spacing: .small) {
                 RoundedTextFieldView(
                     text: $vm.accountNumber,
                     placeholder: vm.accountNumberPlaceholder,
                     isValid: $vm.accountNumberValidationState,
                     title: vm.accountNumberTextField,
-                    radius: 6
+                    radius: .medium
                 )
             }
             
-            VStack(alignment: .leading, spacing: 6) {
+            VStack(alignment: .leading, spacing: .small) {
                 RoundedTextFieldView(
                     text: $vm.routingNumber,
                     placeholder: vm.routingNumberPlaceholder,
                     isValid: $vm.routingNumberValidationState,
                     title: vm.routingNumberTextField,
-                    radius: 6
+                    radius: .medium
                 )
             }
             
-            VStack(alignment: .leading, spacing: 6) {
+            VStack(alignment: .leading, spacing: .small) {
                 RoundedTextFieldView(
                     text: $vm.name,
                     placeholder: vm.payeeNamePlaceholder,
                     isValid: $vm.nameValidationState,
                     title: vm.payeeNameTextField,
-                    radius: 6
+                    radius: .medium
                 )
             }
             
-            VStack(alignment: .leading, spacing: 6) {
+            VStack(alignment: .leading, spacing: .small) {
                 RoundedTextFieldView(
                     text: $vm.amount,
                     placeholder: vm.amountPlaceholder,
                     isValid: $vm.amountValidationState,
                     title: vm.amountTextField,
-                    radius: 6,
+                    radius: .medium,
                     leftIcon: "dollarsign"
                 )
                 .keyboardType(.decimalPad)

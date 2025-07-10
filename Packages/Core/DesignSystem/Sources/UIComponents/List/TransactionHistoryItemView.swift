@@ -18,7 +18,6 @@ public struct TransactionHistoryItemView: View {
     let date: String
     let amount: String
     let amountColor: Color
-    let cornerRadius: CGFloat = 16
     
     // MARK: - Initializers
     
@@ -46,7 +45,7 @@ public struct TransactionHistoryItemView: View {
                 .resizable()
                 .scaledToFit()
                 .foregroundStyle(statusIconColor)
-                .frame(width: 18, height: 18)
+                .frame(width: .medium, height: .medium)
             VStack(alignment: .leading, spacing: .extraSmall) {
                 Text(title)
                     .font(.Paynext.footnoteMedium)
@@ -62,7 +61,7 @@ public struct TransactionHistoryItemView: View {
         }
         .padding(.medium)
         .background(
-            RoundedRectangle(cornerRadius: cornerRadius)
+            RoundedRectangle(cornerRadius: .medium)
                 .stroke(Color.Paynext.tertiary, lineWidth: 1)
         )
     }
@@ -92,7 +91,7 @@ public struct TransactionHistoryItemView: View {
         
         TransactionHistoryItemView(
             imageName: "x.circle",
-            statusIconColor: .orange,
+            statusIconColor: .Paynext.negative,
             title: "James May",
             date: "12:30 10/06/2025",
             amount: "+$300.00",
@@ -101,7 +100,7 @@ public struct TransactionHistoryItemView: View {
         
         TransactionHistoryItemView(
             imageName: "exclamationmark.circle",
-            statusIconColor: .orange,
+            statusIconColor: .Paynext.negative,
             title: "James May",
             date: "12:30 10/06/2025",
             amount: "+$300.00",
