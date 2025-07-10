@@ -27,7 +27,7 @@ public struct RoundedTextFieldView: View {
         placeholder: String,
         isValid: Binding<Bool>,
         title: String,
-        radius: CGFloat = 16,
+        radius: CGFloat = .medium,
         leftIcon: String? = nil
     ) {
         self._text = text
@@ -44,14 +44,14 @@ public struct RoundedTextFieldView: View {
         HStack {
             Text(title)
                 .font(.Paynext.body)
-                .foregroundStyle(Color.Paynext.primaryText)
+                .foregroundStyle(Color.Paynext.primary)
             
             Spacer()
             if !isValid {
                 Text("Wrong format")
-                    .foregroundStyle(Color.Paynext.errorStrokeBackground)
+                    .foregroundStyle(Color.Paynext.negative)
                     .font(.Paynext.caption)
-                    .padding([.top, .trailing], 8)
+                    .padding([.top, .trailing], .small)
             }
         }
         ZStack(alignment: .topTrailing) {
@@ -59,14 +59,14 @@ public struct RoundedTextFieldView: View {
                 HStack(spacing: 0) {
                     if let leftIcon {
                         Image(systemName: leftIcon)
-                            .font(.Paynext.bodyMedium)
-                            .foregroundStyle(Color.Paynext.primaryText)
-                            .padding(.leading, 12)
+                            .font(.Paynext.body.weight(.medium))
+                            .foregroundStyle(Color.Paynext.primary)
+                            .padding(.leading, .medium)
                     }
                     
                     TextField(placeholder, text: $text)
                         .font(.Paynext.body)
-                        .foregroundStyle(Color.Paynext.primaryText)
+                        .foregroundStyle(Color.Paynext.primary)
                         .padding(.medium)
                     
                     if !text.isEmpty {
@@ -74,8 +74,8 @@ public struct RoundedTextFieldView: View {
                             text = ""
                         }) {
                             Image(systemName: "xmark.circle.fill")
-                                .foregroundStyle(Color.Paynext.secondaryText.opacity(0.6))
-                                .padding(.trailing, 16)
+                                .foregroundStyle(Color.Paynext.tertiary)
+                                .padding(.trailing, .medium)
                         }
                         .buttonStyle(.plain)
                     }
@@ -88,8 +88,8 @@ public struct RoundedTextFieldView: View {
                     RoundedRectangle(cornerRadius: radius)
                         .stroke(
                             isValid
-                            ? Color.Paynext.strokeBackground
-                            : Color.Paynext.errorStrokeBackground,
+                            ? Color.Paynext.tertiary
+                            : Color.Paynext.negative,
                             lineWidth: 1.5
                         )
                 )
@@ -101,7 +101,7 @@ public struct RoundedTextFieldView: View {
 // MARK: - Preview
 
 #Preview {
-    VStack(spacing: 16) {
+    VStack(spacing: .medium) {
         RoundedTextFieldView(
             text: .constant(""),
             placeholder: "Name and Surname",
@@ -121,7 +121,7 @@ public struct RoundedTextFieldView: View {
             placeholder: "0.00",
             isValid: .constant(true),
             title: "Amount",
-            radius: 6,
+            radius: .medium,
             leftIcon: "dollarsign"
         )
     }

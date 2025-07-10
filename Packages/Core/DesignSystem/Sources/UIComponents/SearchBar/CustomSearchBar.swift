@@ -11,19 +11,27 @@ public struct CustomSearchBar: View {
     
     // MARK: - Properties
     
-    @State private var searchText: String = ""
-    let cornerRadius: CGFloat = 6
-    let lineWidth: CGFloat = 1
-    let contentPadding = EdgeInsets(
-        top: 12,
-        leading: 12,
-        bottom: 12,
-        trailing: 12
-    )
+    @Binding var searchText: String
+    
+    // MARK: - Constants
+    
+    private enum Constants {
+        static let lineWidth: CGFloat = 1
+        static let contentPadding = EdgeInsets(
+            top: 14,
+            leading: 14,
+            bottom: 14,
+            trailing: 14
+        )
+    }
     
     // MARK: - Initializers
     
-    public init() {}
+    public init(
+        searchText: Binding<String>
+    ) {
+        self._searchText = searchText
+    }
     
     // MARK: - View
     
@@ -33,25 +41,26 @@ public struct CustomSearchBar: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: .medium, height: .medium)
-                .foregroundStyle(Color.Paynext.primaryText)
+                .foregroundStyle(Color.Paynext.primary)
             
             TextField("Search transactions", text: $searchText)
                 .font(.Paynext.footnote)
-                .foregroundStyle(Color.Paynext.secondaryText)
+                .foregroundStyle(Color.Paynext.secondary)
         }
-        .padding(contentPadding)
+        .padding(Constants.contentPadding)
         .background(
-            RoundedRectangle(cornerRadius: cornerRadius)
-                .stroke(Color.Paynext.strokeBackground, lineWidth: lineWidth)
+            RoundedRectangle(cornerRadius: .medium)
+                .stroke(Color.Paynext.tertiary, lineWidth: Constants.lineWidth)
         )
         .background(Color.Paynext.background)
-        .clippedRoundedCorners(cornerRadius)
+        .clippedRoundedCorners(.medium)
     }
 }
 
 // MARK: - Preview
 
 #Preview {
-    CustomSearchBar()
+    @Previewable @State var text = ""
+    return CustomSearchBar(searchText: $text)
         .padding()
 }

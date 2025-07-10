@@ -55,7 +55,7 @@ public struct TransactionRowViewModel: TransactionRowViewModelProtocol {
     }
     
     public var amountColor: Color {
-        .Paynext.incomeText
+        .Paynext.positive
     }
     
     public var statusIconName: String {
@@ -76,7 +76,7 @@ public struct TransactionRowViewModel: TransactionRowViewModelProtocol {
     public var statusIconColor: Color {
         switch transaction.status {
         case "COMPLETED":
-            return .Paynext.incomeText
+            return .Paynext.positive
         case "PROCESSING":
             return .orange
         case "FAILED", "REJECTED":

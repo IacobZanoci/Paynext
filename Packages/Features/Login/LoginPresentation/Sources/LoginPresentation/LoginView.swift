@@ -28,7 +28,7 @@ public struct LoginView<ViewModel: LoginViewModelProtocol>: View {
     
     public var body: some View {
         ZStack {
-            Color.Paynext.secondaryBackground.ignoresSafeArea()
+            Color.Paynext.contrast.ignoresSafeArea()
             
             VStack {
                 appIcon
@@ -76,8 +76,8 @@ extension LoginView {
         ScrollView {
             VStack {
                 Text(viewModel.loginFormTitle)
-                    .font(.Paynext.headlineBold)
-                    .foregroundStyle(Color.Paynext.primaryText)
+                    .font(.Paynext.headline.weight(.bold))
+                    .foregroundStyle(Color.Paynext.primary)
                     .padding(.bottom, 6)
                 
                 VStack(spacing: 20) {
@@ -115,8 +115,9 @@ extension LoginView {
                     }
                 } label : {
                     Text(viewModel.loginButtonTitle)
-                        .filledButton(.primary, isDisabled: $viewModel.isLoginDisabled.wrappedValue)
+                        .primary()
                 }
+                .disabled(viewModel.isLoginDisabled)
                 .padding(.top, 50)
             }
         }

@@ -27,12 +27,12 @@ final class NetworkClientTests: XCTestCase {
         
         let expectedData = "response".data(using: .utf8)!
         let url = URL(string: "https://paynext.com")!
+        let response = HTTPURLResponse(url: url,
+                                       statusCode: 200,
+                                       httpVersion: nil,
+                                       headerFields: nil)!
         
-        mockSession.dataToReturn = expectedData
-        mockSession.responseToReturn = HTTPURLResponse(url: url,
-                                                       statusCode: 200,
-                                                       httpVersion: nil,
-                                                       headerFields: nil)
+        mockSession.result = .success((expectedData, response))
         
         let data = try await sut.get(from: url)
         XCTAssertEqual(data, expectedData)
@@ -42,14 +42,13 @@ final class NetworkClientTests: XCTestCase {
         
         let expectedData = Data([1,2,3])
         let url = URL(string: "https://paynext.com")!
-        
-        mockSession.dataToReturn = expectedData
-        mockSession.responseToReturn = HTTPURLResponse(url: url,
-                                                       statusCode: 201,
-                                                       httpVersion: nil,
-                                                       headerFields: nil)
-        
+        let response = HTTPURLResponse(url: url,
+                                       statusCode: 201,
+                                       httpVersion: nil,
+                                       headerFields: nil)!
         let body: [String: String] = ["name": "Paynext"]
+        
+        mockSession.result = .success((expectedData, response))
         
         let data = try await sut.post(to: url, body: body)
         XCTAssertEqual(data, expectedData)
@@ -59,14 +58,13 @@ final class NetworkClientTests: XCTestCase {
         
         let expectedData = Data([9,8,7])
         let url = URL(string: "https://paynext.com")!
-        
-        mockSession.dataToReturn = expectedData
-        mockSession.responseToReturn = HTTPURLResponse(url: url,
-                                                       statusCode: 200,
-                                                       httpVersion: nil,
-                                                       headerFields: nil)
-        
+        let response = HTTPURLResponse(url: url,
+                                       statusCode: 200,
+                                       httpVersion: nil,
+                                       headerFields: nil)!
         let body: [String: Int] = ["id": 1]
+        
+        mockSession.result = .success((expectedData, response))
         
         let data = try await sut.put(to: url, body: body)
         XCTAssertEqual(data, expectedData)
@@ -76,12 +74,12 @@ final class NetworkClientTests: XCTestCase {
         
         let expectedData = Data()
         let url = URL(string: "https://paynext.com")!
+        let response = HTTPURLResponse(url: url,
+                                       statusCode: 204,
+                                       httpVersion: nil,
+                                       headerFields: nil)!
         
-        mockSession.dataToReturn = expectedData
-        mockSession.responseToReturn = HTTPURLResponse(url: url,
-                                                       statusCode: 204,
-                                                       httpVersion: nil,
-                                                       headerFields: nil)
+        mockSession.result = .success((expectedData, response))
         
         let data = try await sut.delete(from: url)
         XCTAssertEqual(data, expectedData)
@@ -93,18 +91,13 @@ final class NetworkClientTests: XCTestCase {
         
         let url = URL(string: "https://paynext.com")!
         
-        mockSession.dataToReturn = Data()
-        mockSession.responseToReturn = URLResponse()
+        mockSession.result = .success((Data(), URLResponse()))
         
         do {
-            let result = try await sut.get(from: url)
-            XCTFail("Expected to throw 'invalidResponse' error, but got : \(result)")
+            _ = try await sut.get(from: url)
+            XCTFail("Expected to throw NetworkError.invalidResponse")
         } catch {
-            if case NetworkError.invalidResponse = error {
-                //
-            } else {
-                XCTFail("Expected invalidResponse error, got: \(error)")
-            }
+            XCTAssertEqual(error as? NetworkError, .invalidResponse)
         }
     }
     
@@ -112,16 +105,12 @@ final class NetworkClientTests: XCTestCase {
         
         let url = URL(string: "https://paynext.com")!
         
-        mockSession.dataToReturn = Data()
-        mockSession.responseToReturn = HTTPURLResponse(url: url,
-                                                       statusCode: 404,
-                                                       httpVersion: nil,
-                                                       headerFields: nil)
+        mockSession.result = .success((
+            Data(),
+            HTTPURLResponse(url: url, statusCode: 404, httpVersion: nil, headerFields: nil)!
+        ))
         
-        do {
-            let result = try await sut.get(from: url)
-            XCTFail("Expected to throw httpError, got: \(result)")
-        } catch {
+        await XCTAssertThrowsAsync(try await self.sut.get(from: url)) { error in
             if case let NetworkError.httpError(statusCode) = error {
                 XCTAssertEqual(statusCode, 404)
             } else {
@@ -134,16 +123,10 @@ final class NetworkClientTests: XCTestCase {
         
         let url = URL(string: "https://paynext.com")!
         
-        mockSession.errorToThrow = URLError(.timedOut)
+        mockSession.result = .failure(URLError(.timedOut))
         
-        do {
-            let result = try await sut.get(from: url)
-            XCTFail("Expected to throw timeoutError, got: \(result)")
-        } catch {
-            if case NetworkError.timeout = error {
-            } else {
-                XCTFail("Expected timeoutError, got: \(error)")
-            }
+        await XCTAssertThrowsAsync(try await self.sut.get(from: url)) { error in
+            XCTAssertEqual(error as? NetworkError, .timeout)
         }
     }
     
@@ -152,12 +135,9 @@ final class NetworkClientTests: XCTestCase {
         let url = URL(string: "https://paynext.com")!
         let underlyingError = NSError(domain: "paynextTestDomain", code: 1)
         
-        mockSession.errorToThrow = underlyingError
+        mockSession.result = .failure(underlyingError)
         
-        do {
-            let result = try await sut.get(from: url)
-            XCTFail("Expected to throw requestFailed error, got: \(result)")
-        } catch {
+        await XCTAssertThrowsAsync(try await self.sut.get(from: url)) { error in
             if case let NetworkError.requestFailed(inner) = error {
                 XCTAssertEqual((inner as NSError).code, 1)
             } else {
@@ -177,14 +157,8 @@ final class NetworkClientTests: XCTestCase {
             }
         }
         
-        do {
-            let result = try await sut.post(to: url, body: InvalidBody())
-            XCTFail("Expected to throw encodingError, got: \(result)")
-        } catch {
-            if case NetworkError.encodingError = error {
-            } else {
-                XCTFail("Expected encodingError error, got: \(error)")
-            }
+        await XCTAssertThrowsAsync(try await self.sut.post(to: url, body: InvalidBody())) { error in
+            XCTAssertEqual(error as? NetworkError, .encodingError)
         }
     }
 }

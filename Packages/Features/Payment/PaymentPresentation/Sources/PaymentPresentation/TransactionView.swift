@@ -76,10 +76,10 @@ extension TransactionView {
     func confirmationRow(title: String, value: String) -> some View {
         HStack {
             Text(title)
-                .foregroundStyle(Color.Paynext.secondaryText)
+                .foregroundStyle(Color.Paynext.secondary)
             Spacer()
             Text(value)
-                .foregroundStyle(Color.Paynext.primaryText)
+                .foregroundStyle(Color.Paynext.primary)
         }
         .padding(.horizontal, .small)
     }
@@ -90,20 +90,20 @@ extension TransactionView {
         VStack(spacing: .large) {
             ZStack {
                 Circle()
-                    .fill(Color.Paynext.secondaryBackground)
+                    .fill(Color.Paynext.accent)
                     .frame(width: Constants.circleSize, height: Constants.circleSize)
                 Image(systemName: "checkmark.circle.fill")
                     .resizable()
                     .scaledToFit()
-                    .foregroundStyle(Color.Paynext.accentText)
+                    .foregroundStyle(Color.white)
                     .frame(width: Constants.checkMarkSize, height: Constants.checkMarkSize)
             }
             Text("Successfully transfered!")
                 .font(.Paynext.headline)
-                .foregroundStyle(Color.Paynext.primaryText)
+                .foregroundStyle(Color.Paynext.primary)
             ZStack(alignment: .top) {
                 RoundedRectangle(cornerRadius: .large)
-                    .stroke(Color.Paynext.strokeBackground, lineWidth: 1)
+                    .stroke(Color.Paynext.tertiary, lineWidth: 1)
                     .frame(width: Constants.successCardWidth, height: Constants.successCardHeight)
                 VStack(spacing: .large) {
                     confirmationRow(title: "Recipient", value: paymentVM.name)
@@ -120,7 +120,7 @@ extension TransactionView {
             VStack(spacing: .medium) {
                 Button(action: {}) {
                     Text("Back to home")
-                        .filledButton(.primary)
+                        .primary()
                 }
                 .padding(.top, .large)
                 
@@ -130,7 +130,7 @@ extension TransactionView {
                     }
                 }) {
                     Text("Make another payment")
-                        .filledButton(.secondary)
+                        .secondary()
                 }
             }
         }
@@ -156,13 +156,13 @@ extension TransactionView {
                     Image(systemName: "exclamationmark.octagon.fill")
                         .resizable()
                         .scaledToFit()
-                        .foregroundStyle(Color.Paynext.outcomeText)
+                        .foregroundStyle(Color.Paynext.negative)
                         .frame(width: Constants.imageWidth, height: Constants.imageHeight)
                     
                     VStack(spacing: .medium) {
                         Text("Transaction Failed")
-                            .font(.Paynext.headlineBold)
-                            .foregroundStyle(Color.Paynext.outcomeText)
+                            .font(.Paynext.headline.weight(.bold))
+                            .foregroundStyle(Color.Paynext.primary)
                         
                         Text("""
                             There was an issue processing your
@@ -170,7 +170,7 @@ extension TransactionView {
                             """)
                         .multilineTextAlignment(.center)
                         .font(.Paynext.footnote)
-                        .foregroundStyle(Color.Paynext.secondaryText)
+                        .foregroundStyle(Color.Paynext.secondary)
                     }
                     .padding(.horizontal, 2)
                     
@@ -181,13 +181,13 @@ extension TransactionView {
                             }
                         }) {
                             Text("Review payment details")
-                                .filledButton(.error)
+                                .tertiary()
                         }
                         .padding(.top, .large)
                         
                         Button(action: {}) {
                             Text("Go to Dashboard")
-                                .filledButton(.error)
+                                .secondary(tone: .destructive)
                         }
                     }
                     .padding(.horizontal, .large)
@@ -230,7 +230,7 @@ extension TransactionView {
                 
                 Text("We're making sure everything checks out.")
                     .font(.Paynext.footnote)
-                    .foregroundStyle(Color.Paynext.secondaryText)
+                    .foregroundStyle(Color.Paynext.secondary)
             }
             
             Spacer()

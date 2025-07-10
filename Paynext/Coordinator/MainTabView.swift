@@ -49,18 +49,18 @@ struct MainTabView: View {
         let itemAppearance = UITabBarItemAppearance()
         
         appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = UIColor.Paynext.tabBarBackground
+        appearance.backgroundColor = UIColor.Paynext.background
         appearance.shadowColor = UIColor.systemGray5
         
-        itemAppearance.normal.iconColor = UIColor.Paynext.normalTabBar
+        itemAppearance.normal.iconColor = UIColor.Paynext.inactive
         itemAppearance.normal.titleTextAttributes = [
-            .foregroundColor: UIColor.Paynext.normalTabBar,
+            .foregroundColor: UIColor.Paynext.inactive,
             .font: UIFont.systemFont(ofSize: 10, weight: .regular)
         ]
         
-        itemAppearance.selected.iconColor = UIColor.Paynext.selectedTabBar
+        itemAppearance.selected.iconColor = UIColor.Paynext.active
         itemAppearance.selected.titleTextAttributes = [
-            .foregroundColor: UIColor.Paynext.selectedTabBar,
+            .foregroundColor: UIColor.Paynext.active,
             .font: UIFont.systemFont(ofSize: 10, weight: .bold)
         ]
         

@@ -17,6 +17,7 @@ public struct TransactionHistoryView<ViewModel: TransactionHistoryViewModelProto
     @StateObject private var viewModel: ViewModel
     @State private var selectedTransaction: TransactionItem?
     @State private var isFilterPresented: Bool = false
+    @State private var searchText: String = ""
     
     // MARK: - Initializers
     
@@ -80,8 +81,8 @@ extension TransactionHistoryView {
     private var navigationTitle: some View {
         VStack {
             Text(viewModel.transactionNavigationTitle)
-                .font(.Paynext.subheadlineBold)
-                .foregroundStyle(Color.Paynext.primaryText)
+                .font(.Paynext.subheadline.weight(.bold))
+                .foregroundStyle(Color.Paynext.primary)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
@@ -91,13 +92,13 @@ extension TransactionHistoryView {
     private var transactionToolbarView: some View {
         VStack(spacing: .medium) {
             HStack {
-                CustomSearchBar()
+                CustomSearchBar(searchText: $searchText)
                     .frame(width: 250)
                 Button {
                     isFilterPresented = true
                 } label : {
                     Text(viewModel.filterButtonTitle)
-                        .filledButton(.quartenary)
+                        .primary()
                 }
             }
             Menu {
@@ -117,12 +118,12 @@ extension TransactionHistoryView {
                 HStack {
                     Text(viewModel.sortButtonTitle)
                         .font(.Paynext.footnote)
-                        .foregroundStyle(Color.Paynext.primaryText.opacity(0.5))
+                        .foregroundStyle(Color.Paynext.secondary)
                     Image(systemName: viewModel.sortButtonImageTitle)
                         .resizable()
                         .scaledToFit()
                         .frame(width: .small, height: .small)
-                        .foregroundStyle(Color.Paynext.primaryText.opacity(0.5))
+                        .foregroundStyle(Color.Paynext.secondary)
                     Spacer()
                 }
                 .padding(.bottom, .small)
@@ -158,15 +159,15 @@ extension TransactionHistoryView {
             Image(systemName: viewModel.noTransactionsImageTitle)
                 .resizable()
                 .scaledToFit()
-                .foregroundStyle(Color.Paynext.primaryText)
+                .foregroundStyle(Color.Paynext.primary)
                 .frame(width: 120, height: 80)
             Text(viewModel.noTransactionsTitle)
-                .font(.Paynext.headlineBold)
-                .foregroundStyle(Color.Paynext.primaryText)
+                .font(.Paynext.headline.weight(.bold))
+                .foregroundStyle(Color.Paynext.primary)
             Text(viewModel.noDataMatchFilterCriteriaMessage)
                 .multilineTextAlignment(.center)
-                .font(.Paynext.footnoteMedium)
-                .foregroundStyle(Color.Paynext.secondaryText)
+                .font(.Paynext.footnote.weight(.medium))
+                .foregroundStyle(Color.Paynext.secondary)
                 .padding(.bottom, 180)
             Spacer()
         }

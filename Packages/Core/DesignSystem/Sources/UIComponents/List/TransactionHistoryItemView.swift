@@ -18,7 +18,6 @@ public struct TransactionHistoryItemView: View {
     let date: String
     let amount: String
     let amountColor: Color
-    let cornerRadius: CGFloat = 16
     
     // MARK: - Initializers
     
@@ -46,24 +45,24 @@ public struct TransactionHistoryItemView: View {
                 .resizable()
                 .scaledToFit()
                 .foregroundStyle(statusIconColor)
-                .frame(width: 18, height: 18)
+                .frame(width: .medium, height: .medium)
             VStack(alignment: .leading, spacing: .extraSmall) {
                 Text(title)
-                    .font(.Paynext.footnoteMedium)
-                    .foregroundStyle(Color.Paynext.primaryText.opacity(0.9))
+                    .font(.Paynext.footnote.weight(.medium))
+                    .foregroundStyle(Color.Paynext.primary)
                 Text(date)
                     .font(.Paynext.caption)
-                    .foregroundStyle(Color.Paynext.primaryText.opacity(0.7))
+                    .foregroundStyle(Color.Paynext.secondary)
             }
             Spacer()
             Text(amount)
-                .font(.Paynext.footnoteMedium)
+                .font(.Paynext.footnote.weight(.medium))
                 .foregroundStyle(amountColor)
         }
         .padding(.medium)
         .background(
-            RoundedRectangle(cornerRadius: cornerRadius)
-                .stroke(Color.Paynext.strokeBackground.opacity(0.9), lineWidth: 1)
+            RoundedRectangle(cornerRadius: .medium)
+                .stroke(Color.Paynext.tertiary, lineWidth: 1)
         )
     }
 }
@@ -74,38 +73,38 @@ public struct TransactionHistoryItemView: View {
     VStack(spacing: 16) {
         TransactionHistoryItemView(
             imageName: "clock",
-            statusIconColor: .Paynext.secondaryText,
+            statusIconColor: .Paynext.secondary,
             title: "James May",
             date: "12:30 10/06/2025",
             amount: "+$300.00",
-            amountColor: Color.Paynext.incomeText
+            amountColor: Color.Paynext.positive
         )
         
         TransactionHistoryItemView(
             imageName: "checkmark.circle",
-            statusIconColor: .Paynext.incomeText,
+            statusIconColor: .Paynext.positive,
             title: "James May",
             date: "12:30 10/06/2025",
             amount: "+$300.00",
-            amountColor: Color.Paynext.incomeText
+            amountColor: Color.Paynext.positive
         )
         
         TransactionHistoryItemView(
             imageName: "x.circle",
-            statusIconColor: .orange,
+            statusIconColor: .Paynext.negative,
             title: "James May",
             date: "12:30 10/06/2025",
             amount: "+$300.00",
-            amountColor: Color.Paynext.incomeText
+            amountColor: Color.Paynext.positive
         )
         
         TransactionHistoryItemView(
             imageName: "exclamationmark.circle",
-            statusIconColor: .orange,
+            statusIconColor: .Paynext.negative,
             title: "James May",
             date: "12:30 10/06/2025",
             amount: "+$300.00",
-            amountColor: Color.Paynext.incomeText
+            amountColor: Color.Paynext.positive
         )
     }
     .padding()

@@ -44,9 +44,9 @@ public struct TransactionDetailsView<ViewModel: TransactionRowViewModelProtocol>
                         dismiss()
                     }) {
                         Image(systemName: viewModel.dismissButtonTitle)
-                            .font(.Paynext.bodyBold)
+                            .font(.Paynext.body.weight(.bold))
                             .imageScale(.large)
-                            .foregroundStyle(Color.Paynext.primaryText)
+                            .foregroundStyle(Color.Paynext.primary)
                     }
                     .padding(.trailing, .large)
                 }
@@ -103,7 +103,7 @@ public struct TransactionDetailsView<ViewModel: TransactionRowViewModelProtocol>
             .padding()
             .background(
                 RoundedRectangle(cornerRadius: .large)
-                    .stroke(Color.Paynext.strokeBackground, lineWidth: 1)
+                    .stroke(Color.Paynext.tertiary, lineWidth: 1)
             )
             .padding(.horizontal, .large)
             .padding(.vertical, .large)
@@ -131,11 +131,11 @@ extension TransactionDetailsView {
         HStack(alignment: .top) {
             Text(title)
                 .font(.Paynext.body)
-                .foregroundStyle(Color.Paynext.secondaryText)
+                .foregroundStyle(Color.Paynext.secondary)
             Spacer()
             Text(displayValue)
                 .font(.Paynext.body)
-                .foregroundStyle(Color.Paynext.primaryText)
+                .foregroundStyle(Color.Paynext.primary)
                 .multilineTextAlignment(.trailing)
                 .frame(maxWidth: .infinity, alignment: .trailing)
                 .onTapGesture {

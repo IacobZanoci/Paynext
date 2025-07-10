@@ -69,32 +69,32 @@ extension  SettingsView {
         VStack(spacing: .extraSmall) {
             ZStack {
                 Circle()
-                    .fill(Color.Paynext.secondaryText)
+                    .fill(Color.Paynext.secondary)
                     .frame(width: 84, height: 84)
                 
                 Image(systemName: "person.crop.circle")
                     .resizable()
                     .scaledToFit()
-                    .foregroundStyle(Color.Paynext.accentText)
+                    .foregroundStyle(Color.white)
                     .frame(width: 84, height: 84)
                     .clipShape(Circle())
             }
             .padding(.top, .extraLarge)
             
             Text("Iacob Zanoci")
-                .font(.Paynext.navigationTitleMedium)
-                .foregroundStyle(Color.Paynext.accentText)
+                .font(.Paynext.navigationTitle.weight(.medium))
+                .foregroundStyle(Color.white)
                 .padding(.top, .medium)
             
             Text("929 671-0972")
-                .font(.Paynext.footnoteMedium)
-                .foregroundStyle(Color.Paynext.accentText.opacity(0.9))
+                .font(.Paynext.footnote.weight(.medium))
+                .foregroundStyle(Color.white.opacity(0.9))
                 .padding(.top, .extraSmall)
                 .padding(.bottom, .medium)
         }
         .frame(maxWidth: .infinity)
         .padding()
-        .background(Color.Paynext.tertiaryBackground)
+        .background(Color.Paynext.contrast)
     }
     
     // MARK: - Settings Section View
@@ -147,12 +147,12 @@ extension  SettingsView {
     private var darkModeSetting: some View {
         HStack {
             Text("Dark Mode")
-                .font(.Paynext.footnoteMedium)
-                .foregroundStyle(Color.Paynext.primaryText)
+                .font(.Paynext.footnote.weight(.medium))
+                .foregroundStyle(Color.Paynext.primary)
             Spacer()
             Toggle("", isOn: $themeManager.isDarkModeEnabled)
                 .labelsHidden()
-                .tint(Color.Paynext.primaryButton)
+                .tint(Color.Paynext.accent)
         }
         .padding(.horizontal, .medium)
         .background(Color.Paynext.background)
@@ -169,10 +169,10 @@ extension  SettingsView {
                 }
             )) {
                 Text(viewModel.pinAccessButton)
-                    .font(.Paynext.footnoteMedium)
-                    .foregroundStyle(Color.Paynext.primaryText)
+                    .font(.Paynext.footnote.weight(.medium))
+                    .foregroundStyle(Color.Paynext.primary)
             }
-            .tint(Color.Paynext.secondaryButton)
+            .tint(Color.Paynext.accent)
             .padding(.horizontal, .medium)
             .background(Color.Paynext.background)
         }
@@ -183,15 +183,15 @@ extension  SettingsView {
     private var faceIdAccess: some View {
         HStack {
             Text(viewModel.faceIdLabel)
-                .font(.Paynext.footnoteMedium)
-                .foregroundStyle(Color.Paynext.primaryText)
+                .font(.Paynext.footnote.weight(.medium))
+                .foregroundStyle(Color.Paynext.primary)
             Spacer()
             Toggle(isOn: Binding(
                 get: { viewModel.isFaceIdOn },
                 set: { _ in }
             )) {}
                 .labelsHidden()
-                .tint(Color.Paynext.secondaryButton)
+                .tint(Color.Paynext.accent)
                 .disabled(true)
                 .contentShape(Rectangle())
                 .onTapGesture {
@@ -219,15 +219,15 @@ extension  SettingsView {
     private var remoteSourceTransactions: some View {
         HStack {
             Text("Use Remote Transactions")
-                .font(.Paynext.footnoteMedium)
-                .foregroundStyle(Color.Paynext.primaryText)
+                .font(.Paynext.footnote.weight(.medium))
+                .foregroundStyle(Color.Paynext.primary)
             Spacer()
             Toggle("", isOn: Binding(
                 get: { viewModel.isRemoteSourceEnabled },
                 set: { viewModel.toggleTransactionSource(toRemote: $0) }
             ))
             .labelsHidden()
-            .tint(Color.Paynext.secondaryButton)
+            .tint(Color.Paynext.accent)
         }
         .padding(.horizontal, .medium)
         .background(Color.Paynext.background)
@@ -242,7 +242,7 @@ extension  SettingsView {
             }
         }) {
             Text("Log out")
-                .filledButton(.quartenary)
+                .tertiary()
         }
         .padding(.top, .large)
     }
