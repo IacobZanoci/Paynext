@@ -15,10 +15,14 @@ public final class TransactionHistoryViewModel: TransactionHistoryViewModelProto
     
     @Published public private(set) var rows: [TransactionRowViewModel] = []
     @Published public private(set) var errorMessage: String?
+    private var currentPage = 1
+    private let pageSize = 20
+    private var hasMorePages = true
+    public var isLoading = false
     
     // MARK: - Dependencies
     
-    private let service: TransactionService
+    private let service: TransactionServiceProtocol
     private let filterService: TransactionFilterService
     private let sortingService: TransactionSortingServiceProtocol
     
@@ -31,7 +35,7 @@ public final class TransactionHistoryViewModel: TransactionHistoryViewModelProto
     // MARK: - Initializers
     
     public init(
-        service: TransactionService = MockTransactionService(),
+        service: TransactionServiceProtocol = MockTransactionService(),
         filterService: TransactionFilterService = TransactionFilterService(),
         sortingService: TransactionSortingServiceProtocol = TransactionSortingService()
     ) {
@@ -43,14 +47,69 @@ public final class TransactionHistoryViewModel: TransactionHistoryViewModelProto
     // MARK: - Data Loading
     
     public func load() async {
+        currentPage = 1
+        hasMorePages = true
+        isLoading = false
+        allTransactions = []
+        errorMessage = nil
+        
         do {
-            let transactions = try await service.fetchAllTransactions()
-            self.allTransactions = transactions
-            self.rows = transactions
+            let transactions = try await service.fetchAllTransactions(page: currentPage, pageSize: pageSize)
+            let uniqueTransactions = Array(Set(transactions))
+            self.allTransactions = uniqueTransactions
+            self.rows = uniqueTransactions
                 .sorted { $0.createdAt > $1.createdAt }
                 .map(TransactionRowViewModel.init)
+            
+            currentPage += 1
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                Task {
+                    if let lastRow = self.rows.dropLast(2).last {
+                        await self.loadNextPageIfNeeded(currentItem: lastRow)
+                    }
+                }
+            }
         } catch {
             self.errorMessage = "Failed to load: \(error.localizedDescription)"
+        }
+    }
+    
+    // MARK: - Loading Next Page
+    
+    public func loadNextPageIfNeeded(currentItem: TransactionRowViewModel?) async {
+        guard let currentItem, !isLoading, hasMorePages else { return }
+        
+        if let index = rows.firstIndex(where: { $0.id == currentItem.id }) {
+            let thresholdIndex = max(0, rows.count - 2)
+            if index >= thresholdIndex {
+                await loadNextPage()
+            }
+        }
+    }
+    
+    private func loadNextPage() async {
+        isLoading = true
+        defer { isLoading = false }
+        
+        do {
+            let newTransactions = try await service.fetchAllTransactions(page: currentPage, pageSize: pageSize)
+            
+            if newTransactions.count < pageSize {
+                hasMorePages = false
+            }
+            
+            allTransactions.append(contentsOf: newTransactions)
+            let uniqueTransactions = Array(Set(allTransactions))
+            self.allTransactions = uniqueTransactions
+            
+            self.rows = uniqueTransactions
+                .sorted { $0.createdAt > $1.createdAt }
+                .map(TransactionRowViewModel.init)
+            
+            currentPage += 1
+        } catch {
+            self.errorMessage = "Failde to load more :\(error.localizedDescription)"
         }
     }
     

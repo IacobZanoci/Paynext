@@ -20,23 +20,31 @@ struct MainTabView: View {
     
     // MARK: - Properties
     
+    @State private var selectedTab = 0
+    @State private var historyViewKey = UUID()
+    
+    // MARK: - Dependencies
+    
+    @EnvironmentObject private var themeManager: ThemeManager
+    @StateObject private var transactionVMProvider: TransactionHistoryViewModelProvider
+    @StateObject private var settingsVM: SettingsViewModel
+    
+    // MARK: - Coordinators
+    
     @StateObject private var homeCoordinator = AppCoordinator()
     @StateObject private var historyCoordinator = AppCoordinator()
     @StateObject private var paymentCoordinator = AppCoordinator()
     @StateObject private var accountCoordinator = AppCoordinator()
+    
+    // MARK: - ViewModels
+    
     @StateObject private var paymentVM = PaymentViewModel(
         credentialsValidator: CredentialsValidator()
     )
-    @EnvironmentObject private var themeManager: ThemeManager
-    @StateObject private var settingsVM: SettingsViewModel
-    
-    @State private var selectedTab = 0
     
     // MARK: - Initializers
     
-    init(
-        coordinator: AppCoordinator
-    ) {
+    init(coordinator: AppCoordinator) {
         let appearance = UITabBarAppearance()
         let itemAppearance = UITabBarItemAppearance()
         
@@ -60,8 +68,6 @@ struct MainTabView: View {
         UITabBar.appearance().standardAppearance = appearance
         UITabBar.appearance().scrollEdgeAppearance = appearance
         
-        _accountCoordinator = StateObject(wrappedValue: coordinator)
-        
         let userDefaults = UserDefaultsManager()
         let notificationCenter: NotificationCenterProtocol = NotificationCenter.default
         let biometricsService = BiometricsService(
@@ -82,7 +88,11 @@ struct MainTabView: View {
             }
         )
         
+        _accountCoordinator = StateObject(wrappedValue: coordinator)
         _settingsVM = StateObject(wrappedValue: settingsVM)
+        _transactionVMProvider = StateObject(
+            wrappedValue: TransactionHistoryViewModelProvider(settings: settingsVM)
+        )
     }
     
     // MARK: - View
@@ -115,16 +125,15 @@ struct MainTabView: View {
             // MARK: - History TabBar View
             
             NavigationStack(path: $historyCoordinator.navigationPath) {
-                TransactionHistoryView(
-                    viewModel: TransactionHistoryViewModel(service: MockTransactionService())
-                )
-                .navigationDestination(for: AppRoute.self) { route in
-                    historyCoordinator.view(
-                        route: route,
-                        coordinator: historyCoordinator
-                    )
-                }
-                .environmentObject(historyCoordinator)
+                TransactionHistoryView(viewModel: transactionVMProvider.viewModel)
+                    .id(historyViewKey)
+                    .navigationDestination(for: AppRoute.self) { route in
+                        historyCoordinator.view(route: route, coordinator: historyCoordinator)
+                    }
+                    .environmentObject(historyCoordinator)
+                    .onReceive(transactionVMProvider.$viewModel) { _ in
+                        historyViewKey = UUID()
+                    }
             }
             .tabItem {
                 Image(systemName: selectedTab == 0 ? "book.pages.fill" : "book.pages")

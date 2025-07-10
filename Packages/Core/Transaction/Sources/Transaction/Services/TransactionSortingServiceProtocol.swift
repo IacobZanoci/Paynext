@@ -9,8 +9,5 @@ import Foundation
 
 public protocol TransactionSortingServiceProtocol {
     
-    func sort(
-        _ transactions: [TransactionItem],
-        by option: TransactionSortingOption
-    ) -> [TransactionItem]
+    func sort(_ transactions: [TransactionItem], by option: TransactionSortingOption) -> [TransactionItem]
 }

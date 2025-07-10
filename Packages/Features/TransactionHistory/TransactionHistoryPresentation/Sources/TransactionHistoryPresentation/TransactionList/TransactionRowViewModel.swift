@@ -26,7 +26,9 @@ public struct TransactionRowViewModel: TransactionRowViewModelProtocol {
     
     // MARK: - Properties
     
-    public var id: UUID { transaction.id }
+    public var id: String {
+        "\(transaction.id.uuidString)-\(transaction.createdAt)"
+    }
     
     public var title: String { transaction.payeeName }
     

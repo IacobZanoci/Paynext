@@ -12,7 +12,10 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../Core/DesignSystem"),
-        .package(path: "../../Core/Transaction")
+        .package(path: "../../Core/Transaction"),
+        .package(path: "../../Core/Persistance"),
+        .package(path: "../../Core/NetworkClient"),
+        .package(path: "../../Core/SettingsPresentation")
     ],
     targets: [
         .target(
@@ -20,7 +23,10 @@ let package = Package(
             dependencies: [
                 .product(name: "DesignSystem", package: "DesignSystem"),
                 .product(name: "UIComponents", package: "DesignSystem"),
-                .product(name: "Transaction", package: "Transaction")
+                .product(name: "Transaction", package: "Transaction"),
+                .product(name: "Persistance", package: "Persistance"),
+                .product(name: "NetworkClient", package: "NetworkClient"),
+                .product(name: "SettingsPresentation", package: "SettingsPresentation")
             ]
         ),
         .testTarget(

@@ -7,8 +7,8 @@
 
 import Foundation
 
-public final class NetworkClient: NetworkClientProtocol {
-        
+public final class NetworkClient: NetworkClientProtocol, @unchecked Sendable {
+    
     private let urlSession: URLSessionProtocol
     
     public init(urlSession: URLSessionProtocol = URLSession.shared) {

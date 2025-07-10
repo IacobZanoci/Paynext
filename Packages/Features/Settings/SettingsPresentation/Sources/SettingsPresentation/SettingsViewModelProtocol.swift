@@ -15,6 +15,7 @@ public protocol SettingsViewModelProtocol: ObservableObject {
     var isOn: Bool { get set }
     var isFaceIdOn: Bool { get set }
     var isAuthenticateFaceId: Bool { get set }
+    var isRemoteSourceEnabled: Bool { get set }
     
     // MARK: - Titles
     
@@ -31,4 +32,5 @@ public protocol SettingsViewModelProtocol: ObservableObject {
     func refreshPinStatus()
     func onToggleFaceId(toEnable: Bool, completion: @escaping (Bool) -> Void)
     func cleanupObservers()
+    func toggleTransactionSource(toRemote: Bool)
 }

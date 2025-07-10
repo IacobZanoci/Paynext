@@ -15,7 +15,7 @@ public final class DashboardViewModel: DashboardViewModelProtocol {
     
     // MARK: - Dependencies
     
-    private let service: TransactionService
+    private let service: TransactionServiceProtocol
     
     // MARK: - Properties
     
@@ -43,7 +43,7 @@ public final class DashboardViewModel: DashboardViewModelProtocol {
     // MARK: - Initializers
     
     public init(
-        service: TransactionService
+        service: TransactionServiceProtocol
     ) {
         self.service = service
     }
@@ -52,7 +52,7 @@ public final class DashboardViewModel: DashboardViewModelProtocol {
     
     public func load() async {
         do {
-            let transactions = try await service.fetchAllTransactions()
+            let transactions = try await service.fetchAllTransactions(page: nil, pageSize: nil)
             let sorted = Array(transactions.sorted { $0.createdAt > $1.createdAt }.prefix(3))
             self.recentTransactions = sorted.map { TransactionRowViewModel(transaction: $0) }
         } catch {

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol NetworkClientProtocol {
+public protocol NetworkClientProtocol: Sendable {
     
     /// Performs a GET request with optional headers and query parameters.
     func get(
