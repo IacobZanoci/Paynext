@@ -67,11 +67,11 @@ extension DashboardView {
                     VStack(alignment: .leading) {
                         Text(viewModel.dashboardTitle)
                             .font(.Paynext.titleBold)
-                            .foregroundStyle(Color.Paynext.accentText)
+                            .foregroundStyle(Color.white)
                             .padding(.vertical, .small)
                         Text(viewModel.username)
                             .font(.Paynext.navigationTitleMedium)
-                            .foregroundStyle(Color.Paynext.accentText.opacity(0.9))
+                            .foregroundStyle(Color.white.opacity(0.9))
                             .onAppear {
                                 viewModel.fetchUsername()
                             }
@@ -83,12 +83,12 @@ extension DashboardView {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 140, height: 140)
-                    .foregroundStyle(Color.Paynext.accentText)
+                    .foregroundStyle(Color.white)
                     .padding(.bottom, .extraLarge)
             }
             .padding(.top, 40)
             .frame(maxWidth: .infinity)
-            .background(Color.Paynext.secondaryBackground)
+            .background(Color.Paynext.accent)
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: .large) {
                     ForEach(viewModel.actions, id: \.self) { action in
@@ -110,7 +110,7 @@ extension DashboardView {
                     VStack(alignment: .leading, spacing: .small) {
                         Text(viewModel.appDescriptionText)
                             .font(.Paynext.footnote)
-                            .foregroundStyle(Color.Paynext.accentText)
+                            .foregroundStyle(Color.white)
                             .lineSpacing(.extraSmall)
                             .padding(.top, -.medium)
                     }
@@ -120,19 +120,19 @@ extension DashboardView {
                     Image(viewModel.dashboardCardImageTitle, bundle: .module)
                         .resizable()
                         .scaledToFit()
-                        .foregroundStyle(Color.Paynext.accentText)
+                        .foregroundStyle(Color.white)
                         .padding(.bottom, -60)
                 }
                 .padding()
                 .frame(minHeight: 150)
-                .background(Color.Paynext.tertiaryBackground)
+                .background(Color.Paynext.contrast)
                 .cornerRadius(.large)
                 
                 Button(action: {}) {
                     Image(systemName: viewModel.dashboardCardHideButtonTitle)
                         .resizable()
                         .frame(width: .small, height: .small)
-                        .foregroundStyle(Color.Paynext.accentText)
+                        .foregroundStyle(Color.white)
                         .padding(.medium)
                 }
             }
@@ -167,7 +167,7 @@ extension DashboardView {
             }
             Text(title)
                 .font(titleFont)
-                .foregroundStyle(Color.Paynext.primaryText)
+                .foregroundStyle(Color.Paynext.primary)
         }
     }
     
@@ -177,7 +177,7 @@ extension DashboardView {
             HStack {
                 Text(viewModel.transactionsSectionTitle)
                     .font(.Paynext.subheadlineMedium)
-                    .foregroundStyle(Color.Paynext.primaryText)
+                    .foregroundStyle(Color.Paynext.primary)
                 Spacer()
                 Button {
                     onSeeAllTap()
@@ -185,12 +185,12 @@ extension DashboardView {
                     HStack(spacing: .extraSmall) {
                         Text(viewModel.transactionsSectionButtonTitle)
                             .font(.Paynext.caption)
-                            .foregroundStyle(Color.Paynext.secondaryText)
+                            .foregroundStyle(Color.Paynext.secondary)
                         Image(systemName: viewModel.transactionsSectionButtonImageTitle)
                             .resizable()
                             .scaledToFit()
                             .frame(width: .small, height: .small)
-                            .foregroundStyle(Color.Paynext.secondaryText)
+                            .foregroundStyle(Color.Paynext.secondary)
                     }
                 }
             }

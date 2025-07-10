@@ -74,14 +74,14 @@ public struct AuthenticationView<ViewModel: AuthenticationViewModelProtocol>: Vi
                 Spacer()
                 Text(viewModel.titleText)
                     .font(.Paynext.navigationTitleMedium)
-                    .foregroundStyle(Color.Paynext.primaryText)
+                    .foregroundStyle(Color.Paynext.primary)
                 Spacer()
                 Color.clear.frame(width: 44, height: 44)
             }
             .padding(.horizontal, .medium)
             
             Divider()
-                .background(Color.gray.opacity(0.3))
+                .background(Color.Paynext.tertiary)
         }
     }
     
@@ -94,7 +94,7 @@ public struct AuthenticationView<ViewModel: AuthenticationViewModelProtocol>: Vi
         }) {
             Text("Cancel")
                 .font(.Paynext.navigationTitleMedium)
-                .foregroundStyle(Color.Paynext.primaryText)
+                .foregroundStyle(Color.Paynext.primary)
         }
         .opacity(isCancelVisible ? 1 : 0)
         .disabled(!isCancelVisible)
@@ -136,8 +136,8 @@ public struct AuthenticationView<ViewModel: AuthenticationViewModelProtocol>: Vi
                         
                         Text(viewModel.pin[index].isEmpty ? "" : "*")
                             .foregroundColor(viewModel.showErrorAlert
-                                             ? .Paynext.errorStrokeBackground
-                                             : .Paynext.primaryText
+                                             ? .Paynext.negative
+                                             : .Paynext.primary
                             )
                             .font(.title)
                             .frame(width: 40, height: 40)
@@ -146,8 +146,8 @@ public struct AuthenticationView<ViewModel: AuthenticationViewModelProtocol>: Vi
                     Rectangle()
                         .frame(width: 40, height: 2)
                         .foregroundColor(viewModel.showErrorAlert || viewModel.pinNotMatchingError
-                                         ? .Paynext.errorStrokeBackground
-                                         : .Paynext.primaryText
+                                         ? .Paynext.negative
+                                         : .Paynext.primary
                         )
                 }
             }
@@ -214,8 +214,8 @@ public struct AuthenticationView<ViewModel: AuthenticationViewModelProtocol>: Vi
                             Text(item)
                                 .font(.Paynext.navigationTitle)
                                 .frame(width: 80, height: 80)
-                                .background(Color.Paynext.primaryText)
-                                .foregroundStyle(Color.Paynext.contrastText)
+                                .background(Color.Paynext.contrast)
+                                .foregroundStyle(Color.white)
                                 .clipShape(Circle())
                         }
                     }
@@ -242,7 +242,7 @@ public struct AuthenticationView<ViewModel: AuthenticationViewModelProtocol>: Vi
                     .resizable()
                     .scaledToFit()
                     .frame(width: 50, height: 50)
-                    .foregroundStyle(Color.Paynext.primaryText)
+                    .foregroundStyle(Color.Paynext.primary)
             }
         } else {
             Color.clear.frame(width: 50, height: 50)

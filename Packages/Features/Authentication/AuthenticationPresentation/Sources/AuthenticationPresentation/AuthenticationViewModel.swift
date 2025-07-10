@@ -96,9 +96,9 @@ public class AuthenticationViewModel: AuthenticationViewModelProtocol {
     public var errorTextColor: Color {
         if (showErrorAlert && (currentStep == .enterPin || currentStep == .disablePin)) ||
             (pinNotMatchingError && currentStep == .enterNewPin) {
-            return Color.Paynext.errorStrokeBackground
+            return Color.Paynext.negative
         } else {
-            return Color.Paynext.secondaryText
+            return Color.Paynext.secondary
         }
     }
     

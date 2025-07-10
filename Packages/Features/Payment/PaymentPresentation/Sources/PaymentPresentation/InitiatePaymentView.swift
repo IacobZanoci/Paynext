@@ -73,7 +73,7 @@ extension InitiatePaymentView {
         VStack(spacing: 12) {
             Text("Initiate Payment")
                 .font(.Paynext.navigationTitleMedium)
-                .foregroundStyle(Color.Paynext.primaryText)
+                .foregroundStyle(Color.Paynext.primary)
             Divider()
         }
         .padding(.top, 20)
@@ -89,33 +89,33 @@ extension InitiatePaymentView {
                 Image(systemName: "wallet.bifold.fill")
                     .resizable()
                     .scaledToFit()
-                    .foregroundStyle(Color.Paynext.accentText)
+                    .foregroundStyle(Color.white)
                     .frame(width: 20, height: 20)
                     .padding(10)
                     .background(
                         Circle()
-                            .fill(Color.Paynext.secondaryBackground)
+                            .fill(Color.Paynext.accent)
                     )
                 VStack(alignment: .leading) {
                     Text("Main Checking Account")
                         .font(.Paynext.bodyMedium)
-                        .foregroundStyle(Color.Paynext.primaryText)
+                        .foregroundStyle(Color.Paynext.primary)
                     Text("$12,345.67")
                         .font(.Paynext.footnote)
-                        .foregroundStyle(Color.Paynext.primaryText.opacity(0.6))
+                        .foregroundStyle(Color.Paynext.primary.opacity(0.6))
                 }
                 
                 Spacer()
                 
                 Image(systemName: "chevron.right")
                     .font(.Paynext.caption)
-                    .foregroundStyle(Color.Paynext.primaryText.opacity(0.6))
+                    .foregroundStyle(Color.Paynext.primary.opacity(0.6))
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 20)
             .background(
                 RoundedRectangle(cornerRadius: 6)
-                    .stroke(Color.Paynext.strokeBackground, lineWidth: 1)
+                    .stroke(Color.Paynext.tertiary, lineWidth: 1)
                     .fill(Color.Paynext.background)
             )
         }

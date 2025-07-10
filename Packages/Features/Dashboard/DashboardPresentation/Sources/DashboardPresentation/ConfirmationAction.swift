@@ -72,15 +72,15 @@ public enum ConfirmationAction: CaseIterable, Hashable {
     var iconColor: Color {
         switch self {
         case .transfer:
-            return .Paynext.accentText
+            return .white
         case .scan:
-            return .Paynext.accentText
+            return .white
         case .payBills:
-            return .Paynext.accentText
+            return .white
         case .savings:
-            return .Paynext.accentText
+            return .white
         case .request:
-            return .Paynext.accentText
+            return .white
         }
     }
     
@@ -89,15 +89,15 @@ public enum ConfirmationAction: CaseIterable, Hashable {
     var backgroundColor: Color {
         switch self {
         case .transfer:
-            return .Paynext.primaryText
+            return .Paynext.contrast
         case .scan:
-            return .Paynext.primaryText
+            return .Paynext.contrast
         case .payBills:
-            return .Paynext.primaryText
+            return .Paynext.contrast
         case .savings:
-            return .Paynext.primaryText
+            return .Paynext.contrast
         case .request:
-            return .Paynext.primaryText
+            return .Paynext.contrast
         }
     }
     

@@ -44,12 +44,12 @@ public struct RoundedTextFieldView: View {
         HStack {
             Text(title)
                 .font(.Paynext.body)
-                .foregroundStyle(Color.Paynext.primaryText)
+                .foregroundStyle(Color.Paynext.primary)
             
             Spacer()
             if !isValid {
                 Text("Wrong format")
-                    .foregroundStyle(Color.Paynext.errorStrokeBackground)
+                    .foregroundStyle(Color.Paynext.negative)
                     .font(.Paynext.caption)
                     .padding([.top, .trailing], 8)
             }
@@ -60,13 +60,13 @@ public struct RoundedTextFieldView: View {
                     if let leftIcon {
                         Image(systemName: leftIcon)
                             .font(.Paynext.bodyMedium)
-                            .foregroundStyle(Color.Paynext.primaryText)
+                            .foregroundStyle(Color.Paynext.primary)
                             .padding(.leading, 12)
                     }
                     
                     TextField(placeholder, text: $text)
                         .font(.Paynext.body)
-                        .foregroundStyle(Color.Paynext.primaryText)
+                        .foregroundStyle(Color.Paynext.primary)
                         .padding(.medium)
                     
                     if !text.isEmpty {
@@ -74,7 +74,7 @@ public struct RoundedTextFieldView: View {
                             text = ""
                         }) {
                             Image(systemName: "xmark.circle.fill")
-                                .foregroundStyle(Color.Paynext.secondaryText.opacity(0.6))
+                                .foregroundStyle(Color.Paynext.secondary.opacity(0.6))
                                 .padding(.trailing, 16)
                         }
                         .buttonStyle(.plain)
@@ -88,8 +88,8 @@ public struct RoundedTextFieldView: View {
                     RoundedRectangle(cornerRadius: radius)
                         .stroke(
                             isValid
-                            ? Color.Paynext.strokeBackground
-                            : Color.Paynext.errorStrokeBackground,
+                            ? Color.Paynext.tertiary
+                            : Color.Paynext.negative,
                             lineWidth: 1.5
                         )
                 )

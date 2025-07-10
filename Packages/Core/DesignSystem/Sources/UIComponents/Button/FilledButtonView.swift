@@ -18,30 +18,30 @@ public enum FilledButtonStyle {
     var backgroundColor: Color {
         switch self {
         case .primary:
-            return Color.Paynext.primaryButton
+            return Color.Paynext.accent
         case .secondary:
-            return Color.Paynext.accentText
+            return Color.white
         case .tertiary:
-            return Color.Paynext.primaryButton
+            return Color.Paynext.accent
         case .quartenary:
-            return Color.Paynext.primaryText
+            return Color.Paynext.primary
         case .error:
-            return Color.Paynext.secondaryText
+            return Color.Paynext.secondary
         }
     }
     
     var textColor: Color {
         switch self {
         case .primary:
-            return Color.Paynext.accentText
+            return Color.white
         case .secondary:
-            return Color.Paynext.incomeText
+            return Color.Paynext.positive
         case .tertiary:
-            return Color.Paynext.primaryText
+            return Color.Paynext.primary
         case .quartenary:
-            return Color.Paynext.contrastText
+            return Color.white
         case .error:
-            return Color.Paynext.accentText
+            return Color.white
         }
     }
     
@@ -49,15 +49,15 @@ public enum FilledButtonStyle {
         switch self {
             
         case .primary:
-            return Color.Paynext.primaryButton
+            return Color.Paynext.accent
         case .secondary:
-            return Color.Paynext.incomeText
+            return Color.Paynext.positive
         case .tertiary:
-            return Color.Paynext.primaryButton
+            return Color.Paynext.accent
         case .quartenary:
-            return Color.Paynext.primaryText
+            return Color.Paynext.primary
         case .error:
-            return Color.Paynext.secondaryText
+            return Color.Paynext.secondary
         }
     }
     

@@ -68,7 +68,7 @@ extension TransactionFilterView {
                         .scaledToFit()
                         .frame(width: .medium, height: .medium)
                         .fontWeight(.bold)
-                        .foregroundStyle(Color.Paynext.primaryText)
+                        .foregroundStyle(Color.Paynext.primary)
                 }
             }
         }
@@ -81,7 +81,7 @@ extension TransactionFilterView {
             }
         }
         .padding(.extraSmall)
-        .background(Color.Paynext.primaryText)
+        .background(Color.Paynext.accent)
         .clipShape(RoundedRectangle(cornerRadius: .small))
     }
     
@@ -98,7 +98,7 @@ extension TransactionFilterView {
                     Group {
                         if viewModel.selectedTab == tab {
                             RoundedRectangle(cornerRadius: .small)
-                                .fill(Color.Paynext.contrastText)
+                                .fill(Color.Paynext.background)
                         } else {
                             Color.clear
                         }
@@ -106,8 +106,8 @@ extension TransactionFilterView {
                 )
                 .foregroundStyle(
                     viewModel.selectedTab == tab
-                    ? Color.Paynext.primaryText
-                    : Color.Paynext.contrastText.opacity(0.7)
+                    ? Color.Paynext.primary
+                    : Color.Paynext.background
                 )
         }
     }
@@ -171,24 +171,24 @@ extension TransactionFilterView {
         HStack(spacing: .medium) {
             Text(viewModel.dateRangePickerTitle)
                 .font(.Paynext.footnoteMedium)
-                .foregroundStyle(Color.Paynext.primaryText)
+                .foregroundStyle(Color.Paynext.primary)
             
             Spacer()
             
             HStack {
                 Text(formattedDate(viewModel.dateRange.lowerBound))
-                    .foregroundStyle(Color.Paynext.contrastText)
+                    .foregroundStyle(Color.white)
                 Text(viewModel.dateRangePickerDividerTitle)
-                    .foregroundStyle(Color.Paynext.contrastText)
+                    .foregroundStyle(Color.white)
                 Text(formattedDate(viewModel.dateRange.upperBound))
-                    .foregroundStyle(Color.Paynext.contrastText)
+                    .foregroundStyle(Color.white)
             }
             .lineLimit(1)
             .minimumScaleFactor(0.8)
             .padding()
             .background(
                 RoundedRectangle(cornerRadius: .small)
-                    .fill(Color.Paynext.primaryText)
+                    .fill(Color.Paynext.accent)
             )
             .onTapGesture {
                 showDateRangePicker = true
@@ -201,7 +201,7 @@ extension TransactionFilterView {
         VStack(spacing: .medium) {
             Text(viewModel.datePickerSheetViewTitle)
                 .font(.Paynext.footnoteMedium)
-                .foregroundStyle(Color.Paynext.primaryText)
+                .foregroundStyle(Color.Paynext.primary)
             
             DatePicker(viewModel.sheetStartDatePickerTitle, selection: Binding(
                 get: { viewModel.dateRange.lowerBound },
@@ -210,9 +210,9 @@ extension TransactionFilterView {
                 }),
                        displayedComponents: .date
             )
-            .tint(Color.Paynext.secondaryButton)
+            .tint(Color.Paynext.accent)
             .font(.Paynext.footnoteMedium)
-            .foregroundStyle(Color.Paynext.primaryText)
+            .foregroundStyle(Color.Paynext.primary)
             
             DatePicker(viewModel.sheetEndDatePickerTitle, selection: Binding(
                 get: { viewModel.dateRange.upperBound },
@@ -221,9 +221,9 @@ extension TransactionFilterView {
                 }),
                        displayedComponents: .date
             )
-            .tint(Color.Paynext.secondaryButton)
+            .tint(Color.Paynext.accent)
             .font(.Paynext.footnoteMedium)
-            .foregroundStyle(Color.Paynext.primaryText)
+            .foregroundStyle(Color.Paynext.primary)
             
             Button {
                 showDateRangePicker = false
@@ -240,9 +240,9 @@ extension TransactionFilterView {
         Toggle(isOn: $viewModel.hideCompleted) {
             Text(viewModel.hideCompletedTransactionTitleToggle)
                 .font(.Paynext.footnoteMedium)
-                .foregroundStyle(Color.Paynext.primaryText)
+                .foregroundStyle(Color.Paynext.primary)
         }
-        .toggleStyle(SwitchToggleStyle(tint: Color.Paynext.primaryText))
+        .toggleStyle(SwitchToggleStyle(tint: Color.Paynext.primary))
         .padding(.top, .large)
     }
     
@@ -297,11 +297,11 @@ extension TransactionFilterView {
                 .resizable()
                 .scaledToFit()
                 .frame(width: .medium, height: .medium)
-                .foregroundStyle(Color.Paynext.primaryText)
+                .foregroundStyle(Color.Paynext.primary)
             
             TextField(title, text: text)
                 .font(.Paynext.footnote)
-                .foregroundStyle(Color.Paynext.primaryText)
+                .foregroundStyle(Color.Paynext.primary)
                 .autocorrectionDisabled()
                 .textInputAutocapitalization(.never)
             
@@ -310,7 +310,7 @@ extension TransactionFilterView {
         .padding()
         .background(
             RoundedRectangle(cornerRadius: .small)
-                .stroke(Color.Paynext.strokeBackground)
+                .stroke(Color.Paynext.tertiary)
         )
     }
     
@@ -327,22 +327,22 @@ extension TransactionFilterView {
                     .resizable()
                     .scaledToFit()
                     .frame(width: .medium, height: .medium)
-                    .foregroundStyle(Color.Paynext.primaryText)
+                    .foregroundStyle(Color.Paynext.primary)
                 Text(value.isEmpty ? title : value)
                     .font(.Paynext.footnote)
                     .foregroundStyle(
                         value.isEmpty
-                        ? Color.Paynext.secondaryText
-                        : Color.Paynext.primaryText
+                        ? Color.Paynext.secondary
+                        : Color.Paynext.primary
                     )
                 Spacer()
                 Image(systemName: "chevron.down")
-                    .foregroundStyle(Color.Paynext.secondaryButton)
+                    .foregroundStyle(Color.Paynext.accent)
             }
             .padding()
             .background(
                 RoundedRectangle(cornerRadius: .small)
-                    .stroke(Color.Paynext.strokeBackground)
+                    .stroke(Color.Paynext.tertiary)
             )
         }
     }

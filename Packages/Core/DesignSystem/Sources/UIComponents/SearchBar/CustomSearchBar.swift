@@ -33,16 +33,16 @@ public struct CustomSearchBar: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: .medium, height: .medium)
-                .foregroundStyle(Color.Paynext.primaryText)
+                .foregroundStyle(Color.Paynext.primary)
             
             TextField("Search transactions", text: $searchText)
                 .font(.Paynext.footnote)
-                .foregroundStyle(Color.Paynext.secondaryText)
+                .foregroundStyle(Color.Paynext.secondary)
         }
         .padding(contentPadding)
         .background(
             RoundedRectangle(cornerRadius: cornerRadius)
-                .stroke(Color.Paynext.strokeBackground, lineWidth: lineWidth)
+                .stroke(Color.Paynext.tertiary, lineWidth: lineWidth)
         )
         .background(Color.Paynext.background)
         .clippedRoundedCorners(cornerRadius)

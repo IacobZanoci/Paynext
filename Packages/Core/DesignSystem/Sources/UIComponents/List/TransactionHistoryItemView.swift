@@ -50,10 +50,10 @@ public struct TransactionHistoryItemView: View {
             VStack(alignment: .leading, spacing: .extraSmall) {
                 Text(title)
                     .font(.Paynext.footnoteMedium)
-                    .foregroundStyle(Color.Paynext.primaryText.opacity(0.9))
+                    .foregroundStyle(Color.Paynext.primary.opacity(0.9))
                 Text(date)
                     .font(.Paynext.caption)
-                    .foregroundStyle(Color.Paynext.primaryText.opacity(0.7))
+                    .foregroundStyle(Color.Paynext.primary.opacity(0.7))
             }
             Spacer()
             Text(amount)
@@ -63,7 +63,7 @@ public struct TransactionHistoryItemView: View {
         .padding(.medium)
         .background(
             RoundedRectangle(cornerRadius: cornerRadius)
-                .stroke(Color.Paynext.strokeBackground.opacity(0.9), lineWidth: 1)
+                .stroke(Color.Paynext.tertiary.opacity(0.9), lineWidth: 1)
         )
     }
 }
@@ -74,20 +74,20 @@ public struct TransactionHistoryItemView: View {
     VStack(spacing: 16) {
         TransactionHistoryItemView(
             imageName: "clock",
-            statusIconColor: .Paynext.secondaryText,
+            statusIconColor: .Paynext.secondary,
             title: "James May",
             date: "12:30 10/06/2025",
             amount: "+$300.00",
-            amountColor: Color.Paynext.incomeText
+            amountColor: Color.Paynext.positive
         )
         
         TransactionHistoryItemView(
             imageName: "checkmark.circle",
-            statusIconColor: .Paynext.incomeText,
+            statusIconColor: .Paynext.positive,
             title: "James May",
             date: "12:30 10/06/2025",
             amount: "+$300.00",
-            amountColor: Color.Paynext.incomeText
+            amountColor: Color.Paynext.positive
         )
         
         TransactionHistoryItemView(
@@ -96,7 +96,7 @@ public struct TransactionHistoryItemView: View {
             title: "James May",
             date: "12:30 10/06/2025",
             amount: "+$300.00",
-            amountColor: Color.Paynext.incomeText
+            amountColor: Color.Paynext.positive
         )
         
         TransactionHistoryItemView(
@@ -105,7 +105,7 @@ public struct TransactionHistoryItemView: View {
             title: "James May",
             date: "12:30 10/06/2025",
             amount: "+$300.00",
-            amountColor: Color.Paynext.incomeText
+            amountColor: Color.Paynext.positive
         )
     }
     .padding()

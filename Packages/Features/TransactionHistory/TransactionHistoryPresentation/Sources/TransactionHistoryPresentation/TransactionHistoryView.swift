@@ -81,7 +81,7 @@ extension TransactionHistoryView {
         VStack {
             Text(viewModel.transactionNavigationTitle)
                 .font(.Paynext.subheadlineBold)
-                .foregroundStyle(Color.Paynext.primaryText)
+                .foregroundStyle(Color.Paynext.primary)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
@@ -117,12 +117,12 @@ extension TransactionHistoryView {
                 HStack {
                     Text(viewModel.sortButtonTitle)
                         .font(.Paynext.footnote)
-                        .foregroundStyle(Color.Paynext.primaryText.opacity(0.5))
+                        .foregroundStyle(Color.Paynext.primary.opacity(0.5))
                     Image(systemName: viewModel.sortButtonImageTitle)
                         .resizable()
                         .scaledToFit()
                         .frame(width: .small, height: .small)
-                        .foregroundStyle(Color.Paynext.primaryText.opacity(0.5))
+                        .foregroundStyle(Color.Paynext.primary.opacity(0.5))
                     Spacer()
                 }
                 .padding(.bottom, .small)
@@ -158,15 +158,15 @@ extension TransactionHistoryView {
             Image(systemName: viewModel.noTransactionsImageTitle)
                 .resizable()
                 .scaledToFit()
-                .foregroundStyle(Color.Paynext.primaryText)
+                .foregroundStyle(Color.Paynext.primary)
                 .frame(width: 120, height: 80)
             Text(viewModel.noTransactionsTitle)
                 .font(.Paynext.headlineBold)
-                .foregroundStyle(Color.Paynext.primaryText)
+                .foregroundStyle(Color.Paynext.primary)
             Text(viewModel.noDataMatchFilterCriteriaMessage)
                 .multilineTextAlignment(.center)
                 .font(.Paynext.footnoteMedium)
-                .foregroundStyle(Color.Paynext.secondaryText)
+                .foregroundStyle(Color.Paynext.secondary)
                 .padding(.bottom, 180)
             Spacer()
         }

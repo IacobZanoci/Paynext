@@ -32,11 +32,11 @@ public struct SettingsButtonRowView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 28, height: 28)
-                .foregroundStyle(Color.Paynext.primaryText)
+                .foregroundStyle(Color.Paynext.primary)
             
             Text(title)
                 .font(.Paynext.body)
-                .foregroundStyle(Color.Paynext.primaryText.opacity(0.8))
+                .foregroundStyle(Color.Paynext.primary.opacity(0.8))
             
             Spacer()
             
@@ -44,7 +44,7 @@ public struct SettingsButtonRowView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 12, height: 12)
-                .foregroundStyle(Color.Paynext.primaryText)
+                .foregroundStyle(Color.Paynext.primary)
         }
         .background(Color.Paynext.background)
     }
