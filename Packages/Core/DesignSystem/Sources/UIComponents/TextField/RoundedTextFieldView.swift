@@ -74,7 +74,7 @@ public struct RoundedTextFieldView: View {
                             text = ""
                         }) {
                             Image(systemName: "xmark.circle.fill")
-                                .foregroundStyle(Color.Paynext.secondary.opacity(0.6))
+                                .foregroundStyle(Color.Paynext.tertiary)
                                 .padding(.trailing, 16)
                         }
                         .buttonStyle(.plain)

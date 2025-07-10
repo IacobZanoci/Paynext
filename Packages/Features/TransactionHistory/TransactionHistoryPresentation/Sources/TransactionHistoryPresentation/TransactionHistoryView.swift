@@ -117,12 +117,12 @@ extension TransactionHistoryView {
                 HStack {
                     Text(viewModel.sortButtonTitle)
                         .font(.Paynext.footnote)
-                        .foregroundStyle(Color.Paynext.primary.opacity(0.5))
+                        .foregroundStyle(Color.Paynext.secondary)
                     Image(systemName: viewModel.sortButtonImageTitle)
                         .resizable()
                         .scaledToFit()
                         .frame(width: .small, height: .small)
-                        .foregroundStyle(Color.Paynext.primary.opacity(0.5))
+                        .foregroundStyle(Color.Paynext.secondary)
                     Spacer()
                 }
                 .padding(.bottom, .small)

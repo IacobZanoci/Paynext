@@ -36,7 +36,7 @@ public struct SettingsButtonRowView: View {
             
             Text(title)
                 .font(.Paynext.body)
-                .foregroundStyle(Color.Paynext.primary.opacity(0.8))
+                .foregroundStyle(Color.Paynext.secondary)
             
             Spacer()
             
@@ -46,7 +46,7 @@ public struct SettingsButtonRowView: View {
                 .frame(width: 12, height: 12)
                 .foregroundStyle(Color.Paynext.primary)
         }
-        .background(Color.Paynext.background)
+        .background(Color.clear)
     }
 }
 

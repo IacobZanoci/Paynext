@@ -50,10 +50,10 @@ public struct TransactionHistoryItemView: View {
             VStack(alignment: .leading, spacing: .extraSmall) {
                 Text(title)
                     .font(.Paynext.footnoteMedium)
-                    .foregroundStyle(Color.Paynext.primary.opacity(0.9))
+                    .foregroundStyle(Color.Paynext.primary)
                 Text(date)
                     .font(.Paynext.caption)
-                    .foregroundStyle(Color.Paynext.primary.opacity(0.7))
+                    .foregroundStyle(Color.Paynext.secondary)
             }
             Spacer()
             Text(amount)
@@ -63,7 +63,7 @@ public struct TransactionHistoryItemView: View {
         .padding(.medium)
         .background(
             RoundedRectangle(cornerRadius: cornerRadius)
-                .stroke(Color.Paynext.tertiary.opacity(0.9), lineWidth: 1)
+                .stroke(Color.Paynext.tertiary, lineWidth: 1)
         )
     }
 }

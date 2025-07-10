@@ -102,14 +102,14 @@ extension InitiatePaymentView {
                         .foregroundStyle(Color.Paynext.primary)
                     Text("$12,345.67")
                         .font(.Paynext.footnote)
-                        .foregroundStyle(Color.Paynext.primary.opacity(0.6))
+                        .foregroundStyle(Color.Paynext.secondary)
                 }
                 
                 Spacer()
                 
                 Image(systemName: "chevron.right")
                     .font(.Paynext.caption)
-                    .foregroundStyle(Color.Paynext.primary.opacity(0.6))
+                    .foregroundStyle(Color.Paynext.secondary)
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 20)
