@@ -66,11 +66,11 @@ extension DashboardView {
                 HStack {
                     VStack(alignment: .leading) {
                         Text(viewModel.dashboardTitle)
-                            .font(.Paynext.titleBold)
+                            .font(.Paynext.title.weight(.bold))
                             .foregroundStyle(Color.white)
                             .padding(.vertical, .small)
                         Text(viewModel.username)
-                            .font(.Paynext.navigationTitleMedium)
+                            .font(.Paynext.navigationTitle.weight(.medium))
                             .foregroundStyle(Color.white.opacity(0.9))
                             .onAppear {
                                 viewModel.fetchUsername()
@@ -176,7 +176,7 @@ extension DashboardView {
         VStack {
             HStack {
                 Text(viewModel.transactionsSectionTitle)
-                    .font(.Paynext.subheadlineMedium)
+                    .font(.Paynext.subheadline.weight(.medium))
                     .foregroundStyle(Color.Paynext.primary)
                 Spacer()
                 Button {

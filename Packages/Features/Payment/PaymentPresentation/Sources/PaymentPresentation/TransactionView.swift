@@ -161,7 +161,7 @@ extension TransactionView {
                     
                     VStack(spacing: .medium) {
                         Text("Transaction Failed")
-                            .font(.Paynext.headlineBold)
+                            .font(.Paynext.headline.weight(.bold))
                             .foregroundStyle(Color.Paynext.primary)
                         
                         Text("""

@@ -170,7 +170,7 @@ extension TransactionFilterView {
     private var dateRangePicker: some View {
         HStack(spacing: .medium) {
             Text(viewModel.dateRangePickerTitle)
-                .font(.Paynext.footnoteMedium)
+                .font(.Paynext.footnote.weight(.medium))
                 .foregroundStyle(Color.Paynext.primary)
             
             Spacer()
@@ -200,7 +200,7 @@ extension TransactionFilterView {
     private var datePickerView: some View {
         VStack(spacing: .medium) {
             Text(viewModel.datePickerSheetViewTitle)
-                .font(.Paynext.footnoteMedium)
+                .font(.Paynext.footnote.weight(.medium))
                 .foregroundStyle(Color.Paynext.primary)
             
             DatePicker(viewModel.sheetStartDatePickerTitle, selection: Binding(
@@ -211,7 +211,7 @@ extension TransactionFilterView {
                        displayedComponents: .date
             )
             .tint(Color.Paynext.accent)
-            .font(.Paynext.footnoteMedium)
+            .font(.Paynext.footnote.weight(.medium))
             .foregroundStyle(Color.Paynext.primary)
             
             DatePicker(viewModel.sheetEndDatePickerTitle, selection: Binding(
@@ -222,7 +222,7 @@ extension TransactionFilterView {
                        displayedComponents: .date
             )
             .tint(Color.Paynext.accent)
-            .font(.Paynext.footnoteMedium)
+            .font(.Paynext.footnote.weight(.medium))
             .foregroundStyle(Color.Paynext.primary)
             
             Button {
@@ -239,7 +239,7 @@ extension TransactionFilterView {
     private var hideCompletedToggle: some View {
         Toggle(isOn: $viewModel.hideCompleted) {
             Text(viewModel.hideCompletedTransactionTitleToggle)
-                .font(.Paynext.footnoteMedium)
+                .font(.Paynext.footnote.weight(.medium))
                 .foregroundStyle(Color.Paynext.primary)
         }
         .toggleStyle(SwitchToggleStyle(tint: Color.Paynext.positive))

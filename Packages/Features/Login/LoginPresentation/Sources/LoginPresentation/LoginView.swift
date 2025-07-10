@@ -76,7 +76,7 @@ extension LoginView {
         ScrollView {
             VStack {
                 Text(viewModel.loginFormTitle)
-                    .font(.Paynext.headlineBold)
+                    .font(.Paynext.headline.weight(.bold))
                     .foregroundStyle(Color.Paynext.primary)
                     .padding(.bottom, 6)
                 

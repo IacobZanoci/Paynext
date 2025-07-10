@@ -44,7 +44,7 @@ public struct TransactionDetailsView<ViewModel: TransactionRowViewModelProtocol>
                         dismiss()
                     }) {
                         Image(systemName: viewModel.dismissButtonTitle)
-                            .font(.Paynext.bodyBold)
+                            .font(.Paynext.body.weight(.bold))
                             .imageScale(.large)
                             .foregroundStyle(Color.Paynext.primary)
                     }

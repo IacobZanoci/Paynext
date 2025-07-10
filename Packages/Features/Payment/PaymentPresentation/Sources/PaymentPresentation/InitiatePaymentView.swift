@@ -72,7 +72,7 @@ extension InitiatePaymentView {
     var navigationTitle: some View {
         VStack(spacing: 12) {
             Text("Initiate Payment")
-                .font(.Paynext.navigationTitleMedium)
+                .font(.Paynext.navigationTitle.weight(.medium))
                 .foregroundStyle(Color.Paynext.primary)
             Divider()
         }
@@ -98,7 +98,7 @@ extension InitiatePaymentView {
                     )
                 VStack(alignment: .leading) {
                     Text("Main Checking Account")
-                        .font(.Paynext.bodyMedium)
+                        .font(.Paynext.body.weight(.medium))
                         .foregroundStyle(Color.Paynext.primary)
                     Text("$12,345.67")
                         .font(.Paynext.footnote)

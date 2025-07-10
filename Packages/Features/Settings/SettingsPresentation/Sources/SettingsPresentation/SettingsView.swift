@@ -82,12 +82,12 @@ extension  SettingsView {
             .padding(.top, .extraLarge)
             
             Text("Iacob Zanoci")
-                .font(.Paynext.navigationTitleMedium)
+                .font(.Paynext.navigationTitle.weight(.medium))
                 .foregroundStyle(Color.white)
                 .padding(.top, .medium)
             
             Text("929 671-0972")
-                .font(.Paynext.footnoteMedium)
+                .font(.Paynext.footnote.weight(.medium))
                 .foregroundStyle(Color.white.opacity(0.9))
                 .padding(.top, .extraSmall)
                 .padding(.bottom, .medium)
@@ -147,7 +147,7 @@ extension  SettingsView {
     private var darkModeSetting: some View {
         HStack {
             Text("Dark Mode")
-                .font(.Paynext.footnoteMedium)
+                .font(.Paynext.footnote.weight(.medium))
                 .foregroundStyle(Color.Paynext.primary)
             Spacer()
             Toggle("", isOn: $themeManager.isDarkModeEnabled)
@@ -169,7 +169,7 @@ extension  SettingsView {
                 }
             )) {
                 Text(viewModel.pinAccessButton)
-                    .font(.Paynext.footnoteMedium)
+                    .font(.Paynext.footnote.weight(.medium))
                     .foregroundStyle(Color.Paynext.primary)
             }
             .tint(Color.Paynext.accent)
@@ -183,7 +183,7 @@ extension  SettingsView {
     private var faceIdAccess: some View {
         HStack {
             Text(viewModel.faceIdLabel)
-                .font(.Paynext.footnoteMedium)
+                .font(.Paynext.footnote.weight(.medium))
                 .foregroundStyle(Color.Paynext.primary)
             Spacer()
             Toggle(isOn: Binding(
@@ -219,7 +219,7 @@ extension  SettingsView {
     private var remoteSourceTransactions: some View {
         HStack {
             Text("Use Remote Transactions")
-                .font(.Paynext.footnoteMedium)
+                .font(.Paynext.footnote.weight(.medium))
                 .foregroundStyle(Color.Paynext.primary)
             Spacer()
             Toggle("", isOn: Binding(

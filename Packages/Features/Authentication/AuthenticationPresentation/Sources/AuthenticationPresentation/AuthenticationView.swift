@@ -73,7 +73,7 @@ public struct AuthenticationView<ViewModel: AuthenticationViewModelProtocol>: Vi
                 cancelButton
                 Spacer()
                 Text(viewModel.titleText)
-                    .font(.Paynext.navigationTitleMedium)
+                    .font(.Paynext.navigationTitle.weight(.medium))
                     .foregroundStyle(Color.Paynext.primary)
                 Spacer()
                 Color.clear.frame(width: 44, height: 44)
@@ -93,7 +93,7 @@ public struct AuthenticationView<ViewModel: AuthenticationViewModelProtocol>: Vi
             viewModel.cancelFlow()
         }) {
             Text("Cancel")
-                .font(.Paynext.navigationTitleMedium)
+                .font(.Paynext.navigationTitle.weight(.medium))
                 .foregroundStyle(Color.Paynext.primary)
         }
         .opacity(isCancelVisible ? 1 : 0)

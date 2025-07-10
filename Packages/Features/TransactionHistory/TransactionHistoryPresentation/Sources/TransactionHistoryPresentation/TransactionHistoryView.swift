@@ -80,7 +80,7 @@ extension TransactionHistoryView {
     private var navigationTitle: some View {
         VStack {
             Text(viewModel.transactionNavigationTitle)
-                .font(.Paynext.subheadlineBold)
+                .font(.Paynext.subheadline.weight(.bold))
                 .foregroundStyle(Color.Paynext.primary)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -161,11 +161,11 @@ extension TransactionHistoryView {
                 .foregroundStyle(Color.Paynext.primary)
                 .frame(width: 120, height: 80)
             Text(viewModel.noTransactionsTitle)
-                .font(.Paynext.headlineBold)
+                .font(.Paynext.headline.weight(.bold))
                 .foregroundStyle(Color.Paynext.primary)
             Text(viewModel.noDataMatchFilterCriteriaMessage)
                 .multilineTextAlignment(.center)
-                .font(.Paynext.footnoteMedium)
+                .font(.Paynext.footnote.weight(.medium))
                 .foregroundStyle(Color.Paynext.secondary)
                 .padding(.bottom, 180)
             Spacer()

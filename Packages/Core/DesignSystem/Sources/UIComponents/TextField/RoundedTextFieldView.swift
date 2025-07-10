@@ -59,7 +59,7 @@ public struct RoundedTextFieldView: View {
                 HStack(spacing: 0) {
                     if let leftIcon {
                         Image(systemName: leftIcon)
-                            .font(.Paynext.bodyMedium)
+                            .font(.Paynext.body.weight(.medium))
                             .foregroundStyle(Color.Paynext.primary)
                             .padding(.leading, .medium)
                     }
